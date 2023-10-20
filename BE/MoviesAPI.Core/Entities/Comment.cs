@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace MoviesAPI.Core.Entities
 {
-    public class Tag : Base
+    public class Comment : Base
     {
-        public string Name { get; set; }
+        public Movie Movie { get; set; }
+        public User User { get; set; }
+        public string Content { get; set; }
     }
 }

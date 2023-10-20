@@ -14,5 +14,8 @@ namespace MoviesAPI.Core.Entities
         public int Upvote { get; set; }
         public int Downvote { get; set; }
         public DateTime AddedDate { get; set; }
+        public List<Category> Categories { get; set; }
+        public List<Movie> Movies { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
