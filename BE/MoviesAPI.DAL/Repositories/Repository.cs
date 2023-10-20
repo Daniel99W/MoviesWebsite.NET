@@ -9,7 +9,7 @@ namespace MoviesAPI.DAL.Repositories
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        private MoviesDbContext moviesDbContext;
+        protected MoviesDbContext moviesDbContext;
         public Repository(MoviesDbContext moviesDbContext)
         {
             this.moviesDbContext = moviesDbContext;
@@ -36,14 +36,13 @@ namespace MoviesAPI.DAL.Repositories
 
         public async Task SaveChangesAsync()
         {
-            return await moviesDbContext.SaveChangesAsync();
+            await moviesDbContext.SaveChangesAsync();
         }
 
         public virtual T Update(T entity)
         {
             return moviesDbContext.Update(entity).Entity;
         }
-
         
     }
 }
