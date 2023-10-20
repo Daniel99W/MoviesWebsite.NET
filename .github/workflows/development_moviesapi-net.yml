@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - Innoloft-API
 on:
   push:
     branches:
-      - azure-deploy
+      - development
   workflow_dispatch:
 
 jobs:
