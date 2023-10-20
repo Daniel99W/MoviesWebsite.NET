@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesAPI.DAL;
 
@@ -10,9 +11,11 @@ using MoviesAPI.DAL;
 namespace MoviesAPI.DAL.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    partial class MoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231020151403_DeleteTagsTableAddComments")]
+    partial class DeleteTagsTableAddComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,27 +77,6 @@ namespace MoviesAPI.DAL.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("MoviesAPI.Core.Entities.FavoriteMovie", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("FavoriteMovies");
-                });
-
             modelBuilder.Entity("MoviesAPI.Core.Entities.Movie", b =>
                 {
                     b.Property<Guid>("Id")
@@ -121,12 +103,17 @@ namespace MoviesAPI.DAL.Migrations
                     b.Property<int>("Upvote")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("char(36)");
+
                     b.Property<int>("Views")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MovieId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Movies");
                 });
@@ -170,30 +157,11 @@ namespace MoviesAPI.DAL.Migrations
                     b.HasOne("MoviesAPI.Core.Entities.Movie", "Movie")
                         .WithMany("Comments")
                         .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("MoviesAPI.Core.Entities.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MoviesAPI.Core.Entities.FavoriteMovie", b =>
-                {
-                    b.HasOne("MoviesAPI.Core.Entities.Movie", "Movie")
-                        .WithMany("Users")
-                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MoviesAPI.Core.Entities.User", "User")
-                        .WithMany("Movies")
+                        .WithMany("Comments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -208,6 +176,10 @@ namespace MoviesAPI.DAL.Migrations
                     b.HasOne("MoviesAPI.Core.Entities.Movie", null)
                         .WithMany("Movies")
                         .HasForeignKey("MovieId");
+
+                    b.HasOne("MoviesAPI.Core.Entities.User", null)
+                        .WithMany("Movies")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("MoviesAPI.Core.Entities.Movie", b =>
@@ -215,8 +187,6 @@ namespace MoviesAPI.DAL.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Movies");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("MoviesAPI.Core.Entities.User", b =>

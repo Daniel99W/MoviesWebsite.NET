@@ -17,5 +17,6 @@ namespace MoviesAPI.Core.Entities
         public List<Category> Categories { get; set; }
         public List<Movie> Movies { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<FavoriteMovie> Users { get; set; }
     }
 }

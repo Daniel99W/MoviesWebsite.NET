@@ -10,7 +10,7 @@ namespace MoviesAPI.Core.Entities
     {
         public string Name { get; set; }
         public string Email { get; set; }
-        public List<Movie> Movies { get; set; }
+        public List<FavoriteMovie> Movies { get; set; }
         public List<Comment> Comments { get; set; }
     }
 }
