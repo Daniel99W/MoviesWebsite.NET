@@ -1,16 +1,17 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - MoviesAPI-NET
+name: Build and deploy ASP.Net Core app to Azure Web App - Innoloft-API
 
 on:
   push:
     branches:
-      - development
+      - azure-deploy
   workflow_dispatch:
 
 jobs:
   build:
+    name: Build .net api
     runs-on: ubuntu-latest
 
     steps:
@@ -24,15 +25,25 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
+        working-directory: BE/MoviesAPI
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o out
+        working-directory: BE/MoviesAPI
+
+      - name: Update Database
+        run: |
+            dotnet tool install --global dotnet-ef
+            dotnet tool restore
+            dotnet ef database update 
+        working-directory: BE/MoviesAPI
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: BE/MoviesAPI/out/*
+          
 
   deploy:
     runs-on: ubuntu-latest
