@@ -19,9 +19,9 @@ namespace MoviesAPI.DAL.Repositories
             return moviesDbContext.Add(entity).Entity;
         }
 
-        public virtual void Delete(Guid id)
+        public virtual void Delete(T obj)
         {
-            moviesDbContext.Remove(id);
+            moviesDbContext.Remove(obj);
         }
 
         public virtual async Task<T?> Read(Guid id)
