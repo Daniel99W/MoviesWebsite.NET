@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoviesAPI.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,35 +10,27 @@ namespace MoviesAPI.DAL
 {
     public static class ExtensionMethods
     {
-        //public static async Task<Pagination<T>> Paginate<T>(this IQueryable<T> query, int page, int itemsPerPage)
-        //{
-        //    int rowsToBeSkiped = itemsPerPage * page - itemsPerPage;
+        public static async Task<Pagination<T>> Paginate<T>(this IQueryable<T> query, int page, int itemsPerPage)
+        {
+            int rowsToBeSkiped = itemsPerPage * page - itemsPerPage;
 
-        //    int totalItems = query.Count();
+            int totalItems = query.Count();
 
-        //    List<T> results = await query
-        //        .Skip(rowsToBeSkiped)
-        //        .Take(itemsPerPage)
-        //        .ToListAsync();
+            List<T> results = await query
+                .Skip(rowsToBeSkiped)
+                .Take(itemsPerPage)
+                .ToListAsync();
 
-        //    PaginatedDTO<T> paginated = new()
-        //    {
-        //        CurrentPage = page,
-        //        TotalPages =
-        //        Convert.ToInt16(Math.Ceiling((double)totalItems / itemsPerPage)),
-        //        PrevPage = page - 1,
-        //        NextPage = page + 1,
-        //        Results = results
-        //    };
+            Pagination<T> paginated = new()
+            {
+                Page = page,
+                TotalPages =
+                Convert.ToInt16(Math.Ceiling((double)totalItems / itemsPerPage)),
+                Results = results
+            };
 
-        //    if (paginated.PrevPage <= 0)
-        //        paginated.PrevPage = null;
+            return paginated;
 
-        //    if (paginated.NextPage > paginated.TotalPages)
-        //        paginated.NextPage = null;
-
-        //    return paginated;
-
-        //}
+        }
     }
 }

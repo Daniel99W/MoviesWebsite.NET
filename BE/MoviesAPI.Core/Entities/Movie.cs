@@ -12,13 +12,12 @@ namespace MoviesAPI.Core.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public int Views { get; set; }
-        public int Upvote { get; set; }
-        public int Downvote { get; set; }
         public string VidGuardId { get; set; }
         public DateTime AddedDate { get; set; }
         public List<Category> Categories { get; set; }
         public List<Comment> Comments { get; set; }
         public List<FavoriteMovie> Users { get; set; }
+        public List<VotedMovie> VotedMovies { get; set; }
 
         public Movie()
         {
@@ -38,8 +37,6 @@ namespace MoviesAPI.Core.Entities
             this.VidGuardId = vidguardId;
             this.Categories = categories;
             this.Views = 0;
-            this.Upvote = 0;
-            this.Downvote = 0;
         }
 
         public static Movie CreateMovie(string title,
@@ -50,6 +47,12 @@ namespace MoviesAPI.Core.Entities
             )
         {
             return new Movie(title, description, AddedDate, vidguardId,categories);
+        }
+
+        public Movie UpdateViewsCounter()
+        {
+            this.Views += 1;
+            return this;
         }
 
 

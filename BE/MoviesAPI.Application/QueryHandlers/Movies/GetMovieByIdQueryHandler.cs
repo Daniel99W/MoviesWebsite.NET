@@ -10,16 +10,20 @@ using System.Threading.Tasks;
 
 namespace MoviesAPI.Application.QueryHandlers.Movies
 {
-    public class GetMovieByIdQueryHandler : IRequestHandler<GetMovieById, Movie>
+    public class GetMovieByIdQueryHandler : IRequestHandler<GetMovieById, Movie?>
     {
         private IRepositoryMovie repositoryMovie;
         public GetMovieByIdQueryHandler(IRepositoryMovie repositoryMovie)
         {
             this.repositoryMovie = repositoryMovie;
         } 
-        public async Task<Movie> Handle(GetMovieById request, CancellationToken cancellationToken)
+        public async Task<Movie?> Handle(GetMovieById request, CancellationToken cancellationToken)
         {
             var movie = await this.repositoryMovie.Read(request.Id);
+            if(movie == null)
+            {
+                throw new HttpRequestException("Movie does not exist");
+            }
             return movie;
         }
     }

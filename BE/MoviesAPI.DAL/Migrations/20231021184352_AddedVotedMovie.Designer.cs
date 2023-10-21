@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesAPI.DAL;
 
@@ -10,9 +11,11 @@ using MoviesAPI.DAL;
 namespace MoviesAPI.DAL.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    partial class MoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231021184352_AddedVotedMovie")]
+    partial class AddedVotedMovie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,33 +150,6 @@ namespace MoviesAPI.DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MoviesAPI.Core.Entities.VotedMovie", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("Downvote")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("Upvote")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("VotedMovies");
-                });
-
             modelBuilder.Entity("CategoryMovie", b =>
                 {
                     b.HasOne("MoviesAPI.Core.Entities.Category", null)
@@ -218,25 +194,6 @@ namespace MoviesAPI.DAL.Migrations
 
                     b.HasOne("MoviesAPI.Core.Entities.User", "User")
                         .WithMany("Movies")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MoviesAPI.Core.Entities.VotedMovie", b =>
-                {
-                    b.HasOne("MoviesAPI.Core.Entities.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoviesAPI.Core.Entities.User", "User")
-                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

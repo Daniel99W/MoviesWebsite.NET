@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoviesAPI.Application.Queries.Movies
+namespace MoviesAPI.Application.Commands.Movies
 {
-    public class GetMovieById : IRequest<Movie?>
+    public class UpdateMovieViewsCounterCommand : IRequest<Movie>
     {
         public Guid Id { get; set; }
     }

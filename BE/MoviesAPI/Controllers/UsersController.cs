@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
-using FirebaseAdmin;
-using FirebaseAdmin.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MiNET.Utils;
 using MoviesAPI.Application.Commands.Users;
 using MoviesAPI.Application.Queries.Users;
-using MoviesAPI.Core.Entities;
-using MoviesAPI.Core.Interfaces;
 using MoviesAPI.Dtos.Users;
 
 namespace MoviesAPI.Controllers
@@ -27,7 +22,7 @@ namespace MoviesAPI.Controllers
 
         [HttpGet]
         [Route(ApiRoutes.UsersRoutes.GetUsers)]
-        public async Task<ActionResult<IEnumerable<UserGetDto>>> GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
             var query = new GetAllUsersQuery();
             var result = await mediator.Send(query);
@@ -37,7 +32,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPost]
         [Route(ApiRoutes.UsersRoutes.CreateUser)]
-        public async Task<ActionResult<string>> CreateUser([FromBody] CreateUserDto createUserDto)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserDto)
         {
             var command = new CreateUserCommand()
             {

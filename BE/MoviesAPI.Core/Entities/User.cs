@@ -15,6 +15,7 @@ namespace MoviesAPI.Core.Entities
         public string FirebaseId { get; set; }
         public List<FavoriteMovie> Movies { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<VotedMovie> VotedMovies { get; set; }
 
         public User(string firebaseId,string Name,string Email)
         {

@@ -21,8 +21,15 @@ namespace MoviesAPI.Application.CommandsHandler.Movies
         }
         public async Task<Movie> Handle(CreateMovieCommand request, CancellationToken cancellationToken)
         {
+            var movieExist = this.repositoryMovie.GetMovieByVidGuardId(request.VidGuardId);
+            if (movieExist != null)
+            {
+                throw new HttpRequestException("This movie already exist in database");
+            }
+
             List<Category> categories =
                 (await repositoryCategory.GetCategoriesByGuidList(request.CategoriesIds)).ToList();
+            
             var movie =
                 Movie.CreateMovie(request.Title,
                 request.Description,
@@ -30,7 +37,6 @@ namespace MoviesAPI.Application.CommandsHandler.Movies
                 request.VidGuardId,
                 categories
                 );
-            
             this.repositoryMovie.Create(movie);
             await this.repositoryMovie.SaveChangesAsync();
             return movie;

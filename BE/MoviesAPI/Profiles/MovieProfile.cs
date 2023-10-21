@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MoviesAPI.Core.Entities;
+using MoviesAPI.Dtos;
 using MoviesAPI.Dtos.Movies;
 
 namespace MoviesAPI.Profiles
@@ -9,6 +10,8 @@ namespace MoviesAPI.Profiles
         public MovieProfile()
         {
             CreateMap<Movie, GetMovieDto>().ReverseMap();
+            CreateMap<Pagination<Movie>, Pagination<GetMovieDto>>();
+            
         }
     }
 }

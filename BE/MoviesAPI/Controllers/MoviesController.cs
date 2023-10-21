@@ -3,8 +3,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Application.Commands.Movies;
 using MoviesAPI.Application.Queries.Movies;
+using MoviesAPI.Dtos;
 using MoviesAPI.Dtos.Movies;
-using System.Reflection.Metadata.Ecma335;
+
 
 namespace MoviesAPI.Controllers
 {
@@ -34,13 +35,13 @@ namespace MoviesAPI.Controllers
                 EndAddedDate = getMovieParams.EndAddedDate
             };
             var result = await mediator.Send(query);
-            var mappedResult = mapper.Map<IEnumerable<GetMovieDto>>(result);
+            var mappedResult = mapper.Map<Pagination<GetMovieDto>>(result);
             return Ok(mappedResult);
         }
 
         [HttpPost]
         [Route(ApiRoutes.MovieRoutes.CreateMovie)]
-        public async Task<ActionResult<IEnumerable<GetMovieDto>>> CreateMovie([FromBody] CreateMovieDto createMovieDto)
+        public async Task<IActionResult> CreateMovie([FromBody] CreateMovieDto createMovieDto)
         {
             var command = new CreateMovieCommand()
             {
@@ -79,6 +80,40 @@ namespace MoviesAPI.Controllers
             await mediator.Send(command);
             return Ok();
         }
+
+        [HttpGet]
+        [Route(ApiRoutes.MovieRoutes.GetMoviesByTitle)]
+        public async Task<IActionResult> GetMoviesByTitle([FromQuery] GetMoviesByTitleParams getMoviesByTitleParams)
+        {
+            var query = new GetMoviesByTitleQuery()
+            {
+                Page = getMoviesByTitleParams.Page,
+                ItemsPerPage = getMoviesByTitleParams.ItemsPerPage,
+                Title = getMoviesByTitleParams.Title
+            };
+            var result = await mediator.Send(query);
+            var mappedResult = mapper.Map<Pagination<GetMovieDto>>(result);
+            return Ok(mappedResult);
+        }
+
+        [HttpPatch]
+        [Route(ApiRoutes.MovieRoutes.UpdateViewsCounter)]
+        public async Task<IActionResult> UpdateViewsCounter(Guid Id)
+        {
+            var command = new UpdateMovieViewsCounterCommand()
+            {
+                Id = Id
+            };
+            var result = await mediator.Send(command);
+            var mappedResult = mapper.Map<GetMovieDto>(result);
+            return Ok(mappedResult);
+        }
+
+
+
+
+
+
 
 
 

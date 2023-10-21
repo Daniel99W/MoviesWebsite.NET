@@ -24,6 +24,7 @@ namespace MoviesAPI.DAL
         public DbSet<Comment> Comments { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<FavoriteMovie> FavoriteMovies { get; set; }
+        public DbSet<VotedMovie> VotedMovies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

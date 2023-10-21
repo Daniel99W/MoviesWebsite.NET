@@ -14,6 +14,8 @@
             public const string CreateMovie = "CreateMovie";
             public const string GetMovieById = $"GetMovieById/{Id}";
             public const string DeleteMovieById = $"DeleteMovieById/{Id}";
+            public const string GetMoviesByTitle = "GetMoviesByTitle";
+            public const string UpdateViewsCounter = $"UpdateViewsCounter/{Id}";
         }
     }
 }
