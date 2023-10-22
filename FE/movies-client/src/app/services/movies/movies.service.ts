@@ -28,11 +28,14 @@ export class MoviesService
     let params =  new HttpParams();
     params = params.append('ItemsPerPage',getMoviesQueryParametersDto.ItemsPerPage.toString());
     params = params.append('Page',getMoviesQueryParametersDto.Page.toString());
-    params = params.append('Title',getMoviesQueryParametersDto.Title);
-    params = params.append('CategoriesIds',getMoviesQueryParametersDto.CategoriesIds.join(', '));
-    params = params.append('BeginReleaseDate',getMoviesQueryParametersDto.BeginReleaseDate);
-    params = params.append('EndReleaseDate',getMoviesQueryParametersDto.EndReleaseDate);
-
+    if(getMoviesQueryParametersDto.Title != undefined && getMoviesQueryParametersDto.Title.length > 0)
+    {
+      params = params.append('Title',getMoviesQueryParametersDto.Title);
+    }
+    if(getMoviesQueryParametersDto.CategoriesIds != undefined && getMoviesQueryParametersDto.CategoriesIds.length > 0)
+    {
+      params = params.append('CategoriesIds',getMoviesQueryParametersDto.CategoriesIds.join(', '));
+    }
     return this._httpClient.get(environment.api+'/Movies/GetMovies',{params:params});
   }
 
@@ -56,11 +59,11 @@ export class MoviesService
         {
           let resJson = JSON.parse(JSON.stringify(res));
           let id = resJson.result.HashID;
-          createMovieDto.Id = id;
+          createMovieDto.VidGuardId = id;
           let imageNameWithId = imageNameWithoutExtension + id;
           this._angularFireStorage.upload(imageNameWithId,moviePoster);
-          createMovieDto.PosterImage = imageNameWithId;
-          return this._httpClient.post(environment.api+'/Movies/AddMovie',createMovieDto);
+          createMovieDto.PosterImageUrl = imageNameWithId;
+          return this._httpClient.post(environment.api+'/Movies/CreateMovie',createMovieDto);
         })
     )
   }
@@ -93,11 +96,11 @@ export class MoviesService
     {
       Id:id
     }
-    return this._httpClient.patch(environment.api+'/Movies/UpdateViewsCountById',body);
+    return this._httpClient.patch(environment.api+'/Movies/UpdateViewsCounter',body);
   }
 
   public deleteMovie(id:string)
   {
-    return this._httpClient.delete(environment.api+'/Movies/DeleteMovie/'+id);
+    return this._httpClient.delete(environment.api+'/Movies/DeleteMovieById/'+id);
   }
 }

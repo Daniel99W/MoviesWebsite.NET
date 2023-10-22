@@ -46,6 +46,7 @@ export class MovieComponent implements OnInit
       .subscribe((res:any) => 
         {
           this._movieGetDto = res;
+          console.log(this._movieGetDto)
         })
       this._moviesService.updateMovieViews(id)
       .subscribe((res:any)=>
@@ -59,7 +60,7 @@ export class MovieComponent implements OnInit
 
  public get movieURL():string
  {
-  let url = environment.videoURL+this._movieGetDto.Id;
+  let url = environment.videoURL+this._movieGetDto.vidGuardId;
   return url;
  }
 

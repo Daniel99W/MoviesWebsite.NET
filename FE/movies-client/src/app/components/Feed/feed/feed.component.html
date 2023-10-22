@@ -5,7 +5,7 @@
     <div class="filters">
        <div class="searchBar">
         <mat-form-field>
-            <mat-label>Search</mat-label>
+            <mat-label>Search a movie</mat-label>
             <input type="text" matInput [formControl]="$any(filterFormGroup().get('Title'))"
             >
             <span matSuffix>
@@ -18,18 +18,18 @@
        <div class="movieGenre">
         <mat-form-field>
             <mat-label>
-                Movie Genre 
+                Categories 
             </mat-label>
             <mat-select [formControl]="$any(filterFormGroup()).get('Categories')" multiple>
-                <mat-option *ngFor="let category of categories" [value]="category.Id">
-                    {{category.Name}}
+                <mat-option *ngFor="let category of categories" [value]="category.id">
+                    {{category.name}}
                 </mat-option>
             </mat-select>   
         </mat-form-field>
        </div>
        <div class="beginReleaseDate">
         <mat-form-field>
-            <mat-label>Begin release date</mat-label>
+            <mat-label>Submitted begin date</mat-label>
             <select matNativeControl required [formControl]="$any(filterFormGroup().get('BeginReleaseDate'))">
               <option></option>
               <option *ngFor="let year of getYears()">{{year}}</option>
@@ -38,7 +38,7 @@
        </div>
        <div class="beginReleaseDate">
         <mat-form-field>
-            <mat-label>End release date</mat-label>
+            <mat-label>Submitted end date</mat-label>
             <select matNativeControl required [formControl]="$any(filterFormGroup().get('EndReleaseDate'))">
               <option></option>
               <option *ngFor="let year of getYears()">{{year}}</option>
@@ -56,17 +56,17 @@
        gutterSize="1rem">
             <mat-grid-tile *ngFor="let movie of movies">
                 <mat-card>
-                    <img mat-card-image src="{{movie.PosterImage}}" >
+                    <img mat-card-image src="{{movie.posterImageUrl}}" >
                     <mat-card-header class="movie_header">
                         <mat-card-title>
-                          <a [routerLink]="['/movie/',movie.Id]" 
+                          <a [routerLink]="['/movie/',movie.id]" 
                           class="titleLink"
                           
-                          > {{restrictChars(movie.Title)}}
+                          > {{restrictChars(movie.title)}}
                             </a>
                         </mat-card-title>
                         <mat-card-subtitle>
-                            {{movie.MovieReleaseDate}}
+                            {{movie.addedDate}}
                         </mat-card-subtitle>
                     </mat-card-header>
                 </mat-card>

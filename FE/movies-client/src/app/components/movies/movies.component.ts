@@ -33,7 +33,10 @@ export class MoviesComponent implements OnInit
     this._moviesService.getMoviesByTitle(this._title,this.itemsPerPage,1)
     .subscribe((res:any) => 
       {
-        this._movies = res;
+      this._movies.Page = res.page;
+      this._movies.Results = res.results;
+      this._movies.TotalPages = res.totalPages;
+        console.log(this._movies);
       })
   }
 
@@ -43,7 +46,9 @@ export class MoviesComponent implements OnInit
     .getMoviesByTitle(this._title,this._itemsPerPage,page)
     .subscribe((res:any)=>
     {
-      this._movies = res;
+      this._movies.Page = res.Page;
+      this._movies.Results = res.Results;
+      this._movies.TotalPages = res.TotalPages;
     })
   }
 
@@ -109,20 +114,20 @@ export class MoviesComponent implements OnInit
 
   public getPrevPage()
   {
-    if(this._movies.CurrentPage - 1 <= 0)
+    if(this._movies.Page - 1 <= 0)
     {
       return null;
     }
-    return this._movies.CurrentPage;
+    return this._movies.Page;
   }
 
   public getNextPage()
   {
-    if(this._movies.TotalPages < (+this._movies.CurrentPage + +1))
+    if(this._movies.TotalPages < (+this._movies.Page + +1))
     {
       return null;
     }
-    return +this._movies.CurrentPage + +1;
+    return +this._movies.Page + +1;
   }
 
   public deleteMovie(id:string)

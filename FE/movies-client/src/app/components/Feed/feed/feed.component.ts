@@ -58,19 +58,22 @@ export class FeedComponent implements OnInit
     this._movieService.getMovies(this._getMoviesQueryParams)
     .subscribe((res:any) => 
       {
-       this._movies = res;
-       console.log(res);
+       this._movies.TotalPages = res.totalPages;
+       this._movies.Page = res.page;
+       this._movies.Results = res.results;
+       console.log(this._movies.Results);
         this._movies.Results
         .forEach(movie => 
         {
+          console.log(movie.posterImageUrl);
           this._firebaseStorage
           .storage
           .ref()
-          .child(movie.PosterImage)
+          .child(movie.posterImageUrl)
           .getDownloadURL()
           .then(res => 
             {
-              movie.PosterImage = res;
+              movie.posterImageUrl = res;
             });
         })
       })
@@ -198,20 +201,20 @@ export class FeedComponent implements OnInit
 
   public getPrevPage()
   {
-    if(this._movies.CurrentPage - 1 <= 0)
+    if(this._movies.Page - 1 <= 0)
     {
       return null;
     }
-    return this._movies.CurrentPage;
+    return this._movies.Page;
   }
 
   public getNextPage()
   {
-    if(this._movies.TotalPages < (+this._movies.CurrentPage + +1))
+    if(this._movies.TotalPages < (+this._movies.Page + +1))
     {
       return null;
     }
-    return +this._movies.CurrentPage + +1;
+    return +this._movies.Page + +1;
   }
 
 

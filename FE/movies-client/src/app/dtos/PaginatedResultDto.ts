@@ -2,7 +2,7 @@
 
 export class PaginatedResultDto<T>
 {
-    CurrentPage!:number;
+    Page!:number;
     TotalPages!:number;
     Results!:T[];
 }

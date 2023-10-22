@@ -5,14 +5,14 @@ import { GetCategoryDto } from "./GetCategoryDto";
 
 export class GetMovieDto 
 {
-    public Id!:string;
-    public Title!:string;
-    public TrailerLink!:string;
-    public Description!:string;
-    public Language!:Languages;
-    public Subtitle!:Languages;
-    public AddedDate!:Date;
-    public PosterImage!:string;
-    public MovieReleaseDate!:number;
-    public Categories!:GetCategoryDto;
+    public id!:string;
+    public title!:string;
+    public description!:string;
+    public addedDate!:Date;
+    public vidGuardId!:string;
+    public views!:number;
+    public ppvotes!:number;
+    public downvotes!:number;
+    public posterImageUrl!:string;
+    public categories!:GetCategoryDto;
 }

@@ -18,7 +18,9 @@ namespace MoviesAPI.DAL.Repositories
 
         }
 
-
-
+        public async Task<IEnumerable<Category>> GetAllCategories()
+        {
+            return await moviesDbContext.Categories.ToListAsync();
+        }
     }
 }

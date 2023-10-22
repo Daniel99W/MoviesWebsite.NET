@@ -59,11 +59,11 @@ namespace MoviesAPI.Controllers
 
         [HttpGet]
         [Route(ApiRoutes.MovieRoutes.GetMovieById)]
-        public async Task<IActionResult> GetMovieById(Guid Id)
+        public async Task<IActionResult> GetMovieById(string Id)
         {
             var command = new GetMovieByIdCommand()
             {
-                Id = Id
+                Id = Guid.Parse(Id)
             };
             var result = await mediator.Send(command);
             var mappedResult = mapper.Map<GetMovieDto>(result);
@@ -72,11 +72,11 @@ namespace MoviesAPI.Controllers
 
         [HttpDelete]
         [Route(ApiRoutes.MovieRoutes.DeleteMovieById)]
-        public async Task<IActionResult> DeleteMovieId(Guid Id)
+        public async Task<IActionResult> DeleteMovieId(string Id)
         {
             var command = new DeleteMovieByIdCommand()
             {
-                Id = Id
+                Id = Guid.Parse(Id)
             };
             await mediator.Send(command);
             return Ok();
@@ -99,11 +99,12 @@ namespace MoviesAPI.Controllers
 
         [HttpPatch]
         [Route(ApiRoutes.MovieRoutes.UpdateViewsCounter)]
-        public async Task<IActionResult> UpdateViewsCounter(Guid Id)
+        public async Task<IActionResult> UpdateViewsCounter([FromBody] UpdateViewsCounterDto updateViewsCounterDto)
         {
+            
             var command = new UpdateMovieViewsCounterCommand()
             {
-                Id = Id
+                Id = Guid.Parse(updateViewsCounterDto.Id)
             };
             var result = await mediator.Send(command);
             var mappedResult = mapper.Map<GetMovieDto>(result);

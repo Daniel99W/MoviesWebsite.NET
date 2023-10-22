@@ -9,6 +9,6 @@ namespace MoviesAPI.Core.Interfaces
 {
     public interface IRepositoryCategory : IRepository<Category>
     {
-        
+        public Task<IEnumerable<Category>> GetAllCategories();   
     }
 }
