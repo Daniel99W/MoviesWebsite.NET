@@ -1,0 +1,53 @@
+
+<mat-toolbar class="navbar">
+    <div class="title">
+        <h1>FSOnline</h1>
+    </div>
+    <div class="links">
+        <div class="baseLinks">
+            <a mat-button routerLink="feed">
+                Movies
+            </a>
+            <a mat-button routerLink="about">
+                About
+            </a>
+            <button mat-raised-button [matMenuTriggerFor]="menu"
+            *ngIf="isLoggedIn()"
+            >Admin Menu</button>
+            <mat-menu #menu="matMenu"
+            >
+                <a mat-button
+                (click)="openAddMovieDialog()"
+                >
+                    Add Movie
+                </a>
+                <a mat-button
+                (click)="openMoviesDialog()"
+                >
+                    Edit movies
+                </a>
+            </mat-menu>
+        </div>
+        
+       
+        <div class="securityLinks">
+            <a mat-button routerLink="signUp"
+            *ngIf="!isLoggedIn()"
+            >
+                Sign Up
+            </a>
+            <a mat-button routerLink="login"
+            *ngIf="!isLoggedIn()"
+            >
+                Login
+            </a>
+            <a mat-button (click)="signOut()"
+            *ngIf="isLoggedIn()"
+            >
+                Sign Out
+            </a>
+        </div>
+
+        
+    </div>
+</mat-toolbar>

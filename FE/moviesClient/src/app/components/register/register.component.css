@@ -1,0 +1,59 @@
+
+
+.container
+{
+    position: absolute;
+    display:block;
+    width:30%;
+    height:auto;
+    top:50%;
+    left:50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border:0.2rem solid #2a4471;
+    border-radius: 8px;
+    background-color: #2f3242;
+}
+
+
+
+mat-label
+{
+    color:white;
+}
+
+.container_login .title
+{
+    text-align: center;
+    font-size:1.8rem;
+    color:white;
+    padding-top:2rem;
+    font-weight: bold;
+}
+
+.container .login_inputs
+{
+    width:100%;
+    margin:2rem auto;
+    text-align: center;
+}
+
+.mat-form-field
+{
+    width:75%;
+    font-size:1.2rem;
+    color:white;
+}
+
+.container .login_inputs .email, .password,.name
+{
+    padding:0.5rem;
+    
+}
+
+.danger
+{
+    color:red;
+    font-size:1.2rem;
+    margin:2rem auto;
+}

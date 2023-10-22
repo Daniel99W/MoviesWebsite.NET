@@ -1,0 +1,22 @@
+
+
+
+.container
+{
+    width:90%;
+    margin:0rem auto;
+}
+
+table 
+{
+    width: 99%;
+    margin:0rem auto;
+}
+
+.mat-column-Title,.mat-column-AddedDate,.mat-column-Update,.mat-column-Delete 
+{
+    width:25%;
+    text-align: center;
+}
+
+

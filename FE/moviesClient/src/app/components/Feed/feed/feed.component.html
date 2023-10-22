@@ -1,0 +1,97 @@
+
+
+
+<div class="container">
+    <div class="filters">
+       <div class="searchBar">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input type="text" matInput [formControl]="$any(filterFormGroup().get('Title'))"
+            >
+            <span matSuffix>
+                <mat-icon>
+                    search
+                </mat-icon>
+            </span>
+        </mat-form-field>
+       </div>
+       <div class="movieGenre">
+        <mat-form-field>
+            <mat-label>
+                Movie Genre 
+            </mat-label>
+            <mat-select [formControl]="$any(filterFormGroup()).get('Categories')" multiple>
+                <mat-option *ngFor="let category of categories" [value]="category.Id">
+                    {{category.Name}}
+                </mat-option>
+            </mat-select>   
+        </mat-form-field>
+       </div>
+       <div class="beginReleaseDate">
+        <mat-form-field>
+            <mat-label>Begin release date</mat-label>
+            <select matNativeControl required [formControl]="$any(filterFormGroup().get('BeginReleaseDate'))">
+              <option></option>
+              <option *ngFor="let year of getYears()">{{year}}</option>
+            </select>
+          </mat-form-field>
+       </div>
+       <div class="beginReleaseDate">
+        <mat-form-field>
+            <mat-label>End release date</mat-label>
+            <select matNativeControl required [formControl]="$any(filterFormGroup().get('EndReleaseDate'))">
+              <option></option>
+              <option *ngFor="let year of getYears()">{{year}}</option>
+            </select>
+          </mat-form-field>
+       </div>
+       <div class="actions">
+        <button mat-raised-button (click)="searchMovies()">search</button>
+       </div>
+       
+    </div>
+    <div class="movies">
+       <mat-grid-list [cols]="breakpoint" rowHeight="20rem"  
+       (window:resize)="onResize($event)"
+       gutterSize="1rem">
+            <mat-grid-tile *ngFor="let movie of movies">
+                <mat-card>
+                    <img mat-card-image src="{{movie.PosterImage}}" >
+                    <mat-card-header class="movie_header">
+                        <mat-card-title>
+                          <a [routerLink]="['/movie/',movie.Id]" 
+                          class="titleLink"
+                          
+                          > {{restrictChars(movie.Title)}}
+                            </a>
+                        </mat-card-title>
+                        <mat-card-subtitle>
+                            {{movie.MovieReleaseDate}}
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                </mat-card>
+            </mat-grid-tile>
+            
+       </mat-grid-list>
+    </div>
+    <div class="pagination">
+        <input type="number"  [formControl]="$any(filterFormGroup().get('MoviesPerPage'))" min="1"  placeholder="Movies per page">
+        <button *ngIf="getPrevPage() != null" class="btn"
+        (click) = "searchMovies(getPrevPage()!)"
+        mat-button>
+            Prev Page
+        </button>
+        <button mat-button color="primary" class="btn"
+        *ngFor="let page of counter(getPaginationData!.TotalPages);let j = index"
+        (click) = "searchMovies(page)"
+        >
+        {{j+1}}
+        </button>
+        <button *ngIf="getNextPage() != null" class="btn"
+        (click) = "searchMovies(getNextPage()!)"
+        mat-button>
+            Next Page
+        </button>
+
+    </div>
+</div>

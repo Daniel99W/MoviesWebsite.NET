@@ -1,0 +1,26 @@
+
+
+
+<div class="container">
+    <div class="movie">
+        <div class="title">
+            {{movie.Title}}
+        </div>
+        <iframe [src]="movieURL | safe" width="100%" height="500" type="video/mp4"
+         frameborder="0" scrolling="yes"></iframe>
+         <div class="movieRouter">
+            
+         </div>
+         <app-navbar-movie
+         [_getMovieDto]="movie"
+         >
+
+         </app-navbar-movie>
+         <div class="content">
+            <router-outlet
+            >
+                
+            </router-outlet>
+         </div>
+    </div>
+</div>

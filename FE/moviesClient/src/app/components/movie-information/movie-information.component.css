@@ -1,0 +1,16 @@
+
+
+
+.container
+{
+    display:flexbox;
+    flex-direction:row;
+    background-color: #2f3242;
+    border:0.2rem solid #2a4471;
+    padding:.5rem;
+    margin-top:.5rem;
+    color:#909090;
+}
+
+
+
