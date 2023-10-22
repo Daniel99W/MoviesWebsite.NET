@@ -6,6 +6,11 @@ import { CategoryService } from 'src/app/services/categories/category.service';
 import { MoviesService } from 'src/app/services/movies/movies.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
+import { Utilities } from 'src/app/utilities/Utilities';
+import { FirebaseAuthService } from 'src/app/services/firebaseAuth/firebase-auth.service';
+import jwtDecode from 'jwt-decode';
+import { Token } from '@angular/compiler';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-movie',
@@ -21,12 +26,17 @@ export class MovieComponent implements OnInit
   private _activatedRoute:ActivatedRoute;
   private _videoClone:any;
   private _sanitizer:DomSanitizer;
+  private _fireAuth:FirebaseAuthService;
+  private _isLoggedIn:boolean;
+  private _userService:UsersService;
 
   constructor(moviesService:MoviesService,
     categoriesService:CategoryService,
     activatedRoute:ActivatedRoute,
     firebaseStorage:AngularFireStorage,
-    sanitizer:DomSanitizer
+    sanitizer:DomSanitizer,
+    fireAuth:FirebaseAuthService,
+    userService:UsersService
     ) 
   {
     this._moviesService = moviesService;
@@ -34,6 +44,9 @@ export class MovieComponent implements OnInit
     this._activatedRoute = activatedRoute;
     this._firebaseStorage = firebaseStorage;
     this._sanitizer = sanitizer;
+    this._fireAuth = fireAuth;
+    this._isLoggedIn = false;
+    this._userService = userService;
   }
 
   ngOnInit(): void 
@@ -46,15 +59,18 @@ export class MovieComponent implements OnInit
       .subscribe((res:any) => 
         {
           this._movieGetDto = res;
-          console.log(this._movieGetDto)
         })
       this._moviesService.updateMovieViews(id)
       .subscribe((res:any)=>
       {
-        console.log(res);
       })
       
     })
+    this._fireAuth.isAuthenticated()
+    .subscribe(res => 
+      {
+        this._isLoggedIn = res;
+      })
   }
 
 
@@ -68,6 +84,63 @@ export class MovieComponent implements OnInit
  {
     return this._movieGetDto;
  }
+
+ public formatDate(date:Date)
+ {
+   return Utilities.formatDate(date);
+ }
+
+ public upvoteMovie(movieId:string)
+ {
+   if(this._isLoggedIn)
+   {
+      let token = this._fireAuth.getToken();
+      let tokenDecoded:any = jwtDecode(token!);
+      let firebaseId = tokenDecoded.user_id;
+      this._userService.getUserIdByFirebaseId(firebaseId)
+      .subscribe((res:any) => 
+        {
+          let userId:string = res;
+          this._moviesService.upvoteMovieById(movieId,userId)
+          .subscribe(res => 
+          {
+            console.log(res);
+            this._moviesService.getMovieById(movieId)
+            .subscribe((res:any) => 
+              {
+                this._movieGetDto = res;
+              })
+          });
+        })
+   }
+ }
+
+ public downvoteMovie(movieId:string)
+ {
+  if(this._isLoggedIn)
+   {
+      let token = this._fireAuth.getToken();
+      let tokenDecoded:any = jwtDecode(token!);
+      let firebaseId = tokenDecoded.user_id;
+      this._userService.getUserIdByFirebaseId(firebaseId)
+      .subscribe((res:any) => 
+        {
+          let userId:string = res;
+          this._moviesService.downvoteMovieById(movieId,userId)
+          .subscribe(res => 
+          {
+            console.log(res);
+            this._moviesService.getMovieById(movieId)
+            .subscribe((res:any) => 
+              {
+                this._movieGetDto = res;
+              })
+          });
+        })  
+   }
+ }
+
+ 
 
 
 }

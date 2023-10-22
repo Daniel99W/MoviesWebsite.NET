@@ -45,6 +45,18 @@ namespace MoviesAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route(ApiRoutes.UsersRoutes.GetUserByFirebaseId)]
+        public async Task<IActionResult> GetUserIdByFirebaseId(string Id)
+        {
+            var command = new GetUserByFirebaseIdQuery()
+            {
+                FirebaseId = Id
+            };
+            var result = await mediator.Send(command);
+            return Ok(result);
+        }
+
     }
 
 }

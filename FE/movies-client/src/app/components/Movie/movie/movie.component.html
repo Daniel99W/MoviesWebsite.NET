@@ -12,30 +12,35 @@
             
          </div>
          <div class="content">
-            <div class="upvotes">
-                <div class="upvote">
-
-                </div>
-                <div class="upvotesNumber">
-
-                </div>
-            </div>
-            <div class="downvotes">
-                <div class="downvote">
-
-                </div>
-                <div class="downvotesNumber">
+            <div class="votes">
+                <div class="upvotes">
+                    <div class="upvote">
+                        <mat-icon (click)="upvoteMovie(movie.id)">thumb_up</mat-icon>
+                    </div>
+                    <div class="upvotesNumber">
+                        {{movie.upvotes}}
+                    </div>
                     
                 </div>
+                <div class="downvotes">
+                    <div class="downvote">
+                        <mat-icon (click)="downvoteMovie(movie.id)">thumb_down</mat-icon>
+                    </div>
+                    <div class="downvotesNumber">
+                        {{movie.downvotes}}
+                    </div>
+                </div>
+                
             </div>
             <div class="date">
-
+                      Subbmited on : {{formatDate(movie.addedDate)}}
             </div>
             <div class="views">
-
+                Views:
+                    {{movie.views}}
             </div>
             <div class="description">
-
+                {{movie.description}}
             </div>
          </div>
     </div>

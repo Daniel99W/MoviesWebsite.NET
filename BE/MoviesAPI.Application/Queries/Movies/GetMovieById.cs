@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MoviesAPI.Application.Queries.Movies
 {
-    public class GetMovieByIdCommand : IRequest<GetMovieWithVotesCounted>
+    public class GetMovieById : IRequest<GetMovieWithVotesCounted>
     {
         public Guid Id { get; set; }
     }

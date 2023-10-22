@@ -21,5 +21,14 @@ namespace MoviesAPI.DAL.Repositories
         {
             return await moviesDbContext.Users.ToListAsync();
         }
+
+        public async Task<Guid?> GetUserByFirebaseId(string id)
+        {
+            return await moviesDbContext
+                .Users
+                .Where(u => u.FirebaseId == id)
+                .Select(u => u.Id)
+                .SingleOrDefaultAsync();
+        }
     }
 }

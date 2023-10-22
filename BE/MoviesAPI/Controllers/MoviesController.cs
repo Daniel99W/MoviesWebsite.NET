@@ -61,7 +61,7 @@ namespace MoviesAPI.Controllers
         [Route(ApiRoutes.MovieRoutes.GetMovieById)]
         public async Task<IActionResult> GetMovieById(string Id)
         {
-            var command = new GetMovieByIdCommand()
+            var command = new GetMovieById()
             {
                 Id = Guid.Parse(Id)
             };

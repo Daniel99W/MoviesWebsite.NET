@@ -2,7 +2,7 @@
 {
     public class CreateVotedMovieDto
     {
-        public Guid UserId { get; set; }
-        public Guid MovieId { get; set; }
+        public string UserId { get; set; }
+        public string MovieId { get; set; }
     }
 }

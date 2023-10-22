@@ -24,7 +24,7 @@ export class MoviesComponent implements OnInit
     this._moviesService = moviesService;
     this._movies = new PaginatedResultDto<GetMovieDto>();
     this._displayedColumns = ['Title','Views','AddedDate','Update','Delete'];
-    this._itemsPerPage = 5;
+    this._itemsPerPage = 10;
     this._title = '';
   }
 
@@ -129,10 +129,10 @@ export class MoviesComponent implements OnInit
     return +this._movies.Page + +1;
   }
 
-  public deleteMovie(id:string)
+  public deleteMovie(id:string,vidGuardId:string)
   {
     this._moviesService
-    .deleteMovie(id)
+    .deleteMovie(id,vidGuardId)
     .subscribe(res => 
       {
         this.ngOnInit();

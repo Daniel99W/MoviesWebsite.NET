@@ -116,7 +116,6 @@ export class FeedComponent implements OnInit
     }
     if(movieGenRe != null)
     {
-      console.log(movieGenRe);
       this._getMoviesQueryParams.CategoriesIds = movieGenRe;
     }
     if(beginAddedDate != null)

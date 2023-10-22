@@ -7,6 +7,7 @@
         {
             public const string GetUsers = "GetUsers";
             public const string CreateUser = "CreateUser";
+            public const string GetUserByFirebaseId = $"GetUserIdByFirebaseId/{Id}";
         }
         public static class MovieRoutes
         {
@@ -21,8 +22,8 @@
 
         public static class VotedMoviesRoutes
         {
-            public const string VotedMovieByUserAndMovieID = "VotedMovieByUserAndMovieId";
-            public const string DownVotedMovieByUserAndMovieID = "DownVotedMovieByUserIdAndMovieID";
+            public const string VotedMovieByUserAndMovieID = "VoteMovieByUserAndMovieId";
+            public const string DownVotedMovieByUserAndMovieID = "DownVoteMovieByUserAndMovieID";
         }
         public static class CategoriesRoutes
         {

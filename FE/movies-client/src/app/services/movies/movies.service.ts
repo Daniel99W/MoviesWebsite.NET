@@ -109,8 +109,33 @@ export class MoviesService
     return this._httpClient.patch(environment.api+'/Movies/UpdateViewsCounter',body);
   }
 
-  public deleteMovie(id:string)
+  public deleteMovie(id:string,vidGuardId:string)
   {
-    return this._httpClient.delete(environment.api+'/Movies/DeleteMovieById/'+id);
+      return this._httpClient.get(environment.vidGuardDelete+environment.vidGuardApiKey+'&id='+vidGuardId)
+      .pipe(
+        switchMap((res:any) => 
+          {
+            return this._httpClient.delete(environment.api+'/Movies/DeleteMovieById/'+id)
+          })
+      )
+  }
+
+  public upvoteMovieById(movieId:string,userId:string)
+  {
+    let body = 
+    {
+      MovieId:movieId,
+      userId:userId
+    };
+    return this._httpClient.post(environment.api+"/VotedMovies/VoteMovieByUserAndMovieId",body);
+  }
+  public downvoteMovieById(movieId:string,userId:string)
+  {
+    let body = 
+    {
+      MovieId:movieId,
+      userId:userId
+    };
+    return this._httpClient.post(environment.api+"/VotedMovies/DownVoteMovieByUserAndMovieId",body);
   }
 }

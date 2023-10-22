@@ -41,11 +41,11 @@ export class FirebaseAuthService
 
   public signUp(signUp:SignUpUser):Observable<any>
   {
-    return this._httpClient.post(environment.api+"/Users/SignUp",
+    return this._httpClient.post(environment.api+"/Users/CreateUser",
     {
       Email:signUp.Email,
       Password:signUp.Password,
-      UserName:signUp.UserName
+      Name:signUp.UserName
     });
   }
 

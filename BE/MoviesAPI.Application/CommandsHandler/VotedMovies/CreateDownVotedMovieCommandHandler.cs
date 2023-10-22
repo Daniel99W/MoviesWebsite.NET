@@ -44,6 +44,7 @@ namespace MoviesAPI.Application.CommandsHandler.VotedMovies
             {
                 this.repositoryVotedMovies.Delete(movieIsDownvoted);
                 await this.repositoryVotedMovies.SaveChangesAsync();
+                return Unit.Value;
             }
             if(movieIsUpvoted != null)
             {
@@ -53,7 +54,7 @@ namespace MoviesAPI.Application.CommandsHandler.VotedMovies
                 await this.repositoryVotedMovies.SaveChangesAsync();
                 return Unit.Value;
             }
-            var votedMovie = VotedMovie.CreateVotedMovie(request.UserId, request.MovieId, true, false);
+            var votedMovie = VotedMovie.CreateVotedMovie(request.UserId, request.MovieId, false, true);
             this.repositoryVotedMovies.Create(votedMovie);
             await this.repositoryVotedMovies.SaveChangesAsync();
             return Unit.Value;

@@ -26,20 +26,21 @@ namespace MoviesAPI.Controllers
         {
             var command = new CreateVotedMovieCommand()
             {
-                UserId = createVotedMovieDto.UserId,
-                MovieId = createVotedMovieDto.MovieId,
+                UserId = Guid.Parse(createVotedMovieDto.UserId),
+                MovieId = Guid.Parse(createVotedMovieDto.MovieId)
             };
             await this.mediator.Send(command);
             return Ok();
         }
+
         [HttpPost]
         [Route(ApiRoutes.VotedMoviesRoutes.DownVotedMovieByUserAndMovieID)]
         public async Task<IActionResult> DownVotedMovieByUserAndMovieId([FromBody] CreateVotedMovieDto createVotedMovieDto)
         {
             var command = new CreateDownVotedMovieCommand()
             {
-                UserId = createVotedMovieDto.UserId,
-                MovieId = createVotedMovieDto.MovieId,
+                UserId = Guid.Parse(createVotedMovieDto.UserId),
+                MovieId = Guid.Parse(createVotedMovieDto.MovieId)
             };
             await this.mediator.Send(command);
             return Ok();

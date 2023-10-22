@@ -11,7 +11,7 @@ export class GetMovieDto
     public addedDate!:Date;
     public vidGuardId!:string;
     public views!:number;
-    public ppvotes!:number;
+    public upvotes!:number;
     public downvotes!:number;
     public posterImageUrl!:string;
     public categories!:GetCategoryDto;

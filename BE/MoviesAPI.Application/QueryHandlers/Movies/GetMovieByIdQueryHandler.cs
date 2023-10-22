@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MoviesAPI.Application.QueryHandlers.Movies
 {
-    public class GetMovieByIdQueryHandler : IRequestHandler<GetMovieByIdCommand, GetMovieWithVotesCounted>
+    public class GetMovieByIdQueryHandler : IRequestHandler<GetMovieById, GetMovieWithVotesCounted>
     {
         private IRepositoryMovie repositoryMovie;
         private IRepositoryVotedMovies repositoryVotedMovies;
@@ -24,7 +24,7 @@ namespace MoviesAPI.Application.QueryHandlers.Movies
             this.repositoryMovie = repositoryMovie;
             this.repositoryVotedMovies = repositoryVotedMovies;
         } 
-        public async Task<GetMovieWithVotesCounted> Handle(GetMovieByIdCommand request, CancellationToken cancellationToken)
+        public async Task<GetMovieWithVotesCounted> Handle(GetMovieById request, CancellationToken cancellationToken)
         {
             var movie = await this.repositoryMovie.Read(request.Id);
             if(movie == null)
