@@ -30,19 +30,18 @@
        <div class="beginReleaseDate">
         <mat-form-field>
             <mat-label>Submitted begin date</mat-label>
-            <select matNativeControl required [formControl]="$any(filterFormGroup().get('BeginReleaseDate'))">
-              <option></option>
-              <option *ngFor="let year of getYears()">{{year}}</option>
-            </select>
+            <mat-form-field>
+                <mat-label>Submitted end date</mat-label>
+                    <input type="date" matInput [formControl]="$any(filterFormGroup().get('EndReleaseDate'))"
+                    >
+              </mat-form-field>
           </mat-form-field>
        </div>
        <div class="beginReleaseDate">
         <mat-form-field>
             <mat-label>Submitted end date</mat-label>
-            <select matNativeControl required [formControl]="$any(filterFormGroup().get('EndReleaseDate'))">
-              <option></option>
-              <option *ngFor="let year of getYears()">{{year}}</option>
-            </select>
+                <input type="date" matInput [formControl]="$any(filterFormGroup().get('EndReleaseDate'))"
+                >
           </mat-form-field>
        </div>
        <div class="actions">

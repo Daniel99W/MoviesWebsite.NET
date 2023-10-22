@@ -47,8 +47,8 @@ export class FeedComponent implements OnInit
       {
         Title:new FormControl(),
         Categories:new FormControl(),
-        BeginReleaseDate:new FormControl(),
-        EndReleaseDate:new FormControl(),
+        SubmittedBeginDate:new FormControl(),
+        SubmittedEndDate:new FormControl(),
         MoviesPerPage:new FormControl()
       });
   }
@@ -89,8 +89,8 @@ export class FeedComponent implements OnInit
     this._filterForm.get('MoviesPerPage')?.setValue(null);
     this._getMoviesQueryParams.Title = '';
     this._getMoviesQueryParams.CategoriesIds = [];
-    this._getMoviesQueryParams.BeginReleaseDate = 1990;
-    this._getMoviesQueryParams.EndReleaseDate = new Date().getFullYear();
+    this._getMoviesQueryParams.BeginAddedDate = new Date();
+    this._getMoviesQueryParams.EndAddedDate = new Date();
   }
 
   public getMovie(id:string)
@@ -103,8 +103,8 @@ export class FeedComponent implements OnInit
   {
     let title = this._filterForm.get('Title')?.value;
     let movieGenRe = this._filterForm.get('Categories')?.value;
-    let beginReleaseDate = this._filterForm.get('BeginReleaseDate')?.value;
-    let endReleaseDate = this._filterForm.get('EndReleaseDate')?.value;
+    let beginAddedDate = this._filterForm.get('SubmittedBeginDate')?.value;
+    let endAddedDate = this._filterForm.get('SubmittedBeginDate')?.value;
     if(title != null)
     {
       this._getMoviesQueryParams.Title = title;
@@ -114,13 +114,13 @@ export class FeedComponent implements OnInit
       console.log(movieGenRe);
       this._getMoviesQueryParams.CategoriesIds = movieGenRe;
     }
-    if(beginReleaseDate != null)
+    if(beginAddedDate != null)
     {
-      this._getMoviesQueryParams.BeginReleaseDate = beginReleaseDate;
+      this._getMoviesQueryParams.BeginAddedDate = beginAddedDate;
     }
-    if(endReleaseDate != null)
+    if(endAddedDate != null)
     {
-      this._getMoviesQueryParams.EndReleaseDate = endReleaseDate;
+      this._getMoviesQueryParams.EndAddedDate = endAddedDate;
     }
     if(this._filterForm.get('MoviesPerPage')?.value != null)
     {

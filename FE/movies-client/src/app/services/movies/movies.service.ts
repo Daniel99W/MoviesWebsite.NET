@@ -36,6 +36,7 @@ export class MoviesService
     {
       params = params.append('CategoriesIds',getMoviesQueryParametersDto.CategoriesIds.join(', '));
     }
+    
     return this._httpClient.get(environment.api+'/Movies/GetMovies',{params:params});
   }
 
