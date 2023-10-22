@@ -9,6 +9,7 @@ import { GetMoviesQueryParametersDto } from 'src/app/dtos/GetMoviesQueryParamete
 import { PaginatedResultDto } from 'src/app/dtos/PaginatedResultDto';
 import { CategoryService } from 'src/app/services/categories/category.service';
 import { MoviesService } from 'src/app/services/movies/movies.service';
+import { Utilities } from 'src/app/utilities/Utilities';
 
 @Component({
   selector: 'app-feed',
@@ -47,8 +48,8 @@ export class FeedComponent implements OnInit
       {
         Title:new FormControl(),
         Categories:new FormControl(),
-        SubmittedBeginDate:new FormControl(),
-        SubmittedEndDate:new FormControl(),
+        BeginAddedDate:new FormControl(),
+        EndAddedDate:new FormControl(),
         MoviesPerPage:new FormControl()
       });
   }
@@ -84,13 +85,13 @@ export class FeedComponent implements OnInit
       })
     this._filterForm.get('Title')?.setValue(null);
     this._filterForm.get('Categories')?.setValue(null);
-    this._filterForm.get('BeginReleaseDate')?.setValue(null);
-    this._filterForm.get('EndReleaseDate')?.setValue(null);
+    this._filterForm.get('BeginAddedDate')?.setValue(null);
+    this._filterForm.get('EndAddedDate')?.setValue(null);
     this._filterForm.get('MoviesPerPage')?.setValue(null);
     this._getMoviesQueryParams.Title = '';
     this._getMoviesQueryParams.CategoriesIds = [];
-    this._getMoviesQueryParams.BeginAddedDate = new Date();
-    this._getMoviesQueryParams.EndAddedDate = new Date();
+    this._getMoviesQueryParams.BeginAddedDate = undefined;
+    this._getMoviesQueryParams.EndAddedDate = undefined;
   }
 
   public getMovie(id:string)
@@ -98,13 +99,17 @@ export class FeedComponent implements OnInit
     this._router.navigate(['movie',id]);
   }
 
+  public formatDate(date:Date)
+  {
+    return Utilities.formatDate(date);
+  }
 
   public searchMovies(page:number = 1)
   {
     let title = this._filterForm.get('Title')?.value;
     let movieGenRe = this._filterForm.get('Categories')?.value;
-    let beginAddedDate = this._filterForm.get('SubmittedBeginDate')?.value;
-    let endAddedDate = this._filterForm.get('SubmittedBeginDate')?.value;
+    let beginAddedDate = this._filterForm.get('BeginAddedDate')?.value;
+    let endAddedDate = this._filterForm.get('EndAddedDate')?.value;
     if(title != null)
     {
       this._getMoviesQueryParams.Title = title;
@@ -130,22 +135,11 @@ export class FeedComponent implements OnInit
     this.ngOnInit();
   }
 
-  public getYears():Array<number>
-  {
-    let years = new Array<number>();
-    for(let i = 1990;i<new Date().getFullYear();++i)
-    {
-      years.push(i);
-    }
-    return years;
-  }
-
 
   public get categories()
   {
     return this._categories;
   }
-
 
   public filterFormGroup():FormGroup
   {

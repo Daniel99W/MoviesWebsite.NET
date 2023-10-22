@@ -7,8 +7,8 @@ export class GetMoviesQueryParametersDto
     Page!:number;
     Title:string;
     CategoriesIds!:string[];
-    BeginAddedDate:Date;
-    EndAddedDate:Date;
+    BeginAddedDate:Date|undefined;
+    EndAddedDate:Date|undefined;
 
     constructor()
     {
@@ -16,7 +16,7 @@ export class GetMoviesQueryParametersDto
         this.Page = 1;
         this.CategoriesIds = [];
         this.Title = '';
-        this.BeginAddedDate = new Date();
-        this.EndAddedDate = new Date();
+        this.BeginAddedDate = undefined;
+        this.EndAddedDate = undefined;
     }
 }

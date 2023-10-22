@@ -36,7 +36,6 @@ export class MoviesComponent implements OnInit
       this._movies.Page = res.page;
       this._movies.Results = res.results;
       this._movies.TotalPages = res.totalPages;
-        console.log(this._movies);
       })
   }
 

@@ -17,9 +17,6 @@
     padding:.5rem 0rem;
 }
 
-.filters 
-{
-}
 
 .filters .title mat-label
 {
@@ -83,6 +80,12 @@ img
     height:14rem;
 }
 
+.addedDate
+{
+    color:white;
+    font-size:1.5rem;
+}
+
 .filters 
 {
     display:flex;
@@ -90,18 +93,14 @@ img
     justify-content:space-evenly;
 }
 
-.filters .searchBar mat-label, .movieGenre mat-label, .beginReleaseDate mat-label
+.filters .searchBar mat-label, .movieGenre mat-label
 {
     color:white;
     font-weight: 600;
     font-size:1.1rem;
 }
 
-.filters .beginReleaseDate option 
-{
-    background-color: #131720;
-    color:white;
-}
+
 
 .actions button 
 {

@@ -27,20 +27,17 @@
             </mat-select>   
         </mat-form-field>
        </div>
-       <div class="beginReleaseDate">
+       <div class="BeginAddedDate">
         <mat-form-field>
-            <mat-label>Submitted begin date</mat-label>
-            <mat-form-field>
-                <mat-label>Submitted end date</mat-label>
-                    <input type="date" matInput [formControl]="$any(filterFormGroup().get('EndReleaseDate'))"
-                    >
-              </mat-form-field>
+            <mat-label class="addedDate">Begin added date</mat-label>
+            <input type="date" matInput [formControl]="$any(filterFormGroup().get('BeginAddedDate'))"
+            >
           </mat-form-field>
        </div>
-       <div class="beginReleaseDate">
+       <div class="EndAddedDate">
         <mat-form-field>
-            <mat-label>Submitted end date</mat-label>
-                <input type="date" matInput [formControl]="$any(filterFormGroup().get('EndReleaseDate'))"
+            <mat-label class="addedDate">End added date</mat-label>
+                <input type="date" matInput [formControl]="$any(filterFormGroup().get('EndAddedDate'))"
                 >
           </mat-form-field>
        </div>
@@ -65,7 +62,7 @@
                             </a>
                         </mat-card-title>
                         <mat-card-subtitle>
-                            {{movie.addedDate}}
+                            {{formatDate(movie.addedDate)}}
                         </mat-card-subtitle>
                     </mat-card-header>
                 </mat-card>

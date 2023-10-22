@@ -36,6 +36,15 @@ export class MoviesService
     {
       params = params.append('CategoriesIds',getMoviesQueryParametersDto.CategoriesIds.join(', '));
     }
+    console.log(getMoviesQueryParametersDto.EndAddedDate);
+    if(getMoviesQueryParametersDto.BeginAddedDate != undefined)
+    {
+      params = params.append("BeginAddedDate",getMoviesQueryParametersDto.BeginAddedDate.toString());
+    }
+    if(getMoviesQueryParametersDto.EndAddedDate != undefined)
+    {
+      params = params.append("EndAddedDate",getMoviesQueryParametersDto.EndAddedDate.toString())
+    }
     
     return this._httpClient.get(environment.api+'/Movies/GetMovies',{params:params});
   }
