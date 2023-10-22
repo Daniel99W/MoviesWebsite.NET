@@ -9,6 +9,6 @@ namespace MoviesAPI.Core.Entities
     public class Category : Base
     {
         public string Name { get; set; }
-        public List<Movie> Movies { get; set; }
+        public List<MovieCategory> Movies { get; set; }
     }
 }

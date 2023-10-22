@@ -18,7 +18,6 @@ namespace MoviesAPI.DAL.Repositories
         {
             return await moviesDbContext
                 .Movies
-                .Include(m => m.VotedMovies)
                 .Where(m => m.VidGuardId == Id)
                 .SingleOrDefaultAsync();
         }
@@ -43,8 +42,8 @@ namespace MoviesAPI.DAL.Repositories
             {
                 movies =
                     movies
-                    .Include(m => m.Categories)
-                    .Where(m => m.Categories.Where(c => categoriesIds.Contains(c.Id)).Any());
+                    .Include(m => m.MovieCategories)
+                    .Where(m => m.MovieCategories.Where(c => categoriesIds.Contains(c.CategoryId)).Any());
             }
 
             if(BeginAddedDate != null && EndAddedDate != null)

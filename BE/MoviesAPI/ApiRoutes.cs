@@ -16,6 +16,13 @@
             public const string DeleteMovieById = $"DeleteMovieById/{Id}";
             public const string GetMoviesByTitle = "GetMoviesByTitle";
             public const string UpdateViewsCounter = $"UpdateViewsCounter/{Id}";
+            public const string UpdateMovieById = $"UpdateMovieById/{Id}";
+        }
+
+        public static class VotedMoviesRoutes
+        {
+            public const string VotedMovieByUserAndMovieID = "VotedMovieByUserAndMovieId";
+            public const string DownVotedMovieByUserAndMovieID = "DownVotedMovieByUserIdAndMovieID";
         }
     }
 }

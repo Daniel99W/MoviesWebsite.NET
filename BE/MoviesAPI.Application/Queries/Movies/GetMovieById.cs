@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MoviesAPI.Application.Responses;
 using MoviesAPI.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MoviesAPI.Application.Queries.Movies
 {
-    public class GetMovieById : IRequest<Movie?>
+    public class GetMovieByIdCommand : IRequest<GetMovieWithVotesCounted>
     {
         public Guid Id { get; set; }
     }

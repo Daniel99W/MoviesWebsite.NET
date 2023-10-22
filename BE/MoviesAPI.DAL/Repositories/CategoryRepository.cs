@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MiNET.Net;
 using MoviesAPI.Core.Entities;
 using MoviesAPI.Core.Interfaces;
 using System;
@@ -17,12 +18,7 @@ namespace MoviesAPI.DAL.Repositories
 
         }
 
-        public async Task<IEnumerable<Category>> GetCategoriesByGuidList(List<Guid> categoryIds)
-        {
-            return await this.moviesDbContext
-                .Categories
-                .Where(c => categoryIds.Contains(c.Id))
-                .ToListAsync();
-        }
+
+
     }
 }

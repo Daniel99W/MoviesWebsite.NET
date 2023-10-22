@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesAPI.DAL;
 
@@ -10,9 +11,11 @@ using MoviesAPI.DAL;
 namespace MoviesAPI.DAL.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    partial class MoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231021230150_AddMovieCategoriesName")]
+    partial class AddMovieCategoriesName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,14 +165,14 @@ namespace MoviesAPI.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<bool>("Downvote")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("Downvote")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("MovieId")
                         .HasColumnType("char(36)");
 
-                    b.Property<bool>("Upvote")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("Upvote")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");

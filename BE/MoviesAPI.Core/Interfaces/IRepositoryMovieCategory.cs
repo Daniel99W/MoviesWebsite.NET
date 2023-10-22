@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MoviesAPI.Core.Interfaces
 {
-    public interface IRepositoryCategory : IRepository<Category>
+    public interface IRepositoryMovieCategory : IRepository<MovieCategory>
     {
-        
+        public Task DeleteMovieCategoriesByMovieId(Guid movieId);
     }
 }

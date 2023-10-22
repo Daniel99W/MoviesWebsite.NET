@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MoviesAPI.Application.Queries.Movies;
+using MoviesAPI.Application.Responses;
 using MoviesAPI.Core.Entities;
 using MoviesAPI.Core.Interfaces;
 using MoviesAPI.Dtos;
@@ -11,23 +12,47 @@ using System.Threading.Tasks;
 
 namespace MoviesAPI.Application.QueryHandlers.Movies
 {
-    public class GetMoviesQueryHandler : IRequestHandler<GetAllMoviesQuery, Pagination<Movie>>
+    public class GetMoviesQueryHandler : IRequestHandler<GetAllMoviesQuery, Pagination<GetMovieWithVotesCounted>>
     {
-        private IRepositoryMovie movieRepository;
-        public GetMoviesQueryHandler(IRepositoryMovie repositoryMovie) 
+        private IRepositoryMovie repositoryMovie;
+        private IRepositoryVotedMovies repositoryVotedMovies;
+        public GetMoviesQueryHandler(IRepositoryMovie repositoryMovie,
+            IRepositoryVotedMovies repositoryVotedMovies
+            ) 
         {
-            this.movieRepository = repositoryMovie;
+            this.repositoryMovie = repositoryMovie;
+            this.repositoryVotedMovies = repositoryVotedMovies;
         }
-        public async Task<Pagination<Movie>> Handle(GetAllMoviesQuery request, CancellationToken cancellationToken)
+        public async Task<Pagination<GetMovieWithVotesCounted>> Handle(GetAllMoviesQuery request, CancellationToken cancellationToken)
         {
-            var movies = await this.movieRepository.GetMovies(
-                request.ItemsPerPage,
-                request.Page,
-                request.Title,
+            Pagination<Movie> moviesPaginated =
+                await repositoryMovie.GetMovies(request.ItemsPerPage,
+                request.Page,request.Title,
                 request.CategoriesIds,
                 request.BeginAddedDate,
                 request.EndAddedDate);
-            return movies;
+
+            Pagination<GetMovieWithVotesCounted> movieWithVotesPaginated =
+                new Pagination<GetMovieWithVotesCounted>();
+            movieWithVotesPaginated.TotalPages = moviesPaginated.TotalPages;
+            movieWithVotesPaginated.Page = moviesPaginated.Page;
+            movieWithVotesPaginated.Results = new List<GetMovieWithVotesCounted>();
+            foreach (var movie in moviesPaginated.Results)
+            {
+                movieWithVotesPaginated.Results.Add(new GetMovieWithVotesCounted()
+                {
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    Description = movie.Description,
+                    AddedDate = movie.AddedDate,
+                    VidGuardId = movie.VidGuardId,
+                    Views = movie.Views,
+                    PosterImageUrl = movie.PosterImageUrl,
+                    Upvotes = await this.repositoryVotedMovies.CountVotesByMovieId(movie.Id),
+                    Downvotes = await this.repositoryVotedMovies.CountDownvotesByMovieId(movie.Id)
+                });
+            }
+            return movieWithVotesPaginated;
         }
     }
 }

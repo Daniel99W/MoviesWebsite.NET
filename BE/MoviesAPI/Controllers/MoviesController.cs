@@ -49,7 +49,8 @@ namespace MoviesAPI.Controllers
                 Description = createMovieDto.Description,
                 AddedDate = createMovieDto.AddedDate,
                 VidGuardId = createMovieDto.VidGuardId,
-                CategoriesIds = createMovieDto.CategoriesIds
+                CategoriesIds = createMovieDto.CategoriesIds,
+                PosterImageUrl = createMovieDto.PosterImageUrl
             };
             var result = await mediator.Send(command);
             var mappedResult = mapper.Map<GetMovieDto>(result);
@@ -60,7 +61,7 @@ namespace MoviesAPI.Controllers
         [Route(ApiRoutes.MovieRoutes.GetMovieById)]
         public async Task<IActionResult> GetMovieById(Guid Id)
         {
-            var command = new GetMovieById()
+            var command = new GetMovieByIdCommand()
             {
                 Id = Id
             };
@@ -108,6 +109,25 @@ namespace MoviesAPI.Controllers
             var mappedResult = mapper.Map<GetMovieDto>(result);
             return Ok(mappedResult);
         }
+
+        [HttpPatch]
+        [Route(ApiRoutes.MovieRoutes.UpdateMovieById)]
+        public async Task<IActionResult> UpdateMoviesById(Guid Id, [FromBody] UpdateMovieById updateMovieById)
+        {
+            var command = new UpdateMovieByIdCommand()
+            {
+                Id = Id,
+                Title = updateMovieById.Title,
+                Description = updateMovieById.Description,
+                CategoriesIds = updateMovieById.CategoriesIds
+            };
+            var result = await mediator.Send(command);
+            var mappedResult = mapper.Map<GetMovieDto>(result);
+            return Ok(mappedResult);
+        }
+
+
+
 
 
 

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesAPI.DAL;
 
@@ -10,14 +11,31 @@ using MoviesAPI.DAL;
 namespace MoviesAPI.DAL.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    partial class MoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231021223139_AddedPosterImageUrl")]
+    partial class AddedPosterImageUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("CategoryMovie", b =>
+                {
+                    b.Property<Guid>("CategoriesId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("MoviesId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("CategoriesId", "MoviesId");
+
+                    b.HasIndex("MoviesId");
+
+                    b.ToTable("CategoryMovie");
+                });
 
             modelBuilder.Entity("MoviesAPI.Core.Entities.Category", b =>
                 {
@@ -112,27 +130,6 @@ namespace MoviesAPI.DAL.Migrations
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("MoviesAPI.Core.Entities.MovieCategory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("MoviesCategories");
-                });
-
             modelBuilder.Entity("MoviesAPI.Core.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -162,14 +159,14 @@ namespace MoviesAPI.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<bool>("Downvote")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("Downvote")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("MovieId")
                         .HasColumnType("char(36)");
 
-                    b.Property<bool>("Upvote")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("Upvote")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
@@ -181,6 +178,21 @@ namespace MoviesAPI.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("VotedMovies");
+                });
+
+            modelBuilder.Entity("CategoryMovie", b =>
+                {
+                    b.HasOne("MoviesAPI.Core.Entities.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoviesAPI.Core.Entities.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MoviesAPI.Core.Entities.Comment", b =>
@@ -221,25 +233,6 @@ namespace MoviesAPI.DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MoviesAPI.Core.Entities.MovieCategory", b =>
-                {
-                    b.HasOne("MoviesAPI.Core.Entities.Category", "Category")
-                        .WithMany("Movies")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoviesAPI.Core.Entities.Movie", "Movie")
-                        .WithMany("MovieCategories")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Movie");
-                });
-
             modelBuilder.Entity("MoviesAPI.Core.Entities.VotedMovie", b =>
                 {
                     b.HasOne("MoviesAPI.Core.Entities.Movie", "Movie")
@@ -259,16 +252,9 @@ namespace MoviesAPI.DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MoviesAPI.Core.Entities.Category", b =>
-                {
-                    b.Navigation("Movies");
-                });
-
             modelBuilder.Entity("MoviesAPI.Core.Entities.Movie", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("MovieCategories");
 
                     b.Navigation("Users");
 

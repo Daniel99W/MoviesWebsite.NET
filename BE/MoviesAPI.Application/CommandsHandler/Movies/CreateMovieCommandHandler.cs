@@ -14,32 +14,46 @@ namespace MoviesAPI.Application.CommandsHandler.Movies
     {
         private IRepositoryMovie repositoryMovie;
         private IRepositoryCategory repositoryCategory;
-        public CreateMovieCommandHandler(IRepositoryMovie repositoryMovie,IRepositoryCategory repositoryCategory)
+        private IRepositoryMovieCategory repositoryMovieCategory;
+        public CreateMovieCommandHandler(
+            IRepositoryMovie repositoryMovie,
+            IRepositoryCategory repositoryCategory,
+            IRepositoryMovieCategory repositoryMovieCategory
+            )
         {
             this.repositoryMovie = repositoryMovie;
             this.repositoryCategory = repositoryCategory;
+            this.repositoryMovieCategory = repositoryMovieCategory;
         }
         public async Task<Movie> Handle(CreateMovieCommand request, CancellationToken cancellationToken)
         {
-            var movieExist = this.repositoryMovie.GetMovieByVidGuardId(request.VidGuardId);
+            var movieExist = await this.repositoryMovie.GetMovieByVidGuardId(request.VidGuardId);
             if (movieExist != null)
             {
                 throw new HttpRequestException("This movie already exist in database");
-            }
-
-            List<Category> categories =
-                (await repositoryCategory.GetCategoriesByGuidList(request.CategoriesIds)).ToList();
-            
+            } 
             var movie =
                 Movie.CreateMovie(request.Title,
                 request.Description,
                 request.AddedDate,
                 request.VidGuardId,
-                categories
+                request.PosterImageUrl
                 );
+            List<MovieCategory> moviesCategories = new List<MovieCategory>();
+            foreach (var categoryId in request.CategoriesIds)
+            {
+                moviesCategories.Add(new MovieCategory()
+                {
+                    MovieId = movie.Id,
+                    CategoryId = categoryId
+                });
+            }
+            movie.MovieCategories = moviesCategories;
             this.repositoryMovie.Create(movie);
             await this.repositoryMovie.SaveChangesAsync();
             return movie;
         }
+
+
     }
 }
