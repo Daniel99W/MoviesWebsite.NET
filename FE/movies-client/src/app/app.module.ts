@@ -31,10 +31,7 @@ import {MatGridListModule} from '@angular/material/grid-list'
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import { SafePipe } from './pipes/SafePipe';
-import { MovieDescriptionComponent } from './components/movie-description/movie-description.component';
-import { MovieInformationComponent } from './components/movie-information/movie-information.component';
-import { MovieTrailerComponent } from './components/movie-trailer/movie-trailer.component';
-import { NavbarMovieComponent } from './components/navbar-movie/navbar-movie.component';
+
 import { MoviesComponent } from './components/movies/movies.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -54,10 +51,6 @@ import {MatTableModule} from '@angular/material/table';
     NavbarComponent,
     AddMovieComponent,
     SafePipe,
-    MovieDescriptionComponent,
-    MovieInformationComponent,
-    MovieTrailerComponent,
-    NavbarMovieComponent,
     MoviesComponent,
     UserProfileComponent,
     NotificationsComponent

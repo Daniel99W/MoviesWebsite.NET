@@ -15,38 +15,13 @@
                 />
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Trailer Link</mat-label>
-                <input type="text" matInput 
-                [formControl]="$any(getCreateMovieForm()).get('trailerLink')"
-                >
-            </mat-form-field>
-            <mat-form-field>
                 <mat-label>Description</mat-label>
                 <textarea type="text" matInput 
                 [formControl]="$any(getCreateMovieForm()).get('description')"
                 >
                 </textarea>
             </mat-form-field>
-            <mat-form-field>
-                <mat-label>Languages </mat-label>
-                <mat-select >
-                    <mat-option 
-                    (onSelectionChange)="changeLanguage($event)"
-                    *ngFor="let language of getLanguagesKeys()" [value]="language">
-                      {{language}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Subtitle</mat-label>
-                <mat-select >
-                    <mat-option 
-                    (onSelectionChange)="changeSubtitle($event)"
-                    *ngFor="let language of getLanguagesKeys()" [value]="language">
-                      {{language}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+
             <div class="fileInput">
                 <mat-label>Movie:</mat-label>
                 <input type="file" (change)="onFileSelected($event)">
@@ -58,12 +33,6 @@
             <mat-form-field>
                 <mat-label>Added date for the movie</mat-label>
                 <input type="date"  matInput [formControl]="$any(getCreateMovieForm()).get('addedDate')">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Movie release date</mat-label>
-                <input type="number" min="1990" max="getCurrentYear()" step="1" value="2016"
-                
-                matInput [formControl]="$any(getCreateMovieForm()).get('movieReleaseDate')">
             </mat-form-field>
             <mat-form-field>
                 <mat-label>

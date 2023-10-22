@@ -45,10 +45,8 @@ export class AddMovieComponent implements OnInit
     this._createMovieForm = new FormGroup(
       {
         title:new FormControl('',[Validators.required]),
-        trailerLink:new FormControl(''),
         description:new FormControl('',[Validators.required]),
         addedDate:new FormControl('',[Validators.required]),
-        movieReleaseDate:new FormControl('',[Validators.required]),
         categories:new FormControl('')
       })
     this._categoriesService = categoriesService;
@@ -70,29 +68,9 @@ export class AddMovieComponent implements OnInit
     return this._createMovieForm;
   }
 
-  public getLanguagesKeys()
-  {
-    return Object.keys(Languages);
-  }
-
   public getCurrentYear()
   {
     return new Date().getFullYear();
-  }
-
-  public languages():Languages
-  {
-    return this._languages;
-  }
-
-  public changeLanguage($event:any)
-  {
-    this._selectedLanguage = $event.source.value;
-  }
-
-  public changeSubtitle($event:any)
-  {
-    this._selectedSubtitle = $event.source.value;
   }
 
   public onFileSelected($event:any)
@@ -123,10 +101,6 @@ export class AddMovieComponent implements OnInit
     createMovieDto.Title = this._createMovieForm.get('title')?.value;
     createMovieDto.Description = this._createMovieForm.get('description')?.value;
     createMovieDto.AddedDate = this._createMovieForm.get('addedDate')?.value;
-    createMovieDto.TrailerLink = this._createMovieForm.get('trailerLink')?.value;
-    createMovieDto.MovieReleaseDate = this._createMovieForm.get('movieReleaseDate')?.value;
-    createMovieDto.Language = this._selectedLanguage;
-    createMovieDto.Subtitle = this._selectedSubtitle;
     createMovieDto.CategoriesIds = this._createMovieForm.get('categories')?.value;
     this._movieService
     .addMovie(createMovieDto,this._movieFile,this._moviePoster)
