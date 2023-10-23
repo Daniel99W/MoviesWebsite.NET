@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs';
 import { env } from 'process';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { GetMoviesQueryParametersDto } from 'src/app/dtos/GetMoviesQueryParametersDto';
+import { UpdateMovieDto } from 'src/app/dtos/UpdateMovieDto';
 
 @Injectable({
   providedIn: 'root'
@@ -137,5 +138,25 @@ export class MoviesService
       userId:userId
     };
     return this._httpClient.post(environment.api+"/VotedMovies/DownVoteMovieByUserAndMovieId",body);
+  }
+
+  public addMovieToFavorite(movieId:string,userId:string)
+  {
+    let body = 
+    {
+      UserId:userId,
+      MovieId:movieId
+    }
+    return this._httpClient.post(environment.api+"/FavoriteMovies/AddMovieToFavoriteList",body)
+  }
+
+  public updateMovieById(updateMovieDto:UpdateMovieDto,id:string)
+  {
+    let body = {
+      Title:updateMovieDto.title,
+      Description:updateMovieDto.description,
+      CategoriesIds:updateMovieDto.categoriesIds
+    };
+    return this._httpClient.patch(environment.api+'/Movies/UpdateMovieById/'+id,body);
   }
 }

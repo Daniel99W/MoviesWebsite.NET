@@ -35,8 +35,8 @@ import { SafePipe } from './pipes/SafePipe';
 import { MoviesComponent } from './components/movies/movies.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
 import {MatTableModule} from '@angular/material/table';
+import { UpdateMovieComponent } from './components/update-movie/update-movie.component';;
 
 
 
@@ -53,7 +53,7 @@ import {MatTableModule} from '@angular/material/table';
     SafePipe,
     MoviesComponent,
     UserProfileComponent,
-    NotificationsComponent
+    UpdateMovieComponent
   ],
   imports: [
     BrowserModule,

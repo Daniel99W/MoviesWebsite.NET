@@ -41,7 +41,6 @@ namespace MoviesAPI.Controllers
                 Password = createUserDto.Password
             };
             var result = await mediator.Send(command);
-           
             return Ok(result);
         }
 

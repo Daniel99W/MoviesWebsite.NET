@@ -31,18 +31,13 @@
 
 .votes 
 {
-    width:15%;
+    width:23%;
     display:flex;
     justify-content:space-between;
+
 }
 
-.upvotes 
-{
-    display:flex;
-    justify-content:space-around;
-}
-
-.downvotes
+.upvotes,.downvotes,.addToFavorite
 {
     display:flex;
     justify-content:space-around;
@@ -51,16 +46,26 @@
 .votes .upvotes .upvote,.upvotesNumber
 {
     color:green;
-    padding:.2rem;
+    padding:0rem .2rem;
 }
 
 .votes .downvotes .downvote,.downvotesNumber
 {
-    color:red;
-    padding:.2rem;
+    color:#960018;
+    padding:0rem .2rem;
+}
+
+.addToFavorite 
+{
+    padding:0rem .6rem;
 }
 
 .date, .views 
 {
     color:white;
+}
+
+.movieRed
+{
+    color:#960018;
 }

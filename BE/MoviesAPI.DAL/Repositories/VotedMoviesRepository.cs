@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoviesAPI.Core.Entities;
 using MoviesAPI.Core.Interfaces;
-using MoviesAPI.DAL.Migrations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MoviesAPI.DAL.Repositories
 {

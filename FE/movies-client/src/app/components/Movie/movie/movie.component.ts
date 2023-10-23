@@ -11,6 +11,8 @@ import { FirebaseAuthService } from 'src/app/services/firebaseAuth/firebase-auth
 import jwtDecode from 'jwt-decode';
 import { Token } from '@angular/compiler';
 import { UsersService } from 'src/app/services/users/users.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-movie',
@@ -27,6 +29,7 @@ export class MovieComponent implements OnInit
   private _videoClone:any;
   private _sanitizer:DomSanitizer;
   private _fireAuth:FirebaseAuthService;
+  private _snackBar:MatSnackBar;
   private _isLoggedIn:boolean;
   private _userService:UsersService;
 
@@ -36,7 +39,8 @@ export class MovieComponent implements OnInit
     firebaseStorage:AngularFireStorage,
     sanitizer:DomSanitizer,
     fireAuth:FirebaseAuthService,
-    userService:UsersService
+    userService:UsersService,
+    snackBar:MatSnackBar
     ) 
   {
     this._moviesService = moviesService;
@@ -47,6 +51,7 @@ export class MovieComponent implements OnInit
     this._fireAuth = fireAuth;
     this._isLoggedIn = false;
     this._userService = userService;
+    this._snackBar = snackBar;
   }
 
   ngOnInit(): void 
@@ -113,6 +118,14 @@ export class MovieComponent implements OnInit
           });
         })
    }
+   else 
+   {
+    this._snackBar.open("U have to be logged In to like this video",'close',
+    {
+      duration:3000,
+      verticalPosition:'top'
+    });
+   }
  }
 
  public downvoteMovie(movieId:string)
@@ -138,9 +151,49 @@ export class MovieComponent implements OnInit
           });
         })  
    }
+   else 
+   {
+    this._snackBar.open("U have to be logged In to like this video",'close',
+    {
+      duration:3000,
+      verticalPosition:'top'
+    });
+   }
  }
 
- 
+ public addToFavorite(movieId:string)
+ {
+  if(this._isLoggedIn)
+  {
+     let token = this._fireAuth.getToken();
+     let tokenDecoded:any = jwtDecode(token!);
+     let firebaseId = tokenDecoded.user_id;
+     this._userService.getUserIdByFirebaseId(firebaseId)
+     .subscribe((res:any) => 
+       {
+         let userId:string = res;
+         this._moviesService.addMovieToFavorite(movieId,userId)
+         .subscribe(res => 
+         {
+           console.log(res);
+           this._moviesService.getMovieById(movieId)
+           .subscribe((res:any) => 
+             {
+               this._movieGetDto = res;
+             })
+         });
+       })  
+      }
+  {
+    this._snackBar.open("U have to be logged In to like this video",'close',
+    {
+      duration:3000,
+      verticalPosition:'top'
+    });
+  }
+ }
+
+
 
 
 }

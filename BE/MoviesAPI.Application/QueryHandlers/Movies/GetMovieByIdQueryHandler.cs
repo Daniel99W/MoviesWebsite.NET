@@ -1,14 +1,8 @@
 ﻿using MediatR;
 using MoviesAPI.Application.Queries.Movies;
 using MoviesAPI.Application.Responses;
-using MoviesAPI.Core.Entities;
 using MoviesAPI.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MoviesAPI.Application.QueryHandlers.Movies
 {
@@ -16,13 +10,15 @@ namespace MoviesAPI.Application.QueryHandlers.Movies
     {
         private IRepositoryMovie repositoryMovie;
         private IRepositoryVotedMovies repositoryVotedMovies;
+        private IRepositoryFavoriteMovie repositoryFavoriteMovie;
         public GetMovieByIdQueryHandler(IRepositoryMovie repositoryMovie,
-            IRepositoryVotedMovies repositoryVotedMovies
-            
+            IRepositoryVotedMovies repositoryVotedMovies,
+            IRepositoryFavoriteMovie repositoryFavoriteMovie
             )
         {
             this.repositoryMovie = repositoryMovie;
             this.repositoryVotedMovies = repositoryVotedMovies;
+            this.repositoryFavoriteMovie = repositoryFavoriteMovie;
         } 
         public async Task<GetMovieWithVotesCounted> Handle(GetMovieById request, CancellationToken cancellationToken)
         {
@@ -41,6 +37,7 @@ namespace MoviesAPI.Application.QueryHandlers.Movies
                 AddedDate = movie.AddedDate,
                 Downvotes = await this.repositoryVotedMovies.CountDownvotesByMovieId(movie.Id),
                 Upvotes = await this.repositoryVotedMovies.CountVotesByMovieId(movie.Id),
+                Likes = await this.repositoryFavoriteMovie.GetMovieNumberOfAddedToFavorite(movie.Id),
                 PosterImageUrl = movie.PosterImageUrl
             };
             return getMovieWithVotesCounted;

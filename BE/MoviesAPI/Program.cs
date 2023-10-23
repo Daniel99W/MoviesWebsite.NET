@@ -20,6 +20,7 @@ builder.Services.AddScoped<IRepositoryMovie, MovieRepository>();
 builder.Services.AddScoped<IRepositoryCategory, CategoryRepository>();
 builder.Services.AddScoped<IRepositoryMovieCategory, MovieCategoryRepository>();
 builder.Services.AddScoped<IRepositoryVotedMovies, VotedMoviesRepository>();
+builder.Services.AddScoped<IRepositoryFavoriteMovie, FavoriteMovieRepository>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateUserCommand).Assembly));
 builder.Services.AddHealthChecks();

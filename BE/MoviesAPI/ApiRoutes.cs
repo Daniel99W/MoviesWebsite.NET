@@ -19,7 +19,6 @@
             public const string UpdateViewsCounter = "UpdateViewsCounter";
             public const string UpdateMovieById = $"UpdateMovieById/{Id}";
         }
-
         public static class VotedMoviesRoutes
         {
             public const string VotedMovieByUserAndMovieID = "VoteMovieByUserAndMovieId";
@@ -28,6 +27,10 @@
         public static class CategoriesRoutes
         {
             public const string GetCategories = "GetCategories";
+        }
+        public static class FavoriteMoviesRoutes
+        {
+            public const string AddMovieToFavoriteList = "AddMovieToFavoriteList";
         }
     }
 }

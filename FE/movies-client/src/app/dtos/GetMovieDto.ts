@@ -1,4 +1,3 @@
-import { Languages } from "../enums/Languages";
 import { GetCategoryDto } from "./GetCategoryDto";
 
 
@@ -12,6 +11,7 @@ export class GetMovieDto
     public vidGuardId!:string;
     public views!:number;
     public upvotes!:number;
+    public likes!:number;
     public downvotes!:number;
     public posterImageUrl!:string;
     public categories!:GetCategoryDto;

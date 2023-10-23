@@ -6,7 +6,6 @@ import { ErrMessages } from 'src/app/constants/ErrMessages';
 import { Messages } from 'src/app/constants/Messages';
 import { CreateMovieDto } from 'src/app/dtos/CreateMovieDto';
 import { GetCategoryDto } from 'src/app/dtos/GetCategoryDto';
-import { Languages } from 'src/app/enums/Languages';
 import { CategoryService } from 'src/app/services/categories/category.service';
 import { MoviesService } from 'src/app/services/movies/movies.service';
 
@@ -21,14 +20,11 @@ export class AddMovieComponent implements OnInit
   private _movieService:MoviesService;
   private _dialogRef:MatDialogRef<AddMovieComponent>
   private _createMovieForm:FormGroup;
-  private _languages!:Languages;
-  private _selectedLanguage:any;
   private _movieFile:any;
   private _categoriesService:CategoryService;
   private _moviePoster:any;
   private _snackBar:MatSnackBar;
   private _isFileUploaded:boolean;
-  private _selectedSubtitle:any;
   private _categories!:GetCategoryDto[];
 
   constructor(

@@ -18,16 +18,23 @@
                         <mat-icon (click)="upvoteMovie(movie.id)">thumb_up</mat-icon>
                     </div>
                     <div class="upvotesNumber">
-                        {{movie.upvotes}}
+                        {{movie.upvotes}} 
                     </div>
                     
                 </div>
+                /
                 <div class="downvotes">
                     <div class="downvote">
                         <mat-icon (click)="downvoteMovie(movie.id)">thumb_down</mat-icon>
                     </div>
                     <div class="downvotesNumber">
                         {{movie.downvotes}}
+                    </div>
+                </div>
+                <div class="addToFavorite movieRed">
+                    <mat-icon (click)="addToFavorite(movie.id)">favorite</mat-icon>
+                    <div class="likesNumber">
+                        {{movie.likes}}
                     </div>
                 </div>
                 

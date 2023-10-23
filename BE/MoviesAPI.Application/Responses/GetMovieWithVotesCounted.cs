@@ -15,6 +15,7 @@ namespace MoviesAPI.Application.Responses
         public int Views { get; set; }
         public int Upvotes { get; set; }
         public int Downvotes { get; set; }
+        public int Likes { get; set; }
         public DateTime AddedDate { get; set; }
         public string VidGuardId { get; set; }
 

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { GetMovieDto } from 'src/app/dtos/GetMovieDto';
 import { PaginatedResultDto } from 'src/app/dtos/PaginatedResultDto';
 import { MoviesService } from 'src/app/services/movies/movies.service';
 import { Constants } from 'src/app/utilities/Constants';
 import { Utilities } from 'src/app/utilities/Utilities';
+import { UpdateMovieComponent } from '../update-movie/update-movie.component';
 
 @Component({
   selector: 'app-movies',
@@ -17,15 +19,17 @@ export class MoviesComponent implements OnInit
   private _displayedColumns:string[]
   private _itemsPerPage:number;
   private _title:string;
+  private _matDialog:MatDialog;
 
 
-  constructor(moviesService:MoviesService) 
+  constructor(moviesService:MoviesService,matDialog:MatDialog) 
   {
     this._moviesService = moviesService;
     this._movies = new PaginatedResultDto<GetMovieDto>();
     this._displayedColumns = ['Title','Views','AddedDate','Update','Delete'];
     this._itemsPerPage = 10;
     this._title = '';
+    this._matDialog = matDialog;
   }
 
   ngOnInit(): void 
@@ -48,6 +52,15 @@ export class MoviesComponent implements OnInit
       this._movies.Page = res.Page;
       this._movies.Results = res.Results;
       this._movies.TotalPages = res.TotalPages;
+    })
+  }
+
+  public updateMovie(movieId:string)
+  {
+    this._matDialog.open(UpdateMovieComponent,{
+      data:{movieId:movieId},
+      height:'51rem',
+      width:'51rem'
     })
   }
 

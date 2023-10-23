@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Application.Commands.VotedMovies;
-using MoviesAPI.Core.Entities;
 using MoviesAPI.Dtos.VotedMovies;
 
 namespace MoviesAPI.Controllers

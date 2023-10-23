@@ -18,13 +18,16 @@ namespace MoviesAPI.Application.QueryHandlers.Movies
     {
         private IRepositoryMovie repositoryMovie;
         private IRepositoryVotedMovies repositoryVotedMovies;
+        private IRepositoryFavoriteMovie repositoryFavoriteMovie;
 
         public GetMoviesByTitleQueryHandler(IRepositoryMovie repositoryMovie,
-            IRepositoryVotedMovies movieVotedMovies
+            IRepositoryVotedMovies movieVotedMovies,
+            IRepositoryFavoriteMovie repositoryFavoriteMovie
             )
         {
             this.repositoryMovie = repositoryMovie;
             this.repositoryVotedMovies = movieVotedMovies;
+            this.repositoryFavoriteMovie = repositoryFavoriteMovie;
         }
 
         public async Task<Pagination<GetMovieWithVotesCounted>> Handle(GetMoviesByTitleQuery request, CancellationToken cancellationToken)
@@ -49,7 +52,8 @@ namespace MoviesAPI.Application.QueryHandlers.Movies
                     Views = movie.Views,
                     PosterImageUrl = movie.PosterImageUrl,
                     Upvotes = await this.repositoryVotedMovies.CountVotesByMovieId(movie.Id),
-                    Downvotes = await this.repositoryVotedMovies.CountDownvotesByMovieId(movie.Id)
+                    Downvotes = await this.repositoryVotedMovies.CountDownvotesByMovieId(movie.Id),
+                    Likes = await this.repositoryFavoriteMovie.GetMovieNumberOfAddedToFavorite(movie.Id)
                 });
             }
             return movieWithVotesPaginated;

@@ -1,4 +1,5 @@
-﻿using MoviesAPI.Dtos.VotedMovies;
+﻿using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using MoviesAPI.Dtos.VotedMovies;
 
 namespace MoviesAPI.Dtos.Movies
 {
@@ -10,6 +11,7 @@ namespace MoviesAPI.Dtos.Movies
         public string PosterImageUrl { get; set; }
         public int Views { get; set; }
         public int Upvotes { get; set; }
+        public int Likes { get; set; }
         public int Downvotes { get; set; }
         public DateTime AddedDate { get; set; }
         public string VidGuardId { get; set; }
