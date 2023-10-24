@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using MoviesAPI.Dtos.Categories;
 using MoviesAPI.Dtos.VotedMovies;
 
 namespace MoviesAPI.Dtos.Movies
@@ -15,5 +16,6 @@ namespace MoviesAPI.Dtos.Movies
         public int Downvotes { get; set; }
         public DateTime AddedDate { get; set; }
         public string VidGuardId { get; set; }
+        public List<GetCategoryDto> Categories { get; set; }
     }
 }

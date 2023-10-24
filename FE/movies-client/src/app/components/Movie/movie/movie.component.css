@@ -1,12 +1,9 @@
-
-
 .movie
 {
-    width:45%;
+    width:55%;
     height:50%;
     margin:2rem auto;
 }
-
 
 .title 
 {
@@ -18,7 +15,7 @@
 
 .description 
 {
-    margin-top:2rem;
+    margin-top:.1rem;
     color:white;
 }
 
@@ -68,4 +65,22 @@
 .movieRed
 {
     color:#960018;
+}
+
+.categories
+{
+    margin-top:.9rem;
+}
+
+.category
+{
+    color:white;
+    display:inline;
+    background-color: #960018;
+    border:1px solid gray;
+    padding:.5rem;
+    margin-left:0rem;
+    margin-right:.5rem;
+    border-radius: 7%;
+    font-size:1.1rem;
 }

@@ -11,14 +11,17 @@ namespace MoviesAPI.Application.QueryHandlers.Movies
         private IRepositoryMovie repositoryMovie;
         private IRepositoryVotedMovies repositoryVotedMovies;
         private IRepositoryFavoriteMovie repositoryFavoriteMovie;
+        private IRepositoryMovieCategory repositoryMovieCategory;
         public GetMovieByIdQueryHandler(IRepositoryMovie repositoryMovie,
             IRepositoryVotedMovies repositoryVotedMovies,
-            IRepositoryFavoriteMovie repositoryFavoriteMovie
+            IRepositoryFavoriteMovie repositoryFavoriteMovie,
+            IRepositoryMovieCategory repositoryMovieCategory
             )
         {
             this.repositoryMovie = repositoryMovie;
             this.repositoryVotedMovies = repositoryVotedMovies;
             this.repositoryFavoriteMovie = repositoryFavoriteMovie;
+            this.repositoryMovieCategory = repositoryMovieCategory;
         } 
         public async Task<GetMovieWithVotesCounted> Handle(GetMovieById request, CancellationToken cancellationToken)
         {
@@ -38,7 +41,8 @@ namespace MoviesAPI.Application.QueryHandlers.Movies
                 Downvotes = await this.repositoryVotedMovies.CountDownvotesByMovieId(movie.Id),
                 Upvotes = await this.repositoryVotedMovies.CountVotesByMovieId(movie.Id),
                 Likes = await this.repositoryFavoriteMovie.GetMovieNumberOfAddedToFavorite(movie.Id),
-                PosterImageUrl = movie.PosterImageUrl
+                PosterImageUrl = movie.PosterImageUrl,
+                Categories = await this.repositoryMovieCategory.GetMovieCategoriesByMovieId(movie.Id),
             };
             return getMovieWithVotesCounted;
         }

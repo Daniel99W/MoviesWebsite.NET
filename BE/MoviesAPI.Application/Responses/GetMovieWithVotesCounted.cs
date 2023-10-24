@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoviesAPI.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ namespace MoviesAPI.Application.Responses
         public int Likes { get; set; }
         public DateTime AddedDate { get; set; }
         public string VidGuardId { get; set; }
+        public List<Category> Categories { get; set; }
 
     }
 }

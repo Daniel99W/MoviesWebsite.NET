@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MoviesAPI.Application.Queries.Movies
 {
-    public class GetAllMoviesQuery : IRequest<Pagination<GetMovieWithVotesCounted>>
+    public class GetAllMoviesQuery : IRequest<Pagination<Movie>>
     {
         public int ItemsPerPage { get; set; }
         public int Page { get; set; }

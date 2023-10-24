@@ -49,6 +49,11 @@
             <div class="description">
                 {{movie.description}}
             </div>
+            <div class="categories">
+                <div class="category" *ngFor="let category of categories">
+                    {{category.name}}
+                </div>
+            </div>
          </div>
     </div>
 </div>

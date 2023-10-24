@@ -19,5 +19,19 @@ namespace MoviesAPI.DAL.Repositories
                 .Where(mc => mc.MovieId == movieId)
                 .ExecuteDeleteAsync();
         }
+
+        public async Task<List<Category>> GetMovieCategoriesByMovieId(Guid movieId)
+        {
+            return await this.moviesDbContext
+                .MoviesCategories
+                .Include(mc => mc.Category)
+                .Where(mc => mc.MovieId == movieId)
+                .Select(mc => new Category()
+                {
+                    Id = mc.CategoryId,
+                    Name = mc.Category.Name
+                })
+                .ToListAsync();
+        }
     }
 }

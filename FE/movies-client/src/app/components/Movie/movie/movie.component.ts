@@ -63,6 +63,7 @@ export class MovieComponent implements OnInit
       this._moviesService.getMovieById(id)
       .subscribe((res:any) => 
         {
+          console.log(res);
           this._movieGetDto = res;
         })
       this._moviesService.updateMovieViews(id)
@@ -90,6 +91,11 @@ export class MovieComponent implements OnInit
     return this._movieGetDto;
  }
 
+ public get categories()
+ {
+  return this._movieGetDto.categories;
+ }
+
  public formatDate(date:Date)
  {
    return Utilities.formatDate(date);
@@ -113,6 +119,7 @@ export class MovieComponent implements OnInit
             this._moviesService.getMovieById(movieId)
             .subscribe((res:any) => 
               {
+                
                 this._movieGetDto = res;
               })
           });
@@ -175,7 +182,6 @@ export class MovieComponent implements OnInit
          this._moviesService.addMovieToFavorite(movieId,userId)
          .subscribe(res => 
          {
-           console.log(res);
            this._moviesService.getMovieById(movieId)
            .subscribe((res:any) => 
              {
@@ -184,6 +190,7 @@ export class MovieComponent implements OnInit
          });
        })  
       }
+  else
   {
     this._snackBar.open("U have to be logged In to like this video",'close',
     {

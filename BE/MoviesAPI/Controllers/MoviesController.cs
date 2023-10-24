@@ -35,7 +35,7 @@ namespace MoviesAPI.Controllers
                 EndAddedDate = getMovieParams.EndAddedDate
             };
             var result = await mediator.Send(query);
-            var mappedResult = mapper.Map<Pagination<GetMovieDto>>(result);
+            var mappedResult = mapper.Map<Pagination<GetMovieFeedDto>>(result);
             return Ok(mappedResult);
         }
 

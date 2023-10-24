@@ -14,5 +14,5 @@ export class GetMovieDto
     public likes!:number;
     public downvotes!:number;
     public posterImageUrl!:string;
-    public categories!:GetCategoryDto;
+    public categories!:Array<GetCategoryDto>;
 }

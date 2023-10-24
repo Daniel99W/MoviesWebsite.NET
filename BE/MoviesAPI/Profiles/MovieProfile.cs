@@ -10,8 +10,9 @@ namespace MoviesAPI.Profiles
         public MovieProfile()
         {
             CreateMap<Movie, GetMovieDto>().ReverseMap();
+            CreateMap<Movie, GetMovieFeedDto>().ReverseMap();
             CreateMap<Pagination<Movie>, Pagination<GetMovieDto>>();
-            
+            CreateMap<Pagination<Movie>, Pagination<GetMovieFeedDto>>();
         }
     }
 }
