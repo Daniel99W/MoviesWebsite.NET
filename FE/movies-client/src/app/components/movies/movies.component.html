@@ -23,6 +23,15 @@
 
         </div>
     </div> -->
+    <div class="search">
+        <div class="searchByTitle">
+            <mat-form-field>
+                <mat-label>Search movies by title</mat-label>
+                <input type="text" matInput class="title" [formControl]="titleForm">
+            </mat-form-field>
+        </div>
+     
+    </div>
     <table
     mat-table [dataSource]="movies"
     class="mat-elevation-z8"
@@ -72,6 +81,9 @@
         mat-button>
             Next Page
         </button>
+        <div class="searchButton">
+            <button mat-raised-button (click)="searchMovieByTitle()">SEARCH MOVIES</button>
+        </div>
 
     </div>
 </div>

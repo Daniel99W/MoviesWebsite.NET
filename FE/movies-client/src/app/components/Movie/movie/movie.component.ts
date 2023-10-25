@@ -6,6 +6,7 @@ import { CategoryService } from 'src/app/services/categories/category.service';
 import { MoviesService } from 'src/app/services/movies/movies.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
+import { Meta } from '@angular/platform-browser';
 import { Utilities } from 'src/app/utilities/Utilities';
 import { FirebaseAuthService } from 'src/app/services/firebaseAuth/firebase-auth.service';
 import jwtDecode from 'jwt-decode';
@@ -13,6 +14,9 @@ import { Token } from '@angular/compiler';
 import { UsersService } from 'src/app/services/users/users.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {Title} from '@angular/platform-browser';
+import { TagDto } from 'src/app/dtos/TagDto';
+
 
 @Component({
   selector: 'app-movie',
@@ -32,6 +36,8 @@ export class MovieComponent implements OnInit
   private _snackBar:MatSnackBar;
   private _isLoggedIn:boolean;
   private _userService:UsersService;
+  private _titleService:Title;
+  private _meta:Meta;
 
   constructor(moviesService:MoviesService,
     categoriesService:CategoryService,
@@ -40,7 +46,9 @@ export class MovieComponent implements OnInit
     sanitizer:DomSanitizer,
     fireAuth:FirebaseAuthService,
     userService:UsersService,
-    snackBar:MatSnackBar
+    snackBar:MatSnackBar,
+    title:Title,
+    meta:Meta
     ) 
   {
     this._moviesService = moviesService;
@@ -52,6 +60,8 @@ export class MovieComponent implements OnInit
     this._isLoggedIn = false;
     this._userService = userService;
     this._snackBar = snackBar;
+    this._titleService = title;
+    this._meta = meta;
   }
 
   ngOnInit(): void 
@@ -63,12 +73,19 @@ export class MovieComponent implements OnInit
       this._moviesService.getMovieById(id)
       .subscribe((res:any) => 
         {
-          console.log(res);
           this._movieGetDto = res;
+          this._titleService.setTitle(this._movieGetDto.title);
+          for(let i = 0;i<this._movieGetDto.tags.length; ++i)
+          {
+            let tag = this._movieGetDto.tags[i];
+            this._meta.addTag({keywords:tag.name});
+            console.log(this._movieGetDto.tags);
+          }
         })
       this._moviesService.updateMovieViews(id)
       .subscribe((res:any)=>
       {
+
       })
       
     })

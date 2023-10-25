@@ -1,4 +1,5 @@
 import { GetCategoryDto } from "./GetCategoryDto";
+import { TagDto } from "./TagDto";
 
 
 
@@ -15,4 +16,5 @@ export class GetMovieDto
     public downvotes!:number;
     public posterImageUrl!:string;
     public categories!:Array<GetCategoryDto>;
+    public tags!:Array<TagDto>;
 }

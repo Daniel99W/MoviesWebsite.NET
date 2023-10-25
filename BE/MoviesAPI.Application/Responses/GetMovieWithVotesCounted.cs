@@ -20,6 +20,7 @@ namespace MoviesAPI.Application.Responses
         public DateTime AddedDate { get; set; }
         public string VidGuardId { get; set; }
         public List<Category> Categories { get; set; }
+        public List<Tag> Tags { get; set; }
 
     }
 }

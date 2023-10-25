@@ -19,4 +19,16 @@ table
     text-align: center;
 }
 
+.searchMovieByTitle
+{
+    width:50%;
+    margin:.5rem auto;
+}
+
+.search 
+{
+    display:flex;
+    padding:0rem .5rem;
+}
+
 

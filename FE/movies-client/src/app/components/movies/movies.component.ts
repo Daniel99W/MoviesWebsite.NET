@@ -6,6 +6,7 @@ import { MoviesService } from 'src/app/services/movies/movies.service';
 import { Constants } from 'src/app/utilities/Constants';
 import { Utilities } from 'src/app/utilities/Utilities';
 import { UpdateMovieComponent } from '../update-movie/update-movie.component';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-movies',
@@ -18,7 +19,7 @@ export class MoviesComponent implements OnInit
   private _movies:PaginatedResultDto<GetMovieDto>;
   private _displayedColumns:string[]
   private _itemsPerPage:number;
-  private _title:string;
+  private _title:FormControl;
   private _matDialog:MatDialog;
 
 
@@ -28,13 +29,13 @@ export class MoviesComponent implements OnInit
     this._movies = new PaginatedResultDto<GetMovieDto>();
     this._displayedColumns = ['Title','Views','AddedDate','Update','Delete'];
     this._itemsPerPage = 10;
-    this._title = '';
+    this._title = new FormControl();
     this._matDialog = matDialog;
   }
 
   ngOnInit(): void 
   {
-    this._moviesService.getMoviesByTitle(this._title,this.itemsPerPage,1)
+    this._moviesService.getMoviesByTitle(this._title.value,this.itemsPerPage,1)
     .subscribe((res:any) => 
       {
       this._movies.Page = res.page;
@@ -43,15 +44,16 @@ export class MoviesComponent implements OnInit
       })
   }
 
-  public searchMovieByTitle(page:number)
+  public searchMovieByTitle(page:number = 1)
   {
     this._moviesService
-    .getMoviesByTitle(this._title,this._itemsPerPage,page)
+    .getMoviesByTitle(this._title.value,this._itemsPerPage,page)
     .subscribe((res:any)=>
     {
-      this._movies.Page = res.Page;
-      this._movies.Results = res.Results;
-      this._movies.TotalPages = res.TotalPages;
+      console.log(res);
+      this._movies.Page = res.page;
+      this._movies.Results = res.results;
+      this._movies.TotalPages = res.totalPages;
     })
   }
 
@@ -64,15 +66,9 @@ export class MoviesComponent implements OnInit
     })
   }
 
-
-  public get title()
+  public get titleForm()
   {
     return this._title;
-  }
-
-  public set title(value:string)
-  {
-    this._title = value;
   }
 
   public get itemsPerPage()

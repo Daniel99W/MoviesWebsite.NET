@@ -9,6 +9,7 @@ import { GetMoviesQueryParametersDto } from 'src/app/dtos/GetMoviesQueryParamete
 import { PaginatedResultDto } from 'src/app/dtos/PaginatedResultDto';
 import { CategoryService } from 'src/app/services/categories/category.service';
 import { MoviesService } from 'src/app/services/movies/movies.service';
+import { Constants } from 'src/app/utilities/Constants';
 import { Utilities } from 'src/app/utilities/Utilities';
 
 @Component({
@@ -46,7 +47,7 @@ export class FeedComponent implements OnInit
 
     this._filterForm = new FormGroup(
       {
-        Title:new FormControl(),
+        Title:new FormControl(Validators.maxLength(Constants.inputSearchTitleMaxSize)),
         Categories:new FormControl(),
         BeginAddedDate:new FormControl(),
         EndAddedDate:new FormControl(),

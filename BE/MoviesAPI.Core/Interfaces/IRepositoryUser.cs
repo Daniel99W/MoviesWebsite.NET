@@ -7,6 +7,5 @@ namespace MoviesAPI.Core.Interfaces
     {
         public  Task<IEnumerable<User>> GetAllUsers();
         public  Task<Guid?> GetUserByFirebaseId(string id);
-
     }
 }

@@ -44,6 +44,24 @@
                     </mat-option>
                 </mat-select>   
             </mat-form-field>
+            <div class="tags">
+                <mat-form-field>
+                    <mat-label>
+                        Add a tag
+                    </mat-label>
+                    <input type="text" matInput 
+                     [(ngModel)]="tag"
+                />
+                </mat-form-field>
+   
+                <button (click)="addTag()" mat-raised-button color="accent">Add tag</button>
+                <br>
+                <div class="tag" *ngFor="let tag of tags">
+                    #{{tag.name}}
+                </div>
+               
+            </div>
+       
             
             
         </div>

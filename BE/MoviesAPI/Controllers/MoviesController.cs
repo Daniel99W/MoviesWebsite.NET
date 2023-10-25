@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Application.Commands.Movies;
 using MoviesAPI.Application.Queries.Movies;
+using MoviesAPI.Core.Entities;
 using MoviesAPI.Dtos;
 using MoviesAPI.Dtos.Movies;
 
@@ -43,6 +44,8 @@ namespace MoviesAPI.Controllers
         [Route(ApiRoutes.MovieRoutes.CreateMovie)]
         public async Task<IActionResult> CreateMovie([FromBody] CreateMovieDto createMovieDto)
         {
+            var tags = mapper.Map<List<Tag>>(createMovieDto.Tags);
+
             var command = new CreateMovieCommand()
             {
                 Title = createMovieDto.Title,
@@ -50,7 +53,8 @@ namespace MoviesAPI.Controllers
                 AddedDate = createMovieDto.AddedDate,
                 VidGuardId = createMovieDto.VidGuardId,
                 CategoriesIds = createMovieDto.CategoriesIds,
-                PosterImageUrl = createMovieDto.PosterImageUrl
+                PosterImageUrl = createMovieDto.PosterImageUrl,
+                Tags = tags
             };
             var result = await mediator.Send(command);
             var mappedResult = mapper.Map<GetMovieDto>(result);

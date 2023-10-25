@@ -62,7 +62,7 @@ namespace MoviesAPI.DAL.Repositories
                     movies.Where(m => m.AddedDate <= EndAddedDate);
             }
 
-            return movies.Paginate<Movie>(Page, ItemsPerPage);
+            return movies.Paginate(Page, ItemsPerPage);
         }
 
         public async Task<Pagination<Movie>> GetMoviesByTitle(int ItemsPerPage, int Page, string? Title)
@@ -72,7 +72,7 @@ namespace MoviesAPI.DAL.Repositories
             {
                 movies = movies.Where(m => m.Title.Contains(Title));
             }
-            return await movies.Paginate<Movie>(Page, ItemsPerPage);
+            return await movies.Paginate(Page, ItemsPerPage);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesAPI.DAL;
 
@@ -10,9 +11,11 @@ using MoviesAPI.DAL;
 namespace MoviesAPI.DAL.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    partial class MoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231025110815_AddtagsForEveryMovie")]
+    partial class AddtagsForEveryMovie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,31 +136,13 @@ namespace MoviesAPI.DAL.Migrations
                     b.ToTable("MoviesCategories");
                 });
 
-            modelBuilder.Entity("MoviesAPI.Core.Entities.MovieTag", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("TagId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("MovieTags");
-                });
-
             modelBuilder.Entity("MoviesAPI.Core.Entities.Tag", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("MovieId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
@@ -165,6 +150,8 @@ namespace MoviesAPI.DAL.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
 
                     b.ToTable("Tags");
                 });
@@ -276,23 +263,11 @@ namespace MoviesAPI.DAL.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("MoviesAPI.Core.Entities.MovieTag", b =>
+            modelBuilder.Entity("MoviesAPI.Core.Entities.Tag", b =>
                 {
-                    b.HasOne("MoviesAPI.Core.Entities.Movie", "Movie")
-                        .WithMany("MovieTags")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoviesAPI.Core.Entities.Tag", "Tag")
-                        .WithMany()
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("Tag");
+                    b.HasOne("MoviesAPI.Core.Entities.Movie", null)
+                        .WithMany("Tags")
+                        .HasForeignKey("MovieId");
                 });
 
             modelBuilder.Entity("MoviesAPI.Core.Entities.VotedMovie", b =>
@@ -325,7 +300,7 @@ namespace MoviesAPI.DAL.Migrations
 
                     b.Navigation("MovieCategories");
 
-                    b.Navigation("MovieTags");
+                    b.Navigation("Tags");
 
                     b.Navigation("Users");
 

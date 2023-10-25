@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignUpUser } from 'src/app/dtos/SignUpDto';
 import { FirebaseAuthService } from 'src/app/services/firebaseAuth/firebase-auth.service';
+import { Constants } from 'src/app/utilities/Constants';
 
 @Component({
   selector: 'app-register',
@@ -22,9 +23,9 @@ export class RegisterComponent implements OnInit
   {
     this._firebaseAuthService = firebaseAuthService;
     this._registerForm = new FormGroup({
-      Email:new FormControl('',[Validators.required,Validators.email]),
-      Password:new FormControl('',[Validators.required]),
-      Name:new FormControl('',Validators.required)
+      Email:new FormControl('',[Validators.required,Validators.email,Validators.maxLength(Constants.inputEmailMaxSize)]),
+      Password:new FormControl('',[Validators.required,Validators.maxLength(Constants.inputPasswordMaxSize)]),
+      Name:new FormControl('',[Validators.required,Validators.maxLength(Constants.inputNameMaxSize)])
     })
     this._router = router;
   }

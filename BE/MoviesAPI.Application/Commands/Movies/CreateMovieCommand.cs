@@ -16,5 +16,6 @@ namespace MoviesAPI.Application.Commands.Movies
         public DateTime AddedDate { get; set; }
         public string VidGuardId { get; set; }
         public List<Guid> CategoriesIds { get; set; }
+        public List<Tag> Tags { get; set; }
     }
 }

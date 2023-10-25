@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace MoviesAPI.Core.Entities
 {
@@ -19,6 +14,7 @@ namespace MoviesAPI.Core.Entities
         public List<Comment> Comments { get; set; }
         public List<FavoriteMovie> Users { get; set; }
         public List<VotedMovie> VotedMovies { get; set; }
+        public List<MovieTag> MovieTags { get; set; }
 
         public Movie()
         {

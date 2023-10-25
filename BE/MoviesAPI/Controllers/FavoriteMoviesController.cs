@@ -12,7 +12,7 @@ namespace MoviesAPI.Controllers
     {
         private IMediator mediator;
         private IMapper mapper;
-       
+
         public FavoriteMoviesController(IMapper mapper, IMediator mediator)
         {
             this.mapper = mapper;

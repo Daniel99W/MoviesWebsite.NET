@@ -1,3 +1,4 @@
+import { TagDto } from "./TagDto";
 
 
 
@@ -11,4 +12,5 @@ export class CreateMovieDto
     public PosterImageUrl!:string;
     public VidGuardId!:string;
     public CategoriesIds!:string[]
+    public Tags!:TagDto[];
 }

@@ -6,6 +6,7 @@ import { FirebaseAuthService } from 'src/app/services/firebaseAuth/firebase-auth
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrMessages } from 'src/app/constants/ErrMessages';
+import { Constants } from 'src/app/utilities/Constants';
 
 @Component({
   selector: 'app-login',
@@ -28,8 +29,8 @@ export class LoginComponent implements OnInit
     this._firebaseAuthService = firebaseAuthService;
     this._loginForm = new FormGroup(
       {
-        Email:new FormControl('',[Validators.required,Validators.email]),
-        Password:new FormControl('',[Validators.required])
+        Email:new FormControl('',[Validators.required,Validators.email,Validators.maxLength(Constants.inputEmailMaxSize)]),
+        Password:new FormControl('',[Validators.required,Validators.maxLength(Constants.inputPasswordMaxSize)])
       }
     )
     this._router = router;
