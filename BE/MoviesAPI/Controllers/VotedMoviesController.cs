@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Application.Commands.VotedMovies;
 using MoviesAPI.Dtos.VotedMovies;
@@ -21,6 +22,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPost]
         [Route(ApiRoutes.VotedMoviesRoutes.VotedMovieByUserAndMovieID)]
+        [Authorize]
         public async Task<IActionResult> VoteMovieByUserAndMovieId([FromBody] CreateVotedMovieDto createVotedMovieDto)
         {
             var command = new CreateVotedMovieCommand()
@@ -34,6 +36,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPost]
         [Route(ApiRoutes.VotedMoviesRoutes.DownVotedMovieByUserAndMovieID)]
+        [Authorize]
         public async Task<IActionResult> DownVotedMovieByUserAndMovieId([FromBody] CreateVotedMovieDto createVotedMovieDto)
         {
             var command = new CreateDownVotedMovieCommand()

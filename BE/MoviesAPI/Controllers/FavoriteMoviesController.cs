@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Application.Commands.FavoriteMovies;
 using MoviesAPI.Dtos.FavoriteMovies;
@@ -21,6 +22,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPost]
         [Route(ApiRoutes.FavoriteMoviesRoutes.AddMovieToFavoriteList)]
+        [Authorize]
         public async Task<IActionResult> AddMoviesToFavoriteList([FromBody] CreateFavoriteMovie createFavoriteMovie)
         {
             var command = new CreateFavoriteMovieCommand()

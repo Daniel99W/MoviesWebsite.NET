@@ -1,22 +1,24 @@
 .movie
 {
     width:55%;
-    height:50%;
+    height:55%;
     margin:2rem auto;
+    background-color: #1E222B;
 }
 
 .title 
 {
-    margin:2rem auto;
     font-weight:800;
     font-size:2rem;
     color:white;
+    margin:3rem auto;
 }
 
 .description 
 {
     margin-top:.1rem;
     color:white;
+
 }
 
 .content 
@@ -31,7 +33,6 @@
     width:23%;
     display:flex;
     justify-content:space-between;
-
 }
 
 .upvotes,.downvotes,.addToFavorite

@@ -31,7 +31,7 @@ namespace MoviesAPI.Application.CommandsHandler.Users
             };
             var claims = new Dictionary<string, object>
             {
-                {ClaimTypes.Role, Roles.USER.ToString() }
+                {ClaimTypes.Role, Roles.ADMIN.ToString() }
             };
 
             UserRecord userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(userRecordArgs);

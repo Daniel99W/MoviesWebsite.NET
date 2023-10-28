@@ -3,8 +3,10 @@
 using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using MoviesAPI.Application.Commands.Users;
 using MoviesAPI.Core.Interfaces;
 using MoviesAPI.DAL;
@@ -47,6 +49,23 @@ FirebaseApp.Create(new AppOptions()
     Credential = GoogleCredential.FromFile("moviepiratedweb-firebase-adminsdk-epkfz-9991c3a39a.json")
 });
 
+var audience = builder.Configuration["Authentication:Audience"];
+var validIssuer = builder.Configuration["Authentication:ValidIssuer"];
+
+
+builder.Services
+    .AddAuthentication(options => {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, jwtOptions =>
+    {
+        jwtOptions.Authority = validIssuer;
+        jwtOptions.Audience = audience;
+        jwtOptions.TokenValidationParameters.ValidIssuer = validIssuer;  
+    });
+
 
 
 var app = builder.Build();
@@ -56,7 +75,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+};
 
 //app.UseHttpsRedirection();
 
@@ -64,8 +83,9 @@ app.UseCors("CorsPolicy");
 
 app.UseHealthChecks("/health");
 
-app.UseAuthorization();
-
 app.MapControllers();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

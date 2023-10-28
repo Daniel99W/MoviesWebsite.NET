@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FirebaseAuthService } from 'src/app/services/firebaseAuth/firebase-auth.service';
 import { AddMovieComponent } from '../add-movie/add-movie.component';
 import { MoviesComponent } from '../movies/movies.component';
+import jwtDecode from 'jwt-decode';
 
 @Component({
   selector: 'app-navbar',
@@ -45,15 +46,29 @@ export class NavbarComponent implements OnInit
 
   public openMoviesDialog()
   {
+    if(this._isLoggedIn)
+    {
     this._dialog.open(MoviesComponent,{
       width:'70rem',
       height:'45rem'
     })
+    }
   }
 
   public isLoggedIn():boolean
   {
     return this._isLoggedIn;
+  }
+
+  public isAuthorized(role:string)
+  {
+    let token = this._firebaseAuthService.getToken();
+    let tokenDecoded:any = jwtDecode(token!);
+    if(tokenDecoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == role)
+    {
+      return true;
+    }
+    return false;
   }
 
   public signOut()

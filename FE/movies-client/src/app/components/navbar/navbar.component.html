@@ -12,7 +12,7 @@
                 About
             </a>
             <button mat-raised-button [matMenuTriggerFor]="menu"
-            *ngIf="isLoggedIn()"
+            *ngIf="isLoggedIn() && isAuthorized('ADMIN')" hidden
             >Admin Menu</button>
             <mat-menu #menu="matMenu"
             >

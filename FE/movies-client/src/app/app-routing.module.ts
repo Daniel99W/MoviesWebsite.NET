@@ -24,7 +24,12 @@ const routes: Routes =
   },
   {
     path:'addMovie',
-    component:AddMovieComponent
+    component:AddMovieComponent,
+    canActivate:[AuthGuard],
+    data:
+    {
+      role:'ADMIN'
+    }
   },
   {
     path:'movie/:Id',

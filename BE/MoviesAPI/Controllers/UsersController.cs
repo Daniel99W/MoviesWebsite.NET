@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Application.Commands.Users;
 using MoviesAPI.Application.Queries.Users;
 using MoviesAPI.Dtos.Users;
+using System.Security.Claims;
 
 namespace MoviesAPI.Controllers
 {
@@ -22,6 +24,7 @@ namespace MoviesAPI.Controllers
 
         [HttpGet]
         [Route(ApiRoutes.UsersRoutes.GetUsers)]
+        [Authorize(Roles ="ADMIN")]
         public async Task<IActionResult> GetUsers()
         {
             var query = new GetAllUsersQuery();

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Application.Commands.Movies;
 using MoviesAPI.Application.Queries.Movies;
@@ -42,6 +43,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPost]
         [Route(ApiRoutes.MovieRoutes.CreateMovie)]
+        [Authorize(Roles ="ADMIN")]
         public async Task<IActionResult> CreateMovie([FromBody] CreateMovieDto createMovieDto)
         {
             var tags = mapper.Map<List<Tag>>(createMovieDto.Tags);
@@ -76,6 +78,7 @@ namespace MoviesAPI.Controllers
 
         [HttpDelete]
         [Route(ApiRoutes.MovieRoutes.DeleteMovieById)]
+        [Authorize(Roles ="ADMIN")]
         public async Task<IActionResult> DeleteMovieId(string Id)
         {
             var command = new DeleteMovieByIdCommand()
@@ -88,6 +91,7 @@ namespace MoviesAPI.Controllers
 
         [HttpGet]
         [Route(ApiRoutes.MovieRoutes.GetMoviesByTitle)]
+        [Authorize(Roles ="ADMIN")]
         public async Task<IActionResult> GetMoviesByTitle([FromQuery] GetMoviesByTitleParams getMoviesByTitleParams)
         {
             var query = new GetMoviesByTitleQuery()
@@ -117,6 +121,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPatch]
         [Route(ApiRoutes.MovieRoutes.UpdateMovieById)]
+        [Authorize(Roles ="ADMIN")]
         public async Task<IActionResult> UpdateMoviesById(Guid Id, [FromBody] UpdateMovieById updateMovieById)
         {
             var command = new UpdateMovieByIdCommand()
