@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreateMovieDto } from 'src/app/dtos/CreateMovieDto';
 import { environment } from 'src/environments/environment';
@@ -7,6 +7,7 @@ import { env } from 'process';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { GetMoviesQueryParametersDto } from 'src/app/dtos/GetMoviesQueryParametersDto';
 import { UpdateMovieDto } from 'src/app/dtos/UpdateMovieDto';
+import { FirebaseAuthService } from '../firebaseAuth/firebase-auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,16 @@ export class MoviesService
 {
   private _httpClient:HttpClient;
   private _angularFireStorage:AngularFireStorage;
+  private _firebaseAuth:FirebaseAuthService;
 
   constructor(httpClient:HttpClient,
-    angularFireStorage:AngularFireStorage
+    angularFireStorage:AngularFireStorage,
+    firebaseAuthService:FirebaseAuthService
     ) 
   {
     this._httpClient = httpClient;
     this._angularFireStorage = angularFireStorage;
+    this._firebaseAuth = firebaseAuthService;
   }
 
   public getMovies(getMoviesQueryParametersDto:GetMoviesQueryParametersDto)
@@ -58,6 +62,11 @@ export class MoviesService
     formData.append('key',environment.vidGuardApiKey);
     let imageName:string = moviePoster.name;
     let imageNameWithoutExtension:string = imageName.split('.')[0];
+    let headers = new HttpHeaders();
+    if(this._firebaseAuth.getToken()!= null)
+    {
+      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
+    }
     //call asyncron, va fi triggeruit cand requestul este completat si vine un raspuns, non blocking
     return this._httpClient.get(environment.vidGuardUpload+environment.vidGuardApiKey)
     .pipe(
@@ -74,7 +83,7 @@ export class MoviesService
           let imageNameWithId = imageNameWithoutExtension + id;
           this._angularFireStorage.upload(imageNameWithId,moviePoster);
           createMovieDto.PosterImageUrl = imageNameWithId;
-          return this._httpClient.post(environment.api+'/Movies/CreateMovie',createMovieDto);
+          return this._httpClient.post(environment.api+'/Movies/CreateMovie',createMovieDto,{headers:headers});
         })
     )
   }
@@ -98,7 +107,12 @@ export class MoviesService
     {
       params = params.append('Title',title);
     }
-    return this._httpClient.get(environment.api+'/Movies/GetMoviesByTitle',{params:params});
+    let headers = new HttpHeaders();
+    if(this._firebaseAuth.getToken()!= null)
+    {
+      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
+    }
+    return this._httpClient.get(environment.api+'/Movies/GetMoviesByTitle',{params:params,headers:headers});
   }
 
   public updateMovieViews(id:string)
@@ -112,11 +126,16 @@ export class MoviesService
 
   public deleteMovie(id:string,vidGuardId:string)
   {
+    let headers = new HttpHeaders();
+    if(this._firebaseAuth.getToken()!= null)
+    {
+      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
+    }
       return this._httpClient.get(environment.vidGuardDelete+environment.vidGuardApiKey+'&id='+vidGuardId)
       .pipe(
         switchMap((res:any) => 
           {
-            return this._httpClient.delete(environment.api+'/Movies/DeleteMovieById/'+id)
+            return this._httpClient.delete(environment.api+'/Movies/DeleteMovieById/'+id,{headers:headers})
           })
       )
   }
@@ -128,7 +147,12 @@ export class MoviesService
       MovieId:movieId,
       userId:userId
     };
-    return this._httpClient.post(environment.api+"/VotedMovies/VoteMovieByUserAndMovieId",body);
+    let headers = new HttpHeaders();
+    if(this._firebaseAuth.getToken()!= null)
+    {
+      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
+    }
+    return this._httpClient.post(environment.api+"/VotedMovies/VoteMovieByUserAndMovieId",body,{headers:headers});
   }
   public downvoteMovieById(movieId:string,userId:string)
   {
@@ -137,7 +161,13 @@ export class MoviesService
       MovieId:movieId,
       userId:userId
     };
-    return this._httpClient.post(environment.api+"/VotedMovies/DownVoteMovieByUserAndMovieId",body);
+    let headers = new HttpHeaders();
+    if(this._firebaseAuth.getToken()!= null)
+    {
+      console.log(this._firebaseAuth.getToken())
+      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
+    }
+    return this._httpClient.post(environment.api+"/VotedMovies/DownVoteMovieByUserAndMovieId",body,{headers:headers});
   }
 
   public addMovieToFavorite(movieId:string,userId:string)
@@ -147,7 +177,12 @@ export class MoviesService
       UserId:userId,
       MovieId:movieId
     }
-    return this._httpClient.post(environment.api+"/FavoriteMovies/AddMovieToFavoriteList",body)
+    let headers = new HttpHeaders();
+    if(this._firebaseAuth.getToken() != null)
+    {
+      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
+    }
+    return this._httpClient.post(environment.api+"/FavoriteMovies/AddMovieToFavoriteList",body,{headers:headers})
   }
 
   public updateMovieById(updateMovieDto:UpdateMovieDto,id:string)
@@ -157,6 +192,11 @@ export class MoviesService
       Description:updateMovieDto.description,
       CategoriesIds:updateMovieDto.categoriesIds
     };
-    return this._httpClient.patch(environment.api+'/Movies/UpdateMovieById/'+id,body);
+    let headers = new HttpHeaders();
+    if(this._firebaseAuth.getToken()!= null)
+    {
+      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
+    }
+    return this._httpClient.patch(environment.api+'/Movies/UpdateMovieById/'+id,body,{headers:headers});
   }
 }
