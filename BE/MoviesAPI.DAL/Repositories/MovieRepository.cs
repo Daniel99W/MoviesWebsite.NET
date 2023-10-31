@@ -14,6 +14,14 @@ namespace MoviesAPI.DAL.Repositories
 
         }
 
+        public async Task<Movie?> GetMovieByTitle(string Title)
+        {
+            return await this.moviesDbContext
+                .Movies
+                .Where(m => m.Title == Title)
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<Movie?> GetMovieByVidGuardId(string Id)
         {
             return await moviesDbContext

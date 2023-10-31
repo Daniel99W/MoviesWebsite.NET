@@ -21,13 +21,15 @@ namespace MoviesAPI.Application.CommandsHandler.Movies
         private IRepositoryMovieCategory repositoryMovieCategory;
         private IRepositoryTag repositoryTag;
         private IRepositoryMovieTag repositoryMovieTag;
+        private IRepositoryUser repositoryUser;
 
         public CreateMovieCommandHandler(
             IRepositoryMovie repositoryMovie,
             IRepositoryCategory repositoryCategory,
             IRepositoryMovieCategory repositoryMovieCategory,
             IRepositoryTag repositoryTag,
-            IRepositoryMovieTag repositoryMovieTag
+            IRepositoryMovieTag repositoryMovieTag,
+            IRepositoryUser repositoryUser
             )
         {
             this.repositoryMovie = repositoryMovie;
@@ -35,20 +37,34 @@ namespace MoviesAPI.Application.CommandsHandler.Movies
             this.repositoryMovieCategory = repositoryMovieCategory;
             this.repositoryTag = repositoryTag;
             this.repositoryMovieTag = repositoryMovieTag;
+            this.repositoryUser = repositoryUser;
         }
         public async Task<Movie> Handle(CreateMovieCommand request, CancellationToken cancellationToken)
         {
             var movieExist = await this.repositoryMovie.GetMovieByVidGuardId(request.VidGuardId);
+            var movieExistByTitle = await this.repositoryMovie.GetMovieByTitle(request.Title);
+            var userId = await this.repositoryUser.GetUserByFirebaseId(request.FirebaseId);
             if (movieExist != null)
             {
                 throw new HttpRequestException("This movie already exist in database");
             }
+            if(userId == null)
+            {
+                throw new HttpRequestException("This user does not exist in database");
+            }
+            if(movieExistByTitle != null)
+            {
+                throw new HttpRequestException("This movie title already exist, choose another one");
+            }
+            var user = await this.repositoryUser.Read((Guid)userId);
             var movie =
                 Movie.CreateMovie(request.Title,
                 request.Description,
                 request.AddedDate,
                 request.VidGuardId,
-                request.PosterImageUrl
+                request.PosterImageUrl,
+                request.PosterImageUrlGif,
+                user!.Id
                 );
             AddCategoriesToMovie(request.CategoriesIds, movie);
             

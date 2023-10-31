@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace MoviesAPI.Application.Queries.Movies
 {
-    public class GetMovieById : IRequest<GetMovieWithVotesCounted>
+    public class GetMovieByTitle : IRequest<GetMovieWithVotesCounted>
     {
-        public Guid Id { get; set; }
+        public string Title { get; set; }
     }
 }

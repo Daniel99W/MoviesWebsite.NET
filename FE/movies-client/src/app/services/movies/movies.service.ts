@@ -17,6 +17,7 @@ export class MoviesService
   private _httpClient:HttpClient;
   private _angularFireStorage:AngularFireStorage;
   private _firebaseAuth:FirebaseAuthService;
+  private _headers:HttpHeaders;
 
   constructor(httpClient:HttpClient,
     angularFireStorage:AngularFireStorage,
@@ -26,6 +27,11 @@ export class MoviesService
     this._httpClient = httpClient;
     this._angularFireStorage = angularFireStorage;
     this._firebaseAuth = firebaseAuthService;
+    this._headers = new HttpHeaders();
+    if(this._firebaseAuth.getToken() != null)
+    {
+      this._headers = this._headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
+    }
   }
 
   public getMovies(getMoviesQueryParametersDto:GetMoviesQueryParametersDto)
@@ -41,7 +47,6 @@ export class MoviesService
     {
       params = params.append('CategoriesIds',getMoviesQueryParametersDto.CategoriesIds.join(', '));
     }
-    console.log(getMoviesQueryParametersDto.EndAddedDate);
     if(getMoviesQueryParametersDto.BeginAddedDate != undefined)
     {
       params = params.append("BeginAddedDate",getMoviesQueryParametersDto.BeginAddedDate.toString());
@@ -54,7 +59,7 @@ export class MoviesService
     return this._httpClient.get(environment.api+'/Movies/GetMovies',{params:params});
   }
 
-  public addMovie(createMovieDto:CreateMovieDto,movieFile:any,moviePoster:any)
+  public addMovie(createMovieDto:CreateMovieDto,movieFile:any,moviePoster:any,moviePosterGif:any)
   {
     
     let formData = new FormData();
@@ -62,11 +67,9 @@ export class MoviesService
     formData.append('key',environment.vidGuardApiKey);
     let imageName:string = moviePoster.name;
     let imageNameWithoutExtension:string = imageName.split('.')[0];
-    let headers = new HttpHeaders();
-    if(this._firebaseAuth.getToken()!= null)
-    {
-      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
-    }
+    let gifName:string = moviePosterGif.name;
+    let gifNameWithoutExtension = gifName.split('.')[0];
+  
     //call asyncron, va fi triggeruit cand requestul este completat si vine un raspuns, non blocking
     return this._httpClient.get(environment.vidGuardUpload+environment.vidGuardApiKey)
     .pipe(
@@ -81,9 +84,12 @@ export class MoviesService
           let id = resJson.result.HashID;
           createMovieDto.VidGuardId = id;
           let imageNameWithId = imageNameWithoutExtension + id;
+          let gifNameWithId = gifNameWithoutExtension + "gif"+id;
           this._angularFireStorage.upload(imageNameWithId,moviePoster);
+          this._angularFireStorage.upload(gifNameWithId,moviePosterGif);
           createMovieDto.PosterImageUrl = imageNameWithId;
-          return this._httpClient.post(environment.api+'/Movies/CreateMovie',createMovieDto,{headers:headers});
+          createMovieDto.PosterImageUrlGif = gifNameWithId;
+          return this._httpClient.post(environment.api+'/Movies/CreateMovie',createMovieDto,{headers:this._headers});
         })
     )
   }
@@ -91,6 +97,11 @@ export class MoviesService
   public getMovieById(id:string)
   {
     return this._httpClient.get(environment.api+'/Movies/GetMovieById/'+id);
+  }
+
+  public getMovieByTitle(title:string)
+  {
+    return this._httpClient.get(environment.api+'/Movies/GetMovieByTitle/'+title);
   }
 
   public getMovieClone(id:string)
@@ -107,12 +118,7 @@ export class MoviesService
     {
       params = params.append('Title',title);
     }
-    let headers = new HttpHeaders();
-    if(this._firebaseAuth.getToken()!= null)
-    {
-      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
-    }
-    return this._httpClient.get(environment.api+'/Movies/GetMoviesByTitle',{params:params,headers:headers});
+    return this._httpClient.get(environment.api+'/Movies/GetMoviesByTitle',{params:params,headers:this._headers});
   }
 
   public updateMovieViews(id:string)
@@ -126,16 +132,11 @@ export class MoviesService
 
   public deleteMovie(id:string,vidGuardId:string)
   {
-    let headers = new HttpHeaders();
-    if(this._firebaseAuth.getToken()!= null)
-    {
-      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
-    }
       return this._httpClient.get(environment.vidGuardDelete+environment.vidGuardApiKey+'&id='+vidGuardId)
       .pipe(
         switchMap((res:any) => 
           {
-            return this._httpClient.delete(environment.api+'/Movies/DeleteMovieById/'+id,{headers:headers})
+            return this._httpClient.delete(environment.api+'/Movies/DeleteMovieById/'+id,{headers:this._headers})
           })
       )
   }
@@ -147,12 +148,7 @@ export class MoviesService
       MovieId:movieId,
       userId:userId
     };
-    let headers = new HttpHeaders();
-    if(this._firebaseAuth.getToken()!= null)
-    {
-      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
-    }
-    return this._httpClient.post(environment.api+"/VotedMovies/VoteMovieByUserAndMovieId",body,{headers:headers});
+    return this._httpClient.post(environment.api+"/VotedMovies/VoteMovieByUserAndMovieId",body,{headers:this._headers});
   }
   public downvoteMovieById(movieId:string,userId:string)
   {
@@ -161,13 +157,7 @@ export class MoviesService
       MovieId:movieId,
       userId:userId
     };
-    let headers = new HttpHeaders();
-    if(this._firebaseAuth.getToken()!= null)
-    {
-      console.log(this._firebaseAuth.getToken())
-      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
-    }
-    return this._httpClient.post(environment.api+"/VotedMovies/DownVoteMovieByUserAndMovieId",body,{headers:headers});
+    return this._httpClient.post(environment.api+"/VotedMovies/DownVoteMovieByUserAndMovieId",body,{headers:this._headers});
   }
 
   public addMovieToFavorite(movieId:string,userId:string)
@@ -177,26 +167,25 @@ export class MoviesService
       UserId:userId,
       MovieId:movieId
     }
-    let headers = new HttpHeaders();
-    if(this._firebaseAuth.getToken() != null)
-    {
-      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
-    }
-    return this._httpClient.post(environment.api+"/FavoriteMovies/AddMovieToFavoriteList",body,{headers:headers})
+    return this._httpClient.post(environment.api+"/FavoriteMovies/AddMovieToFavoriteList",body,{headers:this._headers})
   }
 
   public updateMovieById(updateMovieDto:UpdateMovieDto,id:string)
   {
-    let body = {
+    let body = 
+    {
       Title:updateMovieDto.title,
       Description:updateMovieDto.description,
       CategoriesIds:updateMovieDto.categoriesIds
     };
-    let headers = new HttpHeaders();
-    if(this._firebaseAuth.getToken()!= null)
-    {
-      headers = headers.append('Authorization','Bearer '+this._firebaseAuth.getToken()!);
-    }
-    return this._httpClient.patch(environment.api+'/Movies/UpdateMovieById/'+id,body,{headers:headers});
+    return this._httpClient.patch(environment.api+'/Movies/UpdateMovieById/'+id,body,{headers:this._headers});
+  }
+
+  public getFavoriteMoviesByUserId(userId:string,itemsPerPage:number,page:number)
+  {
+    let params =  new HttpParams();
+    params = params.append('ItemsPerPage',itemsPerPage.toString());
+    params = params.append('Page',page.toString());
+    return this._httpClient.get(environment.api+'/FavoriteMovies/GetFavoriteMoviesByUserId/'+userId,{headers:this._headers})
   }
 }

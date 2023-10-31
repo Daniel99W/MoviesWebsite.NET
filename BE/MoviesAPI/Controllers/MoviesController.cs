@@ -41,6 +41,19 @@ namespace MoviesAPI.Controllers
             return Ok(mappedResult);
         }
 
+        [HttpGet]
+        [Route(ApiRoutes.MovieRoutes.GetMovieById)]
+        public async Task<IActionResult> GetMovieById(string Id)
+        {
+            var query = new GetMovieByIdQuery()
+            {
+                Id = Guid.Parse(Id)
+            };
+            var result = await mediator.Send(query);
+            var mappedResult = this.mapper.Map<GetMovieDto>(result);
+            return Ok(mappedResult);
+        }
+
         [HttpPost]
         [Route(ApiRoutes.MovieRoutes.CreateMovie)]
         [Authorize(Roles ="ADMIN")]
@@ -56,7 +69,9 @@ namespace MoviesAPI.Controllers
                 VidGuardId = createMovieDto.VidGuardId,
                 CategoriesIds = createMovieDto.CategoriesIds,
                 PosterImageUrl = createMovieDto.PosterImageUrl,
-                Tags = tags
+                Tags = tags,
+                PosterImageUrlGif = createMovieDto.PosterImageUrlGif,
+                FirebaseId = createMovieDto.FirebaseId
             };
             var result = await mediator.Send(command);
             var mappedResult = mapper.Map<GetMovieDto>(result);
@@ -64,12 +79,12 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet]
-        [Route(ApiRoutes.MovieRoutes.GetMovieById)]
-        public async Task<IActionResult> GetMovieById(string Id)
+        [Route(ApiRoutes.MovieRoutes.GetMovieByTitle)]
+        public async Task<IActionResult> GetMovieByTitle(string Title)
         {
-            var command = new GetMovieById()
+            var command = new GetMovieByTitle()
             {
-                Id = Guid.Parse(Id)
+                Title = Title
             };
             var result = await mediator.Send(command);
             var mappedResult = mapper.Map<GetMovieDto>(result);

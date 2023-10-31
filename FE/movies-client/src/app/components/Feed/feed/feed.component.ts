@@ -26,7 +26,6 @@ export class FeedComponent implements OnInit
   private _categoriesService:CategoryService;
   private _categories:GetCategoryDto[];
   private _firebaseStorage:AngularFireStorage;
-  private _imageUrl!:string;
   private _filterForm:FormGroup;
   private _router:Router;
 
@@ -47,7 +46,7 @@ export class FeedComponent implements OnInit
 
     this._filterForm = new FormGroup(
       {
-        Title:new FormControl(Validators.maxLength(Constants.inputSearchTitleMaxSize)),
+        Title:new FormControl('',[Validators.maxLength(Constants.inputSearchTitleMaxSize)]),
         Categories:new FormControl(),
         BeginAddedDate:new FormControl(),
         EndAddedDate:new FormControl(),
@@ -63,11 +62,9 @@ export class FeedComponent implements OnInit
        this._movies.TotalPages = res.totalPages;
        this._movies.Page = res.page;
        this._movies.Results = res.results;
-       console.log(this._movies.Results);
         this._movies.Results
         .forEach(movie => 
         {
-          console.log(movie.posterImageUrl);
           this._firebaseStorage
           .storage
           .ref()
@@ -76,6 +73,15 @@ export class FeedComponent implements OnInit
           .then(res => 
             {
               movie.posterImageUrl = res;
+              this._firebaseStorage
+              .storage
+              .ref(movie.posterImageUrlGif)
+              .getDownloadURL()
+              .then(res => 
+                {
+                  movie.posterImageUrlGif = res;
+                  movie.movieImageURL =  movie.posterImageUrl;
+                })
             });
         })
       })
@@ -95,14 +101,20 @@ export class FeedComponent implements OnInit
     this._getMoviesQueryParams.EndAddedDate = undefined;
   }
 
-  public getMovie(id:string)
+
+  public getMovie(title:string)
   {
-    this._router.navigate(['movie',id]);
+    this._router.navigate(['movie',title]);
   }
 
   public formatDate(date:Date)
   {
     return Utilities.formatDate(date);
+  }
+
+  public fileChangeEvent($event:any,movie:GetMovieDto)
+  {
+    movie.movieImageURL = movie.movieImageURL == movie.posterImageUrl ? movie.posterImageUrlGif : movie.posterImageUrl;
   }
 
   public searchMovies(page:number = 1)

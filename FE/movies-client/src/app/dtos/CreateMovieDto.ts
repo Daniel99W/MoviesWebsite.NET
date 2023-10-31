@@ -10,7 +10,9 @@ export class CreateMovieDto
     public Description!:string;
     public AddedDate!:Date;
     public PosterImageUrl!:string;
+    public PosterImageUrlGif!:string;
     public VidGuardId!:string;
     public CategoriesIds!:string[]
     public Tags!:TagDto[];
+    public FirebaseId!:string;
 }

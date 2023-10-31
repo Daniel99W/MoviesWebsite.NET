@@ -1,5 +1,5 @@
 ﻿using MoviesAPI.Core.Entities;
-
+using MoviesAPI.Dtos;
 
 namespace MoviesAPI.Core.Interfaces
 {
@@ -7,5 +7,6 @@ namespace MoviesAPI.Core.Interfaces
     {
         public Task<FavoriteMovie?> GetFavoriteMovieByUserAndMovieId(Guid MovieId, Guid UserId);
         public Task<int> GetMovieNumberOfAddedToFavorite(Guid MovieId);
+        public Task<Pagination<Movie>> GetFavoriteMoviesByUserId(int Page, int ItemsPerPage, Guid UserId);
     }
 }

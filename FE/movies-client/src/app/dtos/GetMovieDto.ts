@@ -12,6 +12,8 @@ export class GetMovieDto
     public vidGuardId!:string;
     public views!:number;
     public upvotes!:number;
+    public movieImageURL!:string;
+    public posterImageUrlGif!:string;
     public likes!:number;
     public downvotes!:number;
     public posterImageUrl!:string;

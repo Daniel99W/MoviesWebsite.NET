@@ -2,22 +2,18 @@
 using MoviesAPI.Application.Queries.Movies;
 using MoviesAPI.Application.Responses;
 using MoviesAPI.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MoviesAPI.Application.QueryHandlers.Movies
 {
-    public class GetMovieByIdQueryHandler : IRequestHandler<GetMovieByIdQuery, GetMovieWithVotesCounted>
+    public class GetMovieByTitleQueryHandler : IRequestHandler<GetMovieByTitle, GetMovieWithVotesCounted>
     {
         private IRepositoryMovie repositoryMovie;
         private IRepositoryVotedMovies repositoryVotedMovies;
         private IRepositoryFavoriteMovie repositoryFavoriteMovie;
         private IRepositoryMovieCategory repositoryMovieCategory;
         private IRepositoryTag repositoryTag;
-        public GetMovieByIdQueryHandler(IRepositoryMovie repositoryMovie,
+        public GetMovieByTitleQueryHandler(IRepositoryMovie repositoryMovie,
             IRepositoryVotedMovies repositoryVotedMovies,
             IRepositoryFavoriteMovie repositoryFavoriteMovie,
             IRepositoryMovieCategory repositoryMovieCategory,
@@ -29,13 +25,13 @@ namespace MoviesAPI.Application.QueryHandlers.Movies
             this.repositoryFavoriteMovie = repositoryFavoriteMovie;
             this.repositoryMovieCategory = repositoryMovieCategory;
             this.repositoryTag = repositoryTag;
-        }
-        public async Task<GetMovieWithVotesCounted> Handle(GetMovieByIdQuery request, CancellationToken cancellationToken)
+        } 
+        public async Task<GetMovieWithVotesCounted> Handle(GetMovieByTitle request, CancellationToken cancellationToken)
         {
-            var movie = await this.repositoryMovie.Read(request.Id);
+            var movie = await this.repositoryMovie.GetMovieByTitle(request.Title);
             if(movie == null)
             {
-                throw new HttpRequestException("Movie not found");
+                throw new HttpRequestException("Movie does not exist");
             }
             var getMovieWithVotesCounted = new GetMovieWithVotesCounted()
             {

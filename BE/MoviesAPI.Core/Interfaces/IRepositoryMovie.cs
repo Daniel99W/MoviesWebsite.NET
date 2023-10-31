@@ -20,5 +20,7 @@ namespace MoviesAPI.Core.Interfaces
         public Task<Pagination<Movie>> GetMoviesByTitle(int ItemsPerPage,int Page,string? Title);
 
         public Task<Movie?> GetMovieByVidGuardId(string Id);
+
+        public Task<Movie?> GetMovieByTitle(string Title);
     }
 }

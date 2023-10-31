@@ -3,7 +3,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Application.Commands.FavoriteMovies;
+using MoviesAPI.Application.Queries.FavoriteMovies;
+using MoviesAPI.Dtos;
 using MoviesAPI.Dtos.FavoriteMovies;
+using MoviesAPI.Dtos.Movies;
+using System.Security.Claims;
 
 namespace MoviesAPI.Controllers
 {
@@ -32,6 +36,24 @@ namespace MoviesAPI.Controllers
             };
             await mediator.Send(command);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route(ApiRoutes.FavoriteMoviesRoutes.GetFavoriteMoviesByUserId)]
+        [Authorize]
+        public async Task<IActionResult> GetFavoriteMoviesByUserId([FromQuery] GetFavoriteMoviesParams getFavoriteMoviesParams, 
+            string Id)
+        {
+            var query = new GetFavoriteMoviesByUserIdQuery()
+            {
+                Page = getFavoriteMoviesParams.Page,
+                ItemsPerPage = getFavoriteMoviesParams.ItemsPerPage,
+                FirebaseId = Id
+            };
+
+            var result = await mediator.Send(query);
+            var mappedResult = mapper.Map<Pagination<GetMovieFeedDto>>(result);
+            return Ok(mappedResult);
         }
     }
 }

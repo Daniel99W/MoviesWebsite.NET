@@ -69,8 +69,8 @@ export class MovieComponent implements OnInit
    this._activatedRoute.params
    .subscribe(params => 
     {
-      let id = params['Id'];
-      this._moviesService.getMovieById(id)
+      let title = params['title'];
+      this._moviesService.getMovieByTitle(title)
       .subscribe((res:any) => 
         {
           this._movieGetDto = res;
@@ -79,10 +79,9 @@ export class MovieComponent implements OnInit
           {
             let tag = this._movieGetDto.tags[i];
             this._meta.addTag({keywords:tag.name});
-            console.log(this._movieGetDto.tags);
           }
         })
-      this._moviesService.updateMovieViews(id)
+      this._moviesService.updateMovieViews(this.movie.id)
       .subscribe((res:any)=>
       {
 
@@ -122,10 +121,8 @@ export class MovieComponent implements OnInit
  {
    if(this._isLoggedIn)
    {
-      let token = this._fireAuth.getToken();
-      let tokenDecoded:any = jwtDecode(token!);
-      let firebaseId = tokenDecoded.user_id;
-      this._userService.getUserIdByFirebaseId(firebaseId)
+      let firebaseId = this._fireAuth.getFirebaseUserIdFromToken();
+      this._userService.getUserIdByFirebaseId(firebaseId!)
       .subscribe((res:any) => 
         {
           let userId:string = res;

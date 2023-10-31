@@ -6,7 +6,7 @@ import { FeedComponent } from './components/Feed/feed/feed.component';
 import { MovieComponent } from './components/Movie/movie/movie.component';
 import { AuthGuard } from './services/AuthGuard';
 import { AddMovieComponent } from './components/add-movie/add-movie.component';
-import { MoviesComponent } from './components/movies/movies.component';
+import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
 
 const routes: Routes = 
 [
@@ -23,16 +23,20 @@ const routes: Routes =
     component:FeedComponent
   },
   {
-    path:'addMovie',
-    component:AddMovieComponent,
+    path:'favoriteMovies',
+    component:FavoriteListComponent,
     canActivate:[AuthGuard],
     data:
     {
-      role:'ADMIN'
+      roles:['ADMIN','USER']
     }
   },
   {
-    path:'movie/:Id',
+    path:'addMovie',
+    component:AddMovieComponent
+  },
+  {
+    path:'movie/:title',
     component:MovieComponent
   },
   {

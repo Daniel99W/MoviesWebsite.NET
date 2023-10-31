@@ -30,6 +30,10 @@
                 <mat-label>Movie poster</mat-label>
                 <input type="file" (change)="onFilePosterSelected($event)">
             </div>
+            <div class="fileInput">
+                <mat-label>Movie poster Gif</mat-label>
+                <input type="file" (change)="onFilePosterGifSelected($event)">
+            </div>
             <mat-form-field>
                 <mat-label>Added date for the movie</mat-label>
                 <input type="date"  matInput [formControl]="$any(getCreateMovieForm()).get('addedDate')">

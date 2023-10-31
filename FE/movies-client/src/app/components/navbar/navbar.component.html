@@ -8,6 +8,11 @@
             <a mat-button routerLink="feed">
                 Movies
             </a>
+            <a mat-button routerLink="favoriteMovies"
+            *ngIf="isLoggedIn()"
+            >
+                Favorite movies
+            </a>
             <a mat-button routerLink="about">
                 About
             </a>
@@ -17,16 +22,18 @@
             <mat-menu #menu="matMenu"
             >
                 <a mat-button
-                (click)="openAddMovieDialog()"
+                (click)="openAddMovieDialog('ADMIN')"
                 >
                     Add Movie
                 </a>
                 <a mat-button
-                (click)="openMoviesDialog()"
+
+                (click)="openMoviesDialog('ADMIN')"
                 >
                     Edit movies
                 </a>
             </mat-menu>
+           
         </div>
         
        

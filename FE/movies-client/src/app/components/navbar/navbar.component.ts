@@ -36,22 +36,26 @@ export class NavbarComponent implements OnInit
 
   }
 
-  public openAddMovieDialog()
+  public openAddMovieDialog(role:string)
   {
-    this._dialog.open(AddMovieComponent,{
-      width:'55rem',
-      height:'40rem'
-    })
+    if(this._isLoggedIn && this.isAuthorized(role))
+    {
+      this._dialog.open(AddMovieComponent,{
+        width:'55rem',
+        height:'40rem'
+      })
+    }
   }
 
-  public openMoviesDialog()
+  public openMoviesDialog(role:string)
   {
-    if(this._isLoggedIn)
+    if(this._isLoggedIn && this.isAuthorized(role))
     {
-    this._dialog.open(MoviesComponent,{
-      width:'70rem',
-      height:'45rem'
-    })
+      this._dialog.open(MoviesComponent,
+        {
+        width:'70rem',
+        height:'45rem'
+      })
     }
   }
 
@@ -63,6 +67,8 @@ export class NavbarComponent implements OnInit
   public isAuthorized(role:string)
   {
     let token = this._firebaseAuthService.getToken();
+    if(token == null)
+      return false;
     let tokenDecoded:any = jwtDecode(token!);
     if(tokenDecoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == role)
     {

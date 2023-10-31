@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { SignUpUser } from 'src/app/dtos/SignUpDto';
 import { environment } from 'src/environments/environment';
 import { signInDto } from 'src/app/dtos/SignInDto';
+import jwtDecode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +58,18 @@ export class FirebaseAuthService
       {
         localStorage.removeItem('accessToken');
       })
+  }
+
+  public getFirebaseUserIdFromToken():string|null
+  {
+    let token = this.getToken();
+    if(token == null)
+    {
+      return null;
+    }
+    let tokenDecoded:any = jwtDecode(token!);
+    let firebaseId = tokenDecoded.user_id;
+    return firebaseId;
   }
 
   public isAuthenticated():Observable<boolean>

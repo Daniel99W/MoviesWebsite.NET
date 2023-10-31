@@ -28,11 +28,12 @@ export class AuthGuard implements CanActivate
        }
        let token = this._authService.getToken();
        let decodedToken:any = jwt_decode(token!);
-       let roles:string[] = decodedToken['role'];
-       if(!roles.includes(next.data['role']))
+       let role:string = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+       let inputRoles:string[] = next.data['roles'];
+       if(inputRoles.includes(role))
        {
-        return false;
+        return true;
        }
-       return true;
+       return false;
      }
 }

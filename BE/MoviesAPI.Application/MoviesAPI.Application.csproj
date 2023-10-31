@@ -16,8 +16,4 @@
     <ProjectReference Include="..\MoviesAPI.Core\MoviesAPI.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queries\FavoriteMovies\" />
-  </ItemGroup>
-
 </Project>

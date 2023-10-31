@@ -13,6 +13,7 @@ namespace MoviesAPI.Application.Responses
         public string Title { get; set; }
         public string Description { get; set; }
         public string? PosterImageUrl { get; set; }
+        public string? PosterImageUrlGif { get; set; }
         public int Views { get; set; }
         public int Upvotes { get; set; }
         public int Downvotes { get; set; }

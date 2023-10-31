@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import jwtDecode from 'jwt-decode';
 import { ErrMessages } from 'src/app/constants/ErrMessages';
 import { Messages } from 'src/app/constants/Messages';
 import { CreateMovieDto } from 'src/app/dtos/CreateMovieDto';
 import { GetCategoryDto } from 'src/app/dtos/GetCategoryDto';
 import { TagDto } from 'src/app/dtos/TagDto';
 import { CategoryService } from 'src/app/services/categories/category.service';
+import { FirebaseAuthService } from 'src/app/services/firebaseAuth/firebase-auth.service';
 import { MoviesService } from 'src/app/services/movies/movies.service';
 import { Constants } from 'src/app/utilities/Constants';
 
@@ -25,17 +27,20 @@ export class AddMovieComponent implements OnInit
   private _movieFile:any;
   private _categoriesService:CategoryService;
   private _moviePoster:any;
+  private _moviePosterGif:any;
   private _snackBar:MatSnackBar;
   private _isFileUploaded:boolean;
   private _categories!:GetCategoryDto[];
   private _tags:Array<TagDto>;
   private _tag:string;
+  private _fireAuth:FirebaseAuthService;
 
   constructor(
     movieService:MoviesService,
     dialogRef:MatDialogRef<AddMovieComponent>,
     snackBar:MatSnackBar,
-    categoriesService:CategoryService
+    categoriesService:CategoryService,
+    fireAuth:FirebaseAuthService
     ) 
   { 
     this._movieService = movieService;
@@ -52,6 +57,7 @@ export class AddMovieComponent implements OnInit
     this._categoriesService = categoriesService;
     this._tags = new Array<TagDto>();
     this._tag = '';
+    this._fireAuth = fireAuth;
   }
 
   ngOnInit(): void 
@@ -111,6 +117,11 @@ export class AddMovieComponent implements OnInit
     this._moviePoster = $event.target.files[0];
   }
 
+  public onFilePosterGifSelected($event:any)
+  {
+    this._moviePosterGif = $event.target.files[0];
+  }
+
   public isFileUploaded():boolean
   {
     return this._isFileUploaded;
@@ -125,14 +136,18 @@ export class AddMovieComponent implements OnInit
   public addMovieToVidGuard()
   {
     this._isFileUploaded = false;
+    let token = this._fireAuth.getToken();
+    let tokenDecoded:any = jwtDecode(token!);
     let createMovieDto = new CreateMovieDto();
     createMovieDto.Title = this._createMovieForm.get('title')?.value;
     createMovieDto.Description = this._createMovieForm.get('description')?.value;
     createMovieDto.AddedDate = this._createMovieForm.get('addedDate')?.value;
     createMovieDto.CategoriesIds = this._createMovieForm.get('categories')?.value;
     createMovieDto.Tags = this._tags;
+    let firebaseId = tokenDecoded.user_id;
+    createMovieDto.FirebaseId = firebaseId;
     this._movieService
-    .addMovie(createMovieDto,this._movieFile,this._moviePoster)
+    .addMovie(createMovieDto,this._movieFile,this._moviePoster,this._moviePosterGif)
     .subscribe(res => 
       {
         this._isFileUploaded = true;

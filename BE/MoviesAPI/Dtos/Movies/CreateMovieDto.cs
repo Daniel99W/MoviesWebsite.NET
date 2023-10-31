@@ -12,7 +12,9 @@ namespace MoviesAPI.Dtos.Movies
         [MaxLength(Constants.Constants.MaxDescriptionSize)]
         public string Description { get; set; }
         [Required]
-        public string PosterImageUrl { get; set; }
+        public string? PosterImageUrl { get; set; }
+        public string? PosterImageUrlGif { get; set; }
+
         [Required]
         public DateTime AddedDate { get; set; }
         [Required]
@@ -20,6 +22,8 @@ namespace MoviesAPI.Dtos.Movies
         [Required]
         public List<Guid> CategoriesIds { get; set; }
         public List<MovieTagDto>? Tags { get; set; }
+        [Required]
+        public string FirebaseId { get; set; }
     }
 
 }

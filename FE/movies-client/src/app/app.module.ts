@@ -34,9 +34,10 @@ import { SafePipe } from './pipes/SafePipe';
 
 import { MoviesComponent } from './components/movies/movies.component';
 import {MatMenuModule} from '@angular/material/menu';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import {MatTableModule} from '@angular/material/table';
-import { UpdateMovieComponent } from './components/update-movie/update-movie.component';;
+import { UpdateMovieComponent } from './components/update-movie/update-movie.component';
+import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
+import { UserFavoriteMoviesComponent } from './components/user-favorite-movies/user-favorite-movies.component';;
 
 
 
@@ -52,8 +53,9 @@ import { UpdateMovieComponent } from './components/update-movie/update-movie.com
     AddMovieComponent,
     SafePipe,
     MoviesComponent,
-    UserProfileComponent,
-    UpdateMovieComponent
+    UpdateMovieComponent,
+    FavoriteListComponent,
+    UserFavoriteMoviesComponent
   ],
   imports: [
     BrowserModule,

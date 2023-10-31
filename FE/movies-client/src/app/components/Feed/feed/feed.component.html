@@ -1,6 +1,3 @@
-
-
-
 <div class="container">
     <div class="filters">
        <div class="searchBar">
@@ -14,6 +11,10 @@
                 </mat-icon>
             </span>
         </mat-form-field>
+        <span class="danger" *ngIf="$any(filterFormGroup().get('Title')).invalid 
+                && $any(filterFormGroup().get('Title')).value.length > 0">
+                    Max 100 characters for searching
+            </span>
        </div>
        <div class="movieGenre">
         <mat-form-field>
@@ -52,10 +53,13 @@
        gutterSize="1rem">
             <mat-grid-tile *ngFor="let movie of movies">
                 <mat-card>
-                    <img mat-card-image src="{{movie.posterImageUrl}}" >
+                    <img mat-card-image src="{{movie.movieImageURL}}" 
+                    (mouseenter)="fileChangeEvent($event,movie)" (mouseleave)="fileChangeEvent($event,movie)"
+                    >
+
                     <mat-card-header class="movie_header">
                         <mat-card-title>
-                          <a [routerLink]="['/movie/',movie.id]" 
+                          <a [routerLink]="['/movie/',movie.title]" 
                           class="titleLink"
                           
                           > {{restrictChars(movie.title)}}

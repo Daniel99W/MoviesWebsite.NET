@@ -11,6 +11,7 @@
                     <mat-label>Email Address</mat-label>
                     <input type="text" placeholder="Email address"
                     [formControl]="$any(getSignInForm).get('Email')" matInput>
+
                 </mat-form-field>
             </div>
             <div class="password">
@@ -20,6 +21,11 @@
                     [formControl]="$any(getSignInForm).get('Password')" matInput>
                 </mat-form-field>
             </div>
+            <br>
+            <span class="danger" *ngIf="$any(getSignInForm).get('Password').invalid 
+                && $any(getSignInForm).get('Password').value.length > 0">
+                    password has to have max 50 characters
+            </span>
             <div>
                 <div class="danger" *ngIf="!$any(getSignInForm).valid">
                     All fields must be filled and email address be valid

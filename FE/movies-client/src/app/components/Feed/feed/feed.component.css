@@ -80,6 +80,7 @@ img
     height:14rem;
 }
 
+
 .addedDate
 {
     color:white;
@@ -134,4 +135,10 @@ img
 .titleLink:hover
 {
     text-decoration: underline;
+}
+
+.danger
+{
+    color:red;
+    margin:2rem auto;
 }

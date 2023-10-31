@@ -11,6 +11,7 @@ namespace MoviesAPI.Profiles
         {
             CreateMap<Movie, GetMovieDto>().ReverseMap();
             CreateMap<Movie, GetMovieFeedDto>().ReverseMap();
+            CreateMap<FavoriteMovie,GetMovieDto>().ReverseMap();
             CreateMap<Pagination<Movie>, Pagination<GetMovieDto>>();
             CreateMap<Pagination<Movie>, Pagination<GetMovieFeedDto>>();
         }

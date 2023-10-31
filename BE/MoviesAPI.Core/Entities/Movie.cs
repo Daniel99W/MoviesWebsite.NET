@@ -7,8 +7,11 @@ namespace MoviesAPI.Core.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public string? PosterImageUrl { get; set; }
+        public string? PosterImageUrlGif { get; set; }
         public int Views { get; set; }
         public string VidGuardId { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; set; }
         public DateTime AddedDate { get; set; }
         public List<MovieCategory> MovieCategories { get; set; }
         public List<Comment> Comments { get; set; }
@@ -25,7 +28,9 @@ namespace MoviesAPI.Core.Entities
             string description,
             DateTime AddedDate,
             string vidguardId,
-            string posterImageUrl
+            string? posterImageUrl,
+            string? posterImageUrlGif,
+            Guid userId
             )
         {
             this.Title = title;
@@ -33,7 +38,9 @@ namespace MoviesAPI.Core.Entities
             this.AddedDate = AddedDate;
             this.VidGuardId = vidguardId;
             this.PosterImageUrl = posterImageUrl;
+            this.PosterImageUrlGif = posterImageUrlGif;
             this.Views = 0;
+            this.UserId = userId;
         }
 
         public static Movie CreateMovie(
@@ -41,10 +48,12 @@ namespace MoviesAPI.Core.Entities
             string description,
             DateTime AddedDate,
             string vidguardId,
-            string posterImageUrl
+            string? posterImageUrl,
+            string? posterImageUrlGif,
+            Guid userId
             )
         {
-            return new Movie(title, description, AddedDate, vidguardId, posterImageUrl);
+            return new Movie(title, description, AddedDate, vidguardId, posterImageUrl, posterImageUrlGif, userId);
         }
 
         public Movie UpdateViewsCounter()

@@ -13,11 +13,12 @@
         {
             public const string GetMovies = "GetMovies";
             public const string CreateMovie = "CreateMovie";
-            public const string GetMovieById = $"GetMovieById/{Id}";
+            public const string GetMovieByTitle = "GetMovieByTitle/{Title}";
             public const string DeleteMovieById = $"DeleteMovieById/{Id}";
             public const string GetMoviesByTitle = "GetMoviesByTitle";
             public const string UpdateViewsCounter = "UpdateViewsCounter";
             public const string UpdateMovieById = $"UpdateMovieById/{Id}";
+            public const string GetMovieById = $"GetMovieById/{Id}";
         }
         public static class VotedMoviesRoutes
         {
@@ -31,6 +32,7 @@
         public static class FavoriteMoviesRoutes
         {
             public const string AddMovieToFavoriteList = "AddMovieToFavoriteList";
+            public const string GetFavoriteMoviesByUserId = $"GetFavoriteMoviesByUserId/{Id}";
         }
     }
 }
