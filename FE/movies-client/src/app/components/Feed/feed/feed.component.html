@@ -62,11 +62,12 @@
                           <a (click)="getMovie(movie.id,movie.title)"
                           class="titleLink"
                           
-                          > {{restrictChars(movie.title)}}
+                          > {{restrictChars(movie.title)}} 
                             </a>
                         </mat-card-title>
                         <mat-card-subtitle>
                             {{formatDate(movie.addedDate)}}
+                            <span class="viewCounter">{{movie.views}} Views</span>
                         </mat-card-subtitle>
                     </mat-card-header>
                 </mat-card>

@@ -8,5 +8,6 @@
         public string PosterImageUrl { get; set; }
         public string PosterImageUrlGif { get; set; }
         public DateTime AddedDate { get; set; }
+        public int Views { get; set; }
     }
 }
