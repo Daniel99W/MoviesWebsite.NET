@@ -1,18 +1,16 @@
-
-
 using FirebaseAdmin;
-using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using MoviesAPI.Application.Commands.Users;
 using MoviesAPI.Core.Interfaces;
 using MoviesAPI.DAL;
 using MoviesAPI.DAL.Repositories;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 
@@ -51,6 +49,7 @@ FirebaseApp.Create(new AppOptions()
 
 var audience = builder.Configuration["Authentication:Audience"];
 var validIssuer = builder.Configuration["Authentication:ValidIssuer"];
+
 
 
 builder.Services

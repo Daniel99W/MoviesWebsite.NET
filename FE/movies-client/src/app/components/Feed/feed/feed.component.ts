@@ -171,7 +171,7 @@ export class FeedComponent implements OnInit
 
   public restrictChars(value:string)
   {
-    return value.substring(0,30);
+    return value.substring(0,27)+'...';
   }
 
   onResize(event:any) 
