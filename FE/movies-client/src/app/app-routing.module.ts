@@ -8,20 +8,19 @@ import { AuthGuard } from './services/AuthGuard';
 import { AddMovieComponent } from './components/add-movie/add-movie.component';
 import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
 import { env } from 'process';
-import { environment } from 'src/environments/environment.prod';
 
 const routes: Routes = 
 [
   {
-    path:environment.domainPath+'login',
+    path:'login',
     component:LoginComponent,
   },
   {
-    path:environment.domainPath+'signUp',
+    path:'signUp',
     component:RegisterComponent
   },
   {
-    path:environment.domainPath+'feed',
+    path:'feed',
     component:FeedComponent
   },
   {
@@ -38,11 +37,11 @@ const routes: Routes =
     component:AddMovieComponent
   },
   {
-    path:environment.domainPath+'movie/:id/:title',
+    path:'movie/:id/:title',
     component:MovieComponent
   },
   {
-    path:'',redirectTo:environment.domainPath+'feed',pathMatch:'full'
+    path:'',redirectTo:'feed',pathMatch:'full'
 
   }
 ];
