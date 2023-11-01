@@ -50,7 +50,6 @@ export class MoviesComponent implements OnInit
     .getMoviesByTitle(this._title.value,this._itemsPerPage,page)
     .subscribe((res:any)=>
     {
-      console.log(res);
       this._movies.Page = res.page;
       this._movies.Results = res.results;
       this._movies.TotalPages = res.totalPages;
@@ -59,7 +58,8 @@ export class MoviesComponent implements OnInit
 
   public updateMovie(movieId:string)
   {
-    this._matDialog.open(UpdateMovieComponent,{
+    this._matDialog.open(UpdateMovieComponent,
+    {
       data:{movieId:movieId},
       height:'51rem',
       width:'51rem'

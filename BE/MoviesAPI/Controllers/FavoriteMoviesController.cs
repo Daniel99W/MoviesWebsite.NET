@@ -55,5 +55,19 @@ namespace MoviesAPI.Controllers
             var mappedResult = mapper.Map<Pagination<GetMovieFeedDto>>(result);
             return Ok(mappedResult);
         }
+
+        [HttpDelete]
+        [Route(ApiRoutes.FavoriteMoviesRoutes.DeleteFavoriteMovieByUserIdAndMovieId)]
+        [Authorize]
+        public async Task<IActionResult> DeleteFavoriteMovieByUserIdAndMovieId([FromQuery] DeleteFavoriteMovieParamsDto deleteFavoriteMovieParamsDto)
+        {
+            var command = new RemoveMovieFromFavoriteListCommand()
+            {
+                FirebaseId = deleteFavoriteMovieParamsDto.FirebaseId,
+                MovieId = Guid.Parse(deleteFavoriteMovieParamsDto.MovieId)
+            };
+            await mediator.Send(command);
+            return NoContent();
+        }
     }
 }

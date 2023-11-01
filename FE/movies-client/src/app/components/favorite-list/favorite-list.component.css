@@ -1,0 +1,54 @@
+
+
+.container
+{
+    width:80%;
+    height:100%;
+    margin:5% auto;
+}
+
+mat-card
+{
+    width: fit-content;
+}
+
+
+mat-card, mat-card-title, mat-card-subtitle
+{
+    background-color:#131720;
+    color:white;
+}
+
+img
+{
+    width:16rem;
+    height:14rem;
+}
+
+
+.addedDate
+{
+    color:white;
+    font-size:1.5rem;
+}
+
+
+.pagination
+{
+    margin:3rem auto;
+    text-align: center;
+
+}
+
+.pagination input 
+{
+    border:none;
+    width:15%;
+    text-align: center;
+}
+
+.title 
+{
+    text-align: center;
+    color:white;
+}

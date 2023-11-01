@@ -186,6 +186,14 @@ export class MoviesService
     let params =  new HttpParams();
     params = params.append('ItemsPerPage',itemsPerPage.toString());
     params = params.append('Page',page.toString());
-    return this._httpClient.get(environment.api+'/FavoriteMovies/GetFavoriteMoviesByUserId/'+userId,{headers:this._headers})
+    return this._httpClient.get(environment.api+'/FavoriteMovies/GetFavoriteMoviesByUserId/'+userId,{headers:this._headers,params:params})
+  }
+
+  public unpinFromFavoriteMovieList(firebaseId:string,movieId:string)
+  {
+    let params = new HttpParams();
+    params = params.append('FirebaseId',firebaseId.toString());
+    params = params.append('MovieId',movieId.toString());
+    return this._httpClient.delete(environment.api+'/FavoriteMovies/DeleteFavoriteMovieByUserIdAndMovieId',{headers:this._headers,params:params})
   }
 }

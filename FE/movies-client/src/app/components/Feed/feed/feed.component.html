@@ -58,8 +58,8 @@
                     >
 
                     <mat-card-header class="movie_header">
-                        <mat-card-title>
-                          <a [routerLink]="['/movie/',movie.title]" 
+                        <mat-card-title class="movieTitle">
+                          <a (click)="getMovie(movie.id,movie.title)"
                           class="titleLink"
                           
                           > {{restrictChars(movie.title)}}

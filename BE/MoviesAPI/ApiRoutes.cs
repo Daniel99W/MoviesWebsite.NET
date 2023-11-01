@@ -33,6 +33,7 @@
         {
             public const string AddMovieToFavoriteList = "AddMovieToFavoriteList";
             public const string GetFavoriteMoviesByUserId = $"GetFavoriteMoviesByUserId/{Id}";
+            public const string DeleteFavoriteMovieByUserIdAndMovieId = "DeleteFavoriteMovieByUserIdAndMovieId";
         }
     }
 }

@@ -36,7 +36,7 @@ const routes: Routes =
     component:AddMovieComponent
   },
   {
-    path:'movie/:title',
+    path:'movie/:id/:title',
     component:MovieComponent
   },
   {

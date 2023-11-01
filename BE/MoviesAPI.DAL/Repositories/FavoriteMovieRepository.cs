@@ -13,6 +13,14 @@ namespace MoviesAPI.DAL.Repositories
 
         }
 
+        public async Task DeleteFavoriteMovieByUserIdAndMovieId(Guid MovieId, Guid UserId)
+        {
+            await this.moviesDbContext
+                .FavoriteMovies
+                .Where(fm => fm.MovieId == MovieId && fm.UserId == UserId)
+                .ExecuteDeleteAsync();
+        }
+
         public async Task<FavoriteMovie?> GetFavoriteMovieByUserAndMovieId(Guid MovieId, Guid UserId)
         {
             return await this.moviesDbContext

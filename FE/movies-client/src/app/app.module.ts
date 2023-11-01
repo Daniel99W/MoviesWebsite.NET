@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FeedComponent } from './components/Feed/feed/feed.component';
-import { EpisodeComponent } from './components/Episode/episode/episode.component';
 import { MovieComponent } from './components/Movie/movie/movie.component';
 import { environment } from 'src/environments/environment';
 import { LoginComponent } from './components/login/login.component';
@@ -45,7 +44,6 @@ import { UserFavoriteMoviesComponent } from './components/user-favorite-movies/u
   declarations: [
     AppComponent,
     FeedComponent,
-    EpisodeComponent,
     MovieComponent,
     LoginComponent,
     RegisterComponent,

@@ -13,6 +13,12 @@
                     [formControl]="$any(signUpForm).get('Name')" matInput>
                 </mat-form-field>
             </div>
+            <div class="danger"
+            *ngIf="$any(signUpForm).get('Name').invalid 
+                && $any(signUpForm).get('Name').value.length > 0"
+            >
+            Max 50 characters per username
+            </div>
             <div class="email">
                 <mat-form-field>
                     <mat-label>Email Address</mat-label>
@@ -26,6 +32,12 @@
                     <input type="password" placeholder="Password" 
                     [formControl]="$any(signUpForm).get('Password')" matInput>
                 </mat-form-field>
+                <div class="danger"
+                *ngIf="$any(signUpForm).get('Password').invalid 
+                    && $any(signUpForm).get('Password').value.length > 0"
+                >
+                Max 50 characters per password
+                </div>
             </div>
             <div>
                 <div class="danger" *ngIf="!$any(signUpForm).valid">

@@ -76,7 +76,7 @@ mat-card, mat-card-title, mat-card-subtitle
 
 img
 {
-    width:14rem;
+    width:16rem;
     height:14rem;
 }
 
@@ -141,4 +141,9 @@ img
 {
     color:red;
     margin:2rem auto;
+}
+
+.movieTitle
+{
+    cursor: pointer;
 }

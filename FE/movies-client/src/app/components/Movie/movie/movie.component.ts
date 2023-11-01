@@ -69,8 +69,8 @@ export class MovieComponent implements OnInit
    this._activatedRoute.params
    .subscribe(params => 
     {
-      let title = params['title'];
-      this._moviesService.getMovieByTitle(title)
+      let id = params['id'];
+      this._moviesService.getMovieById(id)
       .subscribe((res:any) => 
         {
           this._movieGetDto = res;
@@ -81,10 +81,9 @@ export class MovieComponent implements OnInit
             this._meta.addTag({keywords:tag.name});
           }
         })
-      this._moviesService.updateMovieViews(this.movie.id)
+      this._moviesService.updateMovieViews(id)
       .subscribe((res:any)=>
       {
-
       })
       
     })

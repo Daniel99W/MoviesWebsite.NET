@@ -102,9 +102,10 @@ export class FeedComponent implements OnInit
   }
 
 
-  public getMovie(title:string)
+  public getMovie(id:string,title:string)
   {
-    this._router.navigate(['movie',title]);
+    title = title.split(' ').join('-');
+    this._router.navigate(['movie',id,title]);
   }
 
   public formatDate(date:Date)
