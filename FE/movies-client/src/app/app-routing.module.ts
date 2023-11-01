@@ -40,7 +40,7 @@ const routes: Routes =
     component:MovieComponent
   },
   {
-    path:'',redirectTo:'feed',pathMatch:'full'
+    path:'',redirectTo:'feed',pathMatch:'full',component:FeedComponent
   }
 ];
 
