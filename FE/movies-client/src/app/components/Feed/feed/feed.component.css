@@ -74,9 +74,9 @@ mat-card, mat-card-title, mat-card-subtitle
     color:white;
 }
 
-img
+.mat-card img
 {
-    width:100%;
+    width:15rem;
     height:14rem;
 }
 
