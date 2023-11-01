@@ -36,7 +36,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatTableModule} from '@angular/material/table';
 import { UpdateMovieComponent } from './components/update-movie/update-movie.component';
 import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
-import { UserFavoriteMoviesComponent } from './components/user-favorite-movies/user-favorite-movies.component';;
+import { UserFavoriteMoviesComponent } from './components/user-favorite-movies/user-favorite-movies.component';
 
 
 

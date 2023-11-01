@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit
     this._loginForm = new FormGroup(
       {
         Email:new FormControl('',[Validators.required,Validators.email,Validators.maxLength(Constants.inputEmailMaxSize)]),
-        Password:new FormControl('',[Validators.required,Validators.maxLength(Constants.inputPasswordMaxSize)])
+        Password:new FormControl('',[Validators.required,Validators.maxLength(Constants.inputPasswordMaxSize)]),
+        Recaptcha:new FormControl(['',Validators.required])
       }
     )
     this._router = router;
