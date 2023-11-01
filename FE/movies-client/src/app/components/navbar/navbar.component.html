@@ -13,9 +13,6 @@
             >
                 Favorite movies
             </a>
-            <a mat-button routerLink="about">
-                About
-            </a>
             <button mat-raised-button [matMenuTriggerFor]="menu"
             *ngIf="isLoggedIn() && isAuthorized('ADMIN')" hidden
             >Admin Menu</button>
