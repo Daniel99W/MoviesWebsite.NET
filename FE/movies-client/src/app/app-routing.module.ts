@@ -42,7 +42,6 @@ const routes: Routes =
   },
   {
     path:'',redirectTo:'feed',pathMatch:'full'
-
   }
 ];
 
