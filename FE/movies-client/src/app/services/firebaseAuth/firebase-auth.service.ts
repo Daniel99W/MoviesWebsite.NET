@@ -26,6 +26,12 @@ export class FirebaseAuthService
       {
         this._userData = res;
       })
+    this._authAngularFire.onIdTokenChanged(async res => 
+    {
+      localStorage.removeItem('accessToken');
+      let token = (await res?.getIdTokenResult())!.token;
+      localStorage.setItem('accessToken',token);
+    })
     this._httpClient = httpClient;
   }
 
