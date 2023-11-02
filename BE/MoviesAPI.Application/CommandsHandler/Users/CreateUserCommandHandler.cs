@@ -31,7 +31,8 @@ namespace MoviesAPI.Application.CommandsHandler.Users
             };
             var claims = new Dictionary<string, object>
             {
-                {ClaimTypes.Role, Roles.USER.ToString() }
+                {ClaimTypes.Role, Roles.USER.ToString() },
+                {ClaimTypes.Expiration, 3600 }
             };
 
             UserRecord userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(userRecordArgs);

@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from "@angular/material/input";
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {MatToolbarModule} from '@angular/material/toolbar'; 
@@ -37,6 +37,7 @@ import {MatTableModule} from '@angular/material/table';
 import { UpdateMovieComponent } from './components/update-movie/update-movie.component';
 import { FavoriteListComponent } from './components/favorite-list/favorite-list.component';
 import { UserFavoriteMoviesComponent } from './components/user-favorite-movies/user-favorite-movies.component';
+
 
 
 
@@ -78,7 +79,7 @@ import { UserFavoriteMoviesComponent } from './components/user-favorite-movies/u
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

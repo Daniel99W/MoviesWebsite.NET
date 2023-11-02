@@ -8,6 +8,7 @@ export const environment =
   vidGuardClone:' https://api.vidguard.to/v1/video/clone?key=',
   vidGuardDelete:'https://api.vidguard.to/v1/video/delete?key=',
   videoURL:'https://vid-guard.com/e/',
+  siteKey:'6LdoSeooAAAAAGO-n8Po_9Ih_KqU8Mo_hhosWXGB',
   firebase:
   {
     projectId: "moviepiratedweb",

@@ -40,6 +40,8 @@ export class RegisterComponent implements OnInit
     return this._registerForm;
   }
 
+
+
   public signUp()
   {
     let signUpDto = new SignUpUser();
