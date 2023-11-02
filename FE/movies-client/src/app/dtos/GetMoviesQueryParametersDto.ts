@@ -12,7 +12,7 @@ export class GetMoviesQueryParametersDto
 
     constructor()
     {
-        this.ItemsPerPage = 15;
+        this.ItemsPerPage = 30;
         this.Page = 1;
         this.CategoriesIds = [];
         this.Title = '';
