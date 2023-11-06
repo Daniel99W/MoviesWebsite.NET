@@ -131,6 +131,11 @@ mat-card, mat-card-title, mat-card-subtitle
     font-weight:600;
 }
 
+.titleLink:hover 
+{
+    color:crimson;
+}
+
 
 .titleLink:hover
 {
