@@ -12,6 +12,7 @@
     font-size:2rem;
     color:white;
     margin:3rem auto;
+    text-wrap: wrap;
 }
 
 .description 
