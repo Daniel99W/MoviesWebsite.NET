@@ -134,6 +134,7 @@ mat-card, mat-card-title, mat-card-subtitle
 .titleLink:hover 
 {
     color:crimson;
+    text-decoration: none;
 }
 
 
