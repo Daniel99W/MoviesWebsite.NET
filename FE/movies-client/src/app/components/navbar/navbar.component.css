@@ -56,6 +56,11 @@
     font-weight: bold;
 }
 
+.moviesLink:hover
+{
+    color:crimson;
+}
+
 
 .title h1:hover 
 {

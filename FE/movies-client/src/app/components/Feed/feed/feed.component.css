@@ -55,15 +55,17 @@
 .movies 
 {
     margin:2rem 0rem;
+    width:85%;
 }
 
 .flex-me 
 {   display: inline-flex; 
   flex-flow: row wrap;    
 }
-mat-card
+.mat-card
 {
     width: fit-content;
+    width:30%;
 }
 
 

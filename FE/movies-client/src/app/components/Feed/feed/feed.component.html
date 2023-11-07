@@ -50,8 +50,8 @@
     <div class="movies">
        <mat-grid-list [cols]="breakpoint" rowHeight="20rem"  
        (window:resize)="onResize($event)"
-       gutterSize="1rem">
-            <mat-grid-tile *ngFor="let movie of movies">
+       gutterSize="2rem">
+            <mat-grid-tile *ngFor="let movie of movies" >
                 <mat-card>
                     <img mat-card-image src="{{movie.movieImageURL}}" 
                     (mouseenter)="fileChangeEvent($event,movie)" (mouseleave)="fileChangeEvent($event,movie)"
