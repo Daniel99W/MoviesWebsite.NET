@@ -17,18 +17,18 @@
                 Favorite videos
             </a>
             <button mat-raised-button [matMenuTriggerFor]="menu"
-            *ngIf="isLoggedIn() && isAuthorized('ADMIN')" hidden
-            >Admin Menu</button>
+            *ngIf="isLoggedIn() && isAuthorized('USER')" hidden
+            >Manage videos</button>
             <mat-menu #menu="matMenu"
             >
                 <a mat-button
-                (click)="openAddMovieDialog('ADMIN')"
+                (click)="openAddMovieDialog('USER')"
                 >
                     Add Movie
                 </a>
                 <a mat-button
 
-                (click)="openMoviesDialog('ADMIN')"
+                (click)="openMoviesDialog('USER')"
                 >
                     Edit movies
                 </a>
