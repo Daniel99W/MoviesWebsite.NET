@@ -109,11 +109,12 @@ export class MoviesService
     return this._httpClient.get(environment.vidGuardClone+environment.vidGuardApiKey+`&id=${id}`);
   }
 
-  public getMoviesByTitle(title:string|undefined,itemsPerPage:number,page:number)
+  public getMoviesByTitle(title:string|undefined,itemsPerPage:number,page:number,userId:string)
   {
     let params =  new HttpParams();
     params = params.append('ItemsPerPage',itemsPerPage.toString());
     params = params.append('Page',page.toString());
+    params = params.append('FirebaseId',userId);
     if(title != undefined && title != '')
     {
       params = params.append('Title',title);

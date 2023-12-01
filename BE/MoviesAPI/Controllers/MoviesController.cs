@@ -113,7 +113,8 @@ namespace MoviesAPI.Controllers
             {
                 Page = getMoviesByTitleParams.Page,
                 ItemsPerPage = getMoviesByTitleParams.ItemsPerPage,
-                Title = getMoviesByTitleParams.Title
+                Title = getMoviesByTitleParams.Title,
+                FirebaseId = getMoviesByTitleParams.FirebaseId
             };
             var result = await mediator.Send(query);
             var mappedResult = mapper.Map<Pagination<GetMovieDto>>(result);

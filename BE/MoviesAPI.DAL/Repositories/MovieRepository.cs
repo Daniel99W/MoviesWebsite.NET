@@ -73,9 +73,10 @@ namespace MoviesAPI.DAL.Repositories
             return movies.Paginate(Page, ItemsPerPage);
         }
 
-        public async Task<Pagination<Movie>> GetMoviesByTitle(int ItemsPerPage, int Page, string? Title)
+        public async Task<Pagination<Movie>> GetMoviesByTitle(int ItemsPerPage, int Page, string? Title, Guid UserId)
         {
-            IQueryable<Movie> movies = moviesDbContext.Movies;
+            IQueryable<Movie> movies = moviesDbContext.Movies
+                .Where(m => m.UserId == UserId);
             if(Title != null)
             {
                 movies = movies.Where(m => m.Title.Contains(Title));
