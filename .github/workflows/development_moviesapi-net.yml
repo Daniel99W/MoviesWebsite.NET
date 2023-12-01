@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - Innoloft-API
 on:
   push:
     branches:
-      - development
+      - Site-filme-normale
   workflow_dispatch:
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
 
       - name: Update Database
         run: |
-            dotnet tool install --global dotnet-ef
+            dotnet tool install --global dotnet-ef --version 7.0.12
             dotnet tool restore
             dotnet ef database update 
         working-directory: BE/MoviesAPI
