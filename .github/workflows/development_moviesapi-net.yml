@@ -33,7 +33,7 @@ jobs:
 
       - name: Update Database
         run: |
-            dotnet tool install --global dotnet-ef
+            dotnet tool install --global dotnet-ef --version 7.0.12
             dotnet tool restore
             dotnet ef database update 
         working-directory: BE/MoviesAPI
