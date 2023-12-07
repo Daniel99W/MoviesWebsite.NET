@@ -48,6 +48,8 @@ jobs:
             dotnet tool restore
             dotnet ef database update 
         working-directory: BE/MoviesAPI
+        env:
+          ASPNETCORE_ENVIRONMENT: Development
           
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
