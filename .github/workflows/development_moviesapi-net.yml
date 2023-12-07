@@ -36,7 +36,7 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
-        working-directory: BE/MoviesAP
+        working-directory: BE/MoviesAPI
 
       - name: dotnet publish
         run: dotnet publish -c Release -o out
