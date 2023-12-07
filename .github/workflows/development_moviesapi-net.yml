@@ -32,11 +32,11 @@ jobs:
         with: 
           files: 'BE/MoviesAPI/appsettings.json'
         env:
-          Authentication.AuthUri: ${{ secrets.AUTH_URI }}
-          Authentication.TokenUri: ${{ secrets.TOKEN_URI }}
-          Authentication.Audience: ${{ secrets.AUDIENCE }}
-          Authentication.ValidIssuer: ${{ secrets.VALID_ISSUER }}
-          ConnectionStrings.MySqlConn: ${{ secrets.MY_SQL_CONNECTION_STRING }}
+          Authentication:AuthUri: ${{ secrets.AUTH_URI }}
+          Authentication:TokenUri: ${{ secrets.TOKEN_URI }}
+          Authentication:Audience: ${{ secrets.AUDIENCE }}
+          Authentication:ValidIssuer: ${{ secrets.VALID_ISSUER }}
+          ConnectionStrings:MySqlConn: ${{ secrets.MY_SQL_CONNECTION_STRING }}
 
       - name: dotnet publish
         run: dotnet publish -c Release -o out
@@ -48,8 +48,6 @@ jobs:
             dotnet tool restore
             dotnet ef database update 
         working-directory: BE/MoviesAPI
-        env:
-          ASPNETCORE_ENVIRONMENT: Production
           
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
