@@ -48,8 +48,6 @@ jobs:
             dotnet tool restore
             dotnet ef database update 
         working-directory: BE/MoviesAPI
-        env:
-          ConnectionStrings.MySqlConn: ${{secrets.MY_SQL_CONNECTION_STRING}}
           
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
