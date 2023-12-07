@@ -55,6 +55,7 @@ jobs:
           Authentication.TokenUri: ${{secrets.TOKEN_URI}}
           Authentication.Audience: ${{secrets.AUDIENCE}}
           Authentication.ValidIssuer: ${{secrets.VALID_ISSUER}}
+          ConnectionStrings.MySqlConn: ${{secrets.MY_SQL_CONNECTION_STRING}}
           
           
   deploy:
