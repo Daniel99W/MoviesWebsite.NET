@@ -51,7 +51,7 @@ FirebaseApp.Create(new AppOptions()
 
 var audience = builder.Configuration["Authentication:Audience"];
 var validIssuer = builder.Configuration["Authentication:ValidIssuer"];
-var mysqlConnString = builder.Configuration["ConnectionStrings.MySqlConn"];
+var mysqlConnString = builder.Configuration["ConnectionStrings:MySqlConn"];
 
 Console.WriteLine("Mysql conn string:");
 Console.WriteLine(mysqlConnString);
