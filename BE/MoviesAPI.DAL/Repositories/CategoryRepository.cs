@@ -16,5 +16,13 @@ namespace MoviesAPI.DAL.Repositories
         {
             return await moviesDbContext.Categories.ToListAsync();
         }
+
+        public async Task<Category?> GetCategoryByName(string name)
+        {
+            return await moviesDbContext
+                .Categories
+                .Where(c => c.Name == name)
+                .SingleOrDefaultAsync();
+        }
     }
 }

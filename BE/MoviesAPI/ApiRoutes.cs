@@ -28,6 +28,8 @@
         public static class CategoriesRoutes
         {
             public const string GetCategories = "GetCategories";
+            public const string CreateCategory = "CreateCategory";
+            public const string DeleteCategoryById = $"DeleteCategoryById/{Id}";
         }
         public static class FavoriteMoviesRoutes
         {
