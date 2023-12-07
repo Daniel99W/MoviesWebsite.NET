@@ -32,11 +32,11 @@ jobs:
         with: 
           files: 'BE/MoviesAPI/appsettings.json'
         env:
-          Authentication:AuthUri: ${{ secrets.AUTH_URI }}
-          Authentication:TokenUri: ${{ secrets.TOKEN_URI }}
-          Authentication:Audience: ${{ secrets.AUDIENCE }}
-          Authentication:ValidIssuer: ${{ secrets.VALID_ISSUER }}
-          ConnectionStrings:MySqlConn: ${{ secrets.MY_SQL_CONNECTION_STRING }}
+          Authentication.AuthUri: ${{ secrets.AUTH_URI }}
+          Authentication.TokenUri: ${{ secrets.TOKEN_URI }}
+          Authentication.Audience: ${{ secrets.AUDIENCE }}
+          Authentication.ValidIssuer: ${{ secrets.VALID_ISSUER }}
+          ConnectionStrings.MySqlConn: ${{ secrets.MY_SQL_CONNECTION_STRING }}
 
       - name: dotnet publish
         run: dotnet publish -c Release -o out
