@@ -15,5 +15,6 @@ namespace MoviesAPI.Application.Queries.Movies
         public int Page { get; set; } = 1;
         public int ItemsPerPage { get; set; } = 5;
         public string? Title { get; set; }
+        public string FirebaseId { get; set; }
     }
 }

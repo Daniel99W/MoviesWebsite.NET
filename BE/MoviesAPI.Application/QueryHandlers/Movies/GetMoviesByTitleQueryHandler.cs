@@ -19,21 +19,32 @@ namespace MoviesAPI.Application.QueryHandlers.Movies
         private IRepositoryMovie repositoryMovie;
         private IRepositoryVotedMovies repositoryVotedMovies;
         private IRepositoryFavoriteMovie repositoryFavoriteMovie;
+        private IRepositoryUser repositoryUser;
 
         public GetMoviesByTitleQueryHandler(IRepositoryMovie repositoryMovie,
             IRepositoryVotedMovies movieVotedMovies,
-            IRepositoryFavoriteMovie repositoryFavoriteMovie
+            IRepositoryFavoriteMovie repositoryFavoriteMovie,
+            IRepositoryUser repositoryUser
             )
         {
             this.repositoryMovie = repositoryMovie;
             this.repositoryVotedMovies = movieVotedMovies;
             this.repositoryFavoriteMovie = repositoryFavoriteMovie;
+            this.repositoryUser = repositoryUser;
         }
 
         public async Task<Pagination<GetMovieWithVotesCounted>> Handle(GetMoviesByTitleQuery request, CancellationToken cancellationToken)
         {
+            var userId = await repositoryUser.GetUserByFirebaseId(request.FirebaseId);
+            if(userId == null)
+            {
+                throw new Exception("User does not exist");
+            }
             Pagination<Movie> moviesPaginated = 
-                await repositoryMovie.GetMoviesByTitle(request.ItemsPerPage,request.Page,request.Title);
+                await repositoryMovie.GetMoviesByTitle(
+                request.ItemsPerPage,request.Page,
+                request.Title,
+                (Guid)userId);
 
             Pagination<GetMovieWithVotesCounted> movieWithVotesPaginated = 
                 new Pagination<GetMovieWithVotesCounted>();

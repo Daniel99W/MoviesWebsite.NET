@@ -17,7 +17,7 @@ namespace MoviesAPI.Core.Interfaces
             DateTime? BeginAddedDate,
             DateTime? EndAddedDate);
 
-        public Task<Pagination<Movie>> GetMoviesByTitle(int ItemsPerPage,int Page,string? Title);
+        public Task<Pagination<Movie>> GetMoviesByTitle(int ItemsPerPage,int Page,string? Title, Guid UserId);
 
         public Task<Movie?> GetMovieByVidGuardId(string Id);
 

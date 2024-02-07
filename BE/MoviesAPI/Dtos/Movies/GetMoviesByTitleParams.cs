@@ -5,5 +5,7 @@
         public string? Title { get; set; }
         public int Page { get; set; } = 1;
         public int ItemsPerPage { get; set; } = 5;
+
+        public string FirebaseId { get; set; }
     }
 }

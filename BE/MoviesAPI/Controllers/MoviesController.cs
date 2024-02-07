@@ -56,7 +56,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPost]
         [Route(ApiRoutes.MovieRoutes.CreateMovie)]
-        [Authorize(Roles ="ADMIN")]
+        [Authorize(Roles ="USER")]
         public async Task<IActionResult> CreateMovie([FromBody] CreateMovieDto createMovieDto)
         {
             var tags = mapper.Map<List<Tag>>(createMovieDto.Tags);
@@ -93,7 +93,7 @@ namespace MoviesAPI.Controllers
 
         [HttpDelete]
         [Route(ApiRoutes.MovieRoutes.DeleteMovieById)]
-        [Authorize(Roles ="ADMIN")]
+        [Authorize(Roles ="USER")]
         public async Task<IActionResult> DeleteMovieId(string Id)
         {
             var command = new DeleteMovieByIdCommand()
@@ -106,14 +106,15 @@ namespace MoviesAPI.Controllers
 
         [HttpGet]
         [Route(ApiRoutes.MovieRoutes.GetMoviesByTitle)]
-        [Authorize(Roles ="ADMIN")]
+        [Authorize(Roles ="USER")]
         public async Task<IActionResult> GetMoviesByTitle([FromQuery] GetMoviesByTitleParams getMoviesByTitleParams)
         {
             var query = new GetMoviesByTitleQuery()
             {
                 Page = getMoviesByTitleParams.Page,
                 ItemsPerPage = getMoviesByTitleParams.ItemsPerPage,
-                Title = getMoviesByTitleParams.Title
+                Title = getMoviesByTitleParams.Title,
+                FirebaseId = getMoviesByTitleParams.FirebaseId
             };
             var result = await mediator.Send(query);
             var mappedResult = mapper.Map<Pagination<GetMovieDto>>(result);
@@ -136,7 +137,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPatch]
         [Route(ApiRoutes.MovieRoutes.UpdateMovieById)]
-        [Authorize(Roles ="ADMIN")]
+        [Authorize(Roles ="USER")]
         public async Task<IActionResult> UpdateMoviesById(Guid Id, [FromBody] UpdateMovieById updateMovieById)
         {
             var command = new UpdateMovieByIdCommand()

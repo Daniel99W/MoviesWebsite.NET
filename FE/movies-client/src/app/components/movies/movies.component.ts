@@ -7,6 +7,8 @@ import { Constants } from 'src/app/utilities/Constants';
 import { Utilities } from 'src/app/utilities/Utilities';
 import { UpdateMovieComponent } from '../update-movie/update-movie.component';
 import { FormControl } from '@angular/forms';
+import { FirebaseAuthService } from 'src/app/services/firebaseAuth/firebase-auth.service';
+import jwtDecode from 'jwt-decode';
 
 @Component({
   selector: 'app-movies',
@@ -21,9 +23,13 @@ export class MoviesComponent implements OnInit
   private _itemsPerPage:number;
   private _title:FormControl;
   private _matDialog:MatDialog;
+  private _firebaseAuthService:FirebaseAuthService;
+  private _userId:string;
 
 
-  constructor(moviesService:MoviesService,matDialog:MatDialog) 
+  constructor(moviesService:MoviesService,matDialog:MatDialog,
+    firebaseAuthService:FirebaseAuthService
+    ) 
   {
     this._moviesService = moviesService;
     this._movies = new PaginatedResultDto<GetMovieDto>();
@@ -31,11 +37,15 @@ export class MoviesComponent implements OnInit
     this._itemsPerPage = 10;
     this._title = new FormControl();
     this._matDialog = matDialog;
+    this._firebaseAuthService = firebaseAuthService;
+    let token = this._firebaseAuthService.getToken();
+    let tokenDecoded:any = jwtDecode(token!);
+    this._userId = tokenDecoded["user_id"];
   }
 
   ngOnInit(): void 
   {
-    this._moviesService.getMoviesByTitle(this._title.value,this.itemsPerPage,1)
+    this._moviesService.getMoviesByTitle(this._title.value,this.itemsPerPage,1,this._userId)
     .subscribe((res:any) => 
       {
       this._movies.Page = res.page;
@@ -47,7 +57,7 @@ export class MoviesComponent implements OnInit
   public searchMovieByTitle(page:number = 1)
   {
     this._moviesService
-    .getMoviesByTitle(this._title.value,this._itemsPerPage,page)
+    .getMoviesByTitle(this._title.value,this._itemsPerPage,page,this._userId)
     .subscribe((res:any)=>
     {
       this._movies.Page = res.page;

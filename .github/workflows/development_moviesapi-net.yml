@@ -6,11 +6,12 @@ name: Build and deploy ASP.Net Core app to Azure Web App - Innoloft-API
 on:
   push:
     branches:
-      - development
+      - Site-filme-normale
   workflow_dispatch:
 
 jobs:
   build:
+    environment: Production
     name: Build .net api
     runs-on: ubuntu-latest
 
@@ -22,10 +23,21 @@ jobs:
         with:
           dotnet-version: '6.0.x'
           include-prerelease: true
-
+          
       - name: Build with dotnet
         run: dotnet build --configuration Release
         working-directory: BE/MoviesAPI
+
+      - name: App Settings Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with: 
+          files: 'BE/MoviesAPI/appsettings.json'
+        env:
+          Authentication.AuthUri: ${{ secrets.AUTH_URI }}
+          Authentication.TokenUri: ${{ secrets.TOKEN_URI }}
+          Authentication.Audience: ${{ secrets.AUDIENCE }}
+          Authentication.ValidIssuer: ${{ secrets.VALID_ISSUER }}
+          ConnectionStrings.MySqlConn: ${{ secrets.MY_SQL_CONNECTION_STRING }}
 
       - name: dotnet publish
         run: dotnet publish -c Release -o out
@@ -33,17 +45,17 @@ jobs:
 
       - name: Update Database
         run: |
-            dotnet tool install --global dotnet-ef
+            dotnet tool install --global dotnet-ef --version 7.0.12
             dotnet tool restore
             dotnet ef database update 
         working-directory: BE/MoviesAPI
-
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
           path: BE/MoviesAPI/out/*
-          
+
 
   deploy:
     runs-on: ubuntu-latest

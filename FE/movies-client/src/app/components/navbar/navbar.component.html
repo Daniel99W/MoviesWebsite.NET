@@ -4,7 +4,7 @@
         <h1
         routerLink="feed" 
         ><span class="bitches"
-            >Bitches</span>Online</h1>
+            >Share</span>Videos</h1>
     </div>
     <div class="links">
         <div class="baseLinks">
@@ -17,18 +17,18 @@
                 Favorite videos
             </a>
             <button mat-raised-button [matMenuTriggerFor]="menu"
-            *ngIf="isLoggedIn() && isAuthorized('ADMIN')" hidden
-            >Admin Menu</button>
+            *ngIf="isLoggedIn() && isAuthorized('USER')" hidden
+            >Manage videos</button>
             <mat-menu #menu="matMenu"
             >
                 <a mat-button
-                (click)="openAddMovieDialog('ADMIN')"
+                (click)="openAddMovieDialog('USER')"
                 >
                     Add Movie
                 </a>
                 <a mat-button
 
-                (click)="openMoviesDialog('ADMIN')"
+                (click)="openMoviesDialog('USER')"
                 >
                     Edit movies
                 </a>

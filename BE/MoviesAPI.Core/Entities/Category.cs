@@ -10,5 +10,13 @@ namespace MoviesAPI.Core.Entities
     {
         public string Name { get; set; }
         public List<MovieCategory> Movies { get; set; }
+        public Category()
+        {
+
+        }
+        public Category(string name)
+        {
+            this.Name = name;
+        }
     }
 }
