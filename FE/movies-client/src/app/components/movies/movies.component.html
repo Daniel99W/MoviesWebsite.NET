@@ -1,0 +1,89 @@
+
+
+
+<div class="container">
+    <!-- <div class="movie"
+    *ngFor="let movie of movies"
+    >
+        <div class="title">
+            <h3>{{titleMaxSize(movie.Title)}}</h3>
+        </div>
+        <div class="addedDate">
+            {{formatDate(movie.AddedDate)}}
+        </div>
+        <div class="update">
+            <button mat-raised-button color="accent">
+                update
+            </button>
+        </div>
+        <div class="delete">
+            <button mat-raised-button color="warn">
+                delete
+            </button>
+
+        </div>
+    </div> -->
+    <div class="search">
+        <div class="searchByTitle">
+            <mat-form-field>
+                <mat-label>Search movies by title</mat-label>
+                <input type="text" matInput class="title" [formControl]="titleForm">
+            </mat-form-field>
+        </div>
+     
+    </div>
+    <table
+    mat-table [dataSource]="movies"
+    class="mat-elevation-z8"
+    >
+        <ng-container matColumnDef="Title">
+            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <td mat-cell *matCellDef="let movie"> {{titleMaxSize(movie.title)}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Views">
+            <th mat-header-cell *matHeaderCellDef>Views</th>
+            <td mat-cell *matCellDef="let movie"> {{titleMaxSize(movie.views)}} </td>
+        </ng-container>
+        <ng-container matColumnDef="AddedDate">
+            <th mat-header-cell *matHeaderCellDef>Added Date</th>
+            <td mat-cell *matCellDef="let movie"> {{formatDate(movie.addedDate)}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Update">
+            <th mat-header-cell *matHeaderCellDef>Button</th>
+            <td mat-cell *matCellDef="let movie">
+                <button mat-raised-button color="accent" (click)="updateMovie(movie.id)">Update</button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Delete">
+            <th mat-header-cell *matHeaderCellDef>Button</th>
+            <td mat-cell *matCellDef="let movie">
+                <button mat-raised-button color="warn" (click)="deleteMovie(movie.id,movie.vidGuardId)">Delete</button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div class="pagination">
+        <input type="number" (change)="setItemsPerPage($event)" [value]="itemsPerPage" [value]="itemsPerPage" min="1"  placeholder="Movies per page">
+        <button *ngIf="getPrevPage() != null" class="btn"
+        (click) = "searchMovieByTitle(getPrevPage()!)"
+        mat-button>
+            Prev Page
+        </button>
+        <button mat-button color="primary" class="btn"
+        *ngFor="let page of counter(getPaginationData!.TotalPages);let j = index"
+        (click) = "searchMovieByTitle(page)"
+        >
+        {{j+1}}
+        </button>
+        <button *ngIf="getNextPage() != null" class="btn"
+        (click) = "searchMovieByTitle(getNextPage()!)"
+        mat-button>
+            Next Page
+        </button>
+        <div class="searchButton">
+            <button mat-raised-button (click)="searchMovieByTitle()">SEARCH MOVIES</button>
+        </div>
+
+    </div>
+</div>

@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoviesAPI.Core.Entities;
 using MoviesAPI.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoviesAPI.DAL.Repositories
 {
@@ -20,6 +15,15 @@ namespace MoviesAPI.DAL.Repositories
         public async Task<IEnumerable<User>> GetAllUsers()
         {
             return await moviesDbContext.Users.ToListAsync();
+        }
+
+        public async Task<Guid?> GetUserByFirebaseId(string id)
+        {
+            return await moviesDbContext
+                .Users
+                .Where(u => u.FirebaseId == id)
+                .Select(u => u.Id)
+                .SingleOrDefaultAsync();
         }
     }
 }

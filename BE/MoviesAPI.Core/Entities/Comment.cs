@@ -10,6 +10,8 @@ namespace MoviesAPI.Core.Entities
     {
         public Movie Movie { get; set; }
         public User User { get; set; }
+        public Guid UserId { get; set; }
+        public Guid MovieId { get; set; }
         public string Content { get; set; }
     }
 }

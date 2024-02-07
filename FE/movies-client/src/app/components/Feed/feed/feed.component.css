@@ -1,0 +1,162 @@
+
+
+.container
+{
+    width:85%;
+    height:100%;
+    margin:5% auto;
+}
+
+
+.filters,.pagination
+{
+    background-color: #131720;
+    width:100%;
+    color:white;
+    height:7%;
+    padding:.5rem 0rem;
+}
+
+
+.filters .title mat-label
+{
+    color:white;
+    font-size:1.2rem;
+    font-weight:700;
+}
+.filters .title
+{
+    color:white;
+}
+.filters .title input
+{
+    color:white;
+    font-size:1.5rem;
+}
+
+
+ mat-form-field
+{
+    width:15rem;
+    padding:1rem;
+}
+
+
+:host /deep/ .mat-select-value-text 
+{
+    color: white;
+    font-weight: bold;
+}
+
+.filters .title input::placeholder
+{
+    color:white;
+}
+.movies 
+{
+    margin:2rem 0rem;
+}
+
+.flex-me 
+{   display: inline-flex; 
+  flex-flow: row wrap;    
+}
+.mat-card
+{
+    width: fit-content;
+}
+
+
+
+mat-card, mat-card-title, mat-card-subtitle
+{
+    background-color:#131720;
+    color:white;
+}
+
+.mat-card img
+{
+    width:15rem;
+    height:14rem;
+}
+
+
+.addedDate
+{
+    color:white;
+    font-size:1.5rem;
+}
+
+.filters 
+{
+    display:flex;
+    align-items:center;
+    justify-content:space-evenly;
+}
+
+.filters .searchBar mat-label, .movieGenre mat-label
+{
+    color:white;
+    font-weight: 600;
+    font-size:1.1rem;
+}
+
+
+
+.actions button 
+{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.pagination
+{
+    margin:3rem auto;
+    text-align: center;
+
+}
+
+.pagination input 
+{
+    border:none;
+    width:15%;
+    text-align: center;
+}
+
+
+.titleLink 
+{
+    color:white;
+    text-decoration: none;
+    font-weight:600;
+}
+
+.titleLink:hover 
+{
+    color:crimson;
+    text-decoration: none;
+}
+
+
+.titleLink:hover
+{
+    text-decoration: underline;
+}
+
+.danger
+{
+    color:red;
+    margin:2rem auto;
+}
+
+.movieTitle
+{
+    cursor: pointer;
+}
+
+.viewCounter 
+{
+    background-color:#2a2c3b;
+    padding:.2rem .5rem;
+}
+

@@ -1,0 +1,39 @@
+
+
+<div class="container">
+    <div class="close" (click)="close()">
+
+    </div>
+    <div class="updateMovie">
+        <div class="title">
+            Update Movie Component
+        </div>
+        <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input type="text" matInput 
+            [formControl]="$any(getUpdateMovieForm()).get('title')"
+            />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea type="text" matInput 
+            [formControl]="$any(getUpdateMovieForm()).get('description')"
+            >
+            </textarea>
+    
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>
+                Categories 
+            </mat-label>
+            <mat-select [formControl]="$any(getUpdateMovieForm()).get('categories')" multiple>
+                <mat-option *ngFor="let category of categories" [value]="category.id">
+                    {{category.name}}
+                </mat-option>
+            </mat-select>   
+        </mat-form-field>
+        <div class="button" (click)="updateMovie()" >
+            <button mat-raised-button color="accent">Update Movie</button>
+        </div>
+    </div>
+</div>

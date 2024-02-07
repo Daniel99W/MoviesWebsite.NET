@@ -1,0 +1,63 @@
+
+<head>
+    <title>
+        {{movie.title}}
+    </title>
+</head>
+
+<div class="container">
+    <div class="movie">
+        <div class="title">
+            {{movie.title}}
+        </div>
+        <iframe [src]="movieURL | safe" width="100%" height="500" type="video/mp4"
+         frameborder="0" scrolling="yes"></iframe>
+         <div class="movieRouter">
+            
+         </div>
+         <div class="content">
+            <div class="votes">
+                <div class="upvotes">
+                    <div class="upvote">
+                        <mat-icon (click)="upvoteMovie(movie.id)">thumb_up</mat-icon>
+                    </div>
+                    <div class="upvotesNumber">
+                        {{movie.upvotes}} 
+                    </div>
+                    
+                </div>
+                /
+                <div class="downvotes">
+                    <div class="downvote">
+                        <mat-icon (click)="downvoteMovie(movie.id)">thumb_down</mat-icon>
+                    </div>
+                    <div class="downvotesNumber">
+                        {{movie.downvotes}}
+                    </div>
+                </div>
+                <div class="addToFavorite movieRed">
+                    <mat-icon (click)="addToFavorite(movie.id)">favorite</mat-icon>
+                    <div class="likesNumber">
+                        {{movie.likes}}
+                    </div>
+                </div>
+                
+            </div>
+            <div class="date">
+                      Subbmited on : {{formatDate(movie.addedDate)}}
+            </div>
+            <div class="views">
+                Views:
+                    {{movie.views}}
+            </div>
+            <div class="description">
+                {{movie.description}}
+            </div>
+            <div class="categories">
+                <div class="category" *ngFor="let category of categories">
+                    {{category.name}}
+                </div>
+            </div>
+         </div>
+    </div>
+</div>

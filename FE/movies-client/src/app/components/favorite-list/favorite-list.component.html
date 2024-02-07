@@ -1,0 +1,65 @@
+
+
+
+<div class="container">
+    <h1 class="title">Your favorite videos!</h1>
+    <div class="movies">
+        <mat-grid-list [cols]="breakpoint" rowHeight="20rem"  
+        (window:resize)="onResize($event)"
+        gutterSize="1rem">
+             <mat-grid-tile *ngFor="let movie of movies">
+                 <mat-card
+                
+                 >
+                     <img mat-card-image src="{{movie.movieImageURL}}" 
+                     (mouseenter)="fileChangeEvent($event,movie)" (mouseleave)="fileChangeEvent($event,movie)"
+                     >
+ 
+                     <mat-card-header class="movie_header">
+                         <mat-card-title class="movieTitle">
+                           <a (click)="getMovie(movie.id,movie.title)"
+                           class="titleLink"
+                           
+                           > {{restrictChars(movie.title)}}
+                             </a>
+                         </mat-card-title>
+                         <mat-card-subtitle>
+                             {{formatDate(movie.addedDate)}}
+                         </mat-card-subtitle>
+                     </mat-card-header>
+                     <button mat-raised-button color="warn"
+                        (click)="unpinFromFavoriteList(movie.id)"
+                        > 
+                        UNPIN
+                    </button>
+                 </mat-card>
+
+             </mat-grid-tile>
+             
+        </mat-grid-list>
+     </div>
+     <div class="pagination">
+        <input type="number"  [(ngModel)]="itemsPerPage" min="1"  placeholder="Movies per page" matInput>
+        <button *ngIf="getPrevPage() != null" class="btn"
+        (click) = "getFavoriteMoviesByUserId(getPrevPage()!)"
+        mat-button>
+            Prev Page
+        </button>
+        <button mat-button color="primary" class="btn"
+        *ngFor="let page of counter(getPaginationData!.TotalPages);let j = index"
+        (click) = "getFavoriteMoviesByUserId(page)"
+        >
+        {{j+1}}
+        </button>
+        <button *ngIf="getNextPage() != null" class="btn"
+        (click) = "getFavoriteMoviesByUserId(getNextPage()!)"
+        mat-button>
+            Next Page
+        </button>
+        <button (click)="getFavoriteMoviesByUserId(page)" mat-raised-button color="accent" >
+            SEARCH
+        </button>
+
+
+    </div>
+</div>

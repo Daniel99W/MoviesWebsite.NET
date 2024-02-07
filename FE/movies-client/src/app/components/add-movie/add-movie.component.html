@@ -1,0 +1,78 @@
+
+
+<div class="container">
+    <div class="icon" style="color:red;" (click)="close();">
+        <mat-icon>
+            close
+        </mat-icon>
+    </div>
+    <div class="title">
+        <div class="movie">
+            <mat-form-field>
+                <mat-label>Title</mat-label>
+                <input type="text" matInput 
+                [formControl]="$any(getCreateMovieForm()).get('title')"
+                />
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea type="text" matInput 
+                [formControl]="$any(getCreateMovieForm()).get('description')"
+                >
+                </textarea>
+            </mat-form-field>
+
+            <div class="fileInput">
+                <mat-label>Movie:</mat-label>
+                <input type="file" (change)="onFileSelected($event)">
+            </div>
+            <div class="fileInput">
+                <mat-label>Movie poster</mat-label>
+                <input type="file" (change)="onFilePosterSelected($event)">
+            </div>
+            <div class="fileInput">
+                <mat-label>Movie poster Gif</mat-label>
+                <input type="file" (change)="onFilePosterGifSelected($event)">
+            </div>
+            <mat-form-field>
+                <mat-label>Added date for the movie</mat-label>
+                <input type="date"  matInput [formControl]="$any(getCreateMovieForm()).get('addedDate')">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>
+                    Categories 
+                </mat-label>
+                <mat-select [formControl]="$any(getCreateMovieForm()).get('categories')" multiple>
+                    <mat-option *ngFor="let category of categories" [value]="category.id">
+                        {{category.name}}
+                    </mat-option>
+                </mat-select>   
+            </mat-form-field>
+            <div class="tags">
+                <mat-form-field>
+                    <mat-label>
+                        Add a tag
+                    </mat-label>
+                    <input type="text" matInput 
+                     [(ngModel)]="tag"
+                />
+                </mat-form-field>
+   
+                <button (click)="addTag()" mat-raised-button color="accent">Add tag</button>
+                <br>
+                <div class="tag" *ngFor="let tag of tags">
+                    #{{tag.name}}
+                </div>
+               
+            </div>
+       
+            
+            
+        </div>
+        <button class="btn" 
+        [disabled]="!isFileUploaded()"
+        mat-raised-button color="accent" (click)="addMovieToVidGuard()">
+            Create Movie
+        </button>
+    </div>
+</div>

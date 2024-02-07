@@ -1,0 +1,40 @@
+
+
+<div class="container">
+    <div class="container_login">
+        <div class="title">
+           <h1>Sign In</h1>
+        </div>
+        <div class="login_inputs">
+            <div class="email">
+                <mat-form-field>
+                    <mat-label>Email Address</mat-label>
+                    <input type="text" placeholder="Email address"
+                    [formControl]="$any(getSignInForm).get('Email')" matInput>
+
+                </mat-form-field>
+            </div>
+            <div class="password">
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input type="password" placeholder="Password" 
+                    [formControl]="$any(getSignInForm).get('Password')" matInput>
+                </mat-form-field>
+            </div>
+            <br>
+            <span class="danger" *ngIf="$any(getSignInForm).get('Password').invalid 
+                && $any(getSignInForm).get('Password').value.length > 0">
+                    password has to have max 50 characters
+            </span>
+            <div>
+                <div class="danger" *ngIf="!$any(getSignInForm).valid">
+                    All fields must be filled and email address be valid
+                </div>
+                <button 
+                [disabled]="!$any(getSignInForm).valid"
+                (click)="Login()" mat-raised-button color="basic">LOGIN</button>
+            </div>
+        </div>
+        
+    </div>
+</div>

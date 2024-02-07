@@ -1,0 +1,47 @@
+
+
+.container
+{
+    overflow-x: hidden;
+}
+
+ .title
+{
+    text-align: center;
+}
+.movie
+{
+    width:80%;
+    margin:0rem auto;
+    text-align: center;
+}
+
+.addCompanyBtn
+{
+    text-align: center;
+}
+
+.mat-form-field
+{
+    width: 65%;
+    margin:1rem auto;
+    font-size:1.3rem;
+}
+
+.btn 
+{
+    margin-top:.75rem;
+    text-align: center;
+}
+
+.tag 
+{
+    text-align: left;
+    background-color: blueviolet;
+    color:white;
+    border:1px solid gray;
+    width:0.5rem;
+    display:inline;
+    margin:0.1rem 0.1rem;
+    font-size:1.2rem;
+}
