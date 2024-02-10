@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  database:
+    image: mysql:8.0.0
+    ports:
+      - '3000:3306'
+    restart: always
+    volumes:
+      - C:\Users\Costache Daniel\Desktop\mysql_docker_data:/var/lib/mysql:rw
+    user: mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: daniel
+      MYSQL_USER: daniel
+      MYSQL_PASSWORD: daniel
+      MYSQL_DATABASE: movieswebsite
+    command: 
+      - --ssl-ca=/etc/mysql/certs/ca.crt
+      - --ssl-cert=/etc/mysql/certs/mysql.crt
+      - --ssl-key=/etc/mysql/certs/mysql.key
+      - --ssl=1
+      - --bind-address=0.0.0.0
+  cert-gen:
+    image: alpine
+    volumes:
+      - C:\Users\Costache Daniel\Desktop\certs:/certs
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        apk add --no-cache openssl &&
+        openssl genpkey -algorithm RSA -out /certs/mysql.key -pkeyopt rsa_keygen_bits:2048 &&
+        openssl req -new -key /certs/mysql.key -out /certs/mysql.csr -subj "/CN=mysql/O=myorg/C=US" &&
+        openssl x509 -req -in /certs/mysql.csr -signkey /certs/mysql.key -out /certs/mysql.crt -days 365 &&
+        openssl genpkey -algorithm RSA -out /certs/ca.key -pkeyopt rsa_keygen_bits:2048 &&
+        openssl req -new -x509 -key /certs/ca.key -out /certs/ca.crt -days 1095 -subj "/CN=Certificate Authority/O=myorg/C=US" &&
+        chmod 600 /certs/* && chown 999:999 /certs/*
+    restart: "no"
+  api:
+    depends_on:
+      - database
+    build: ./BE
+    container_name: movies_api
+    ports:
+      - '5001:80'
+    volumes:
+      - ./BE/MoviesAPI/appsettings.json:/app/appsettings.json
+  
