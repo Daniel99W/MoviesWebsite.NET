@@ -9,10 +9,10 @@ services:
       - C:\Users\Costache Daniel\Desktop\mysql_docker_data:/var/lib/mysql:rw
     user: mysql
     environment: 
-      MYSQL_ROOT_PASSWORD: daniel
-      MYSQL_USER: daniel
-      MYSQL_PASSWORD: daniel
-      MYSQL_DATABASE: movieswebsite
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     command: 
       - --ssl-ca=/etc/mysql/certs/ca.crt
       - --ssl-cert=/etc/mysql/certs/mysql.crt
@@ -43,7 +43,7 @@ services:
     container_name: movies_api
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://+:82
+      - ASPNETCORE_URLS=http://+:${ASP_HTTP_PORT_1}
     ports:
       - '5000:82'
     volumes:
