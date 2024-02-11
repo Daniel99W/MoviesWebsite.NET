@@ -37,11 +37,15 @@ services:
     restart: "no"
   api:
     depends_on:
-      - database
+       database:
+        condition: service_started
     build: ./BE
     container_name: movies_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:82
     ports:
-      - '5001:80'
+      - '5000:82'
     volumes:
       - ./BE/MoviesAPI/appsettings.json:/app/appsettings.json
   
