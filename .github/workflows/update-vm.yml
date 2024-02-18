@@ -1,6 +1,0 @@
-name: Update vm yml
-on:
-  push:
-    branches:
-      - scaleway-vm 
-  
