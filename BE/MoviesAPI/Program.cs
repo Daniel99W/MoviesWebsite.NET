@@ -11,8 +11,6 @@ using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -54,22 +52,19 @@ var audience = builder.Configuration["Authentication:Audience"];
 var validIssuer = builder.Configuration["Authentication:ValidIssuer"];
 var mysqlConnString = builder.Configuration["ConnectionStrings:MySqlConn"];
 
-Console.WriteLine("Mysql conn string:");
-Console.WriteLine(mysqlConnString);
-
-
 
 builder.Services
-    .AddAuthentication(options => {
+    .AddAuthentication(options =>
+    {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     })
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, jwtOptions =>
     {
         jwtOptions.Authority = validIssuer;
         jwtOptions.Audience = audience;
-        jwtOptions.TokenValidationParameters.ValidIssuer = validIssuer;  
+        jwtOptions.TokenValidationParameters.ValidIssuer = validIssuer;
     });
 
 
