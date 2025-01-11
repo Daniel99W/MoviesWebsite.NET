@@ -7,11 +7,14 @@ using MoviesAPI.Application.Commands.Users;
 using MoviesAPI.Core.Interfaces;
 using MoviesAPI.DAL;
 using MoviesAPI.DAL.Repositories;
+using System.Reflection;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IRepositoryUser, UserRepository>();
@@ -36,12 +39,14 @@ builder.Services.AddCors(options => options.AddPolicy(
                   .AllowAnyHeader()
                   ));
 
+var mysqlConnString = builder.Configuration["ConnectionStrings:MySqlConn"];
 
+Console.WriteLine(mysqlConnString);
 
 builder.Services.AddDbContext<MoviesDbContext>(options =>
 {
-    options.UseMySql(builder.Configuration.GetConnectionString("MySqlConn"),
-    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MySqlConn")));
+    options.UseMySql(mysqlConnString,
+    ServerVersion.AutoDetect(mysqlConnString));
 });
 FirebaseApp.Create(new AppOptions()
 {
@@ -50,7 +55,6 @@ FirebaseApp.Create(new AppOptions()
 
 var audience = builder.Configuration["Authentication:Audience"];
 var validIssuer = builder.Configuration["Authentication:ValidIssuer"];
-var mysqlConnString = builder.Configuration["ConnectionStrings:MySqlConn"];
 
 
 builder.Services
