@@ -7,13 +7,14 @@ using MoviesAPI.Application.Commands.Users;
 using MoviesAPI.Core.Interfaces;
 using MoviesAPI.DAL;
 using MoviesAPI.DAL.Repositories;
+using System.Reflection;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 // Add services to the container.
+
+
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IRepositoryUser, UserRepository>();
@@ -38,33 +39,41 @@ builder.Services.AddCors(options => options.AddPolicy(
                   .AllowAnyHeader()
                   ));
 
+var mysqlConnString = builder.Configuration["ConnectionStrings:MySqlConn"];
 
+Console.WriteLine(mysqlConnString);
 
 builder.Services.AddDbContext<MoviesDbContext>(options =>
 {
-    options.UseMySql(builder.Configuration.GetConnectionString("MySqlConn"),
-    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MySqlConn")));
+    options.UseMySql(mysqlConnString,
+    ServerVersion.AutoDetect(mysqlConnString));
 });
 FirebaseApp.Create(new AppOptions()
 {
-    Credential = GoogleCredential.FromFile("moviepiratedweb-firebase-adminsdk-epkfz-9991c3a39a.json")
+    Credential = GoogleCredential.FromFile("moviesprivatekey.json")
 });
 
 var audience = builder.Configuration["Authentication:Audience"];
 var validIssuer = builder.Configuration["Authentication:ValidIssuer"];
-var mysqlConnString = builder.Configuration["ConnectionStrings:MySqlConn"];
+
+
+Console.WriteLine("Mysql conn string:");
+Console.WriteLine(mysqlConnString);
+
+
 
 builder.Services
-    .AddAuthentication(options => {
+    .AddAuthentication(options =>
+    {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     })
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, jwtOptions =>
     {
         jwtOptions.Authority = validIssuer;
         jwtOptions.Audience = audience;
-        jwtOptions.TokenValidationParameters.ValidIssuer = validIssuer;  
+        jwtOptions.TokenValidationParameters.ValidIssuer = validIssuer;
     });
 
 
