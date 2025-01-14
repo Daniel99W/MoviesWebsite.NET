@@ -50,7 +50,7 @@ builder.Services.AddDbContext<MoviesDbContext>(options =>
 });
 FirebaseApp.Create(new AppOptions()
 {
-    Credential = GoogleCredential.FromFile("moviepiratedweb-firebase-adminsdk-epkfz-9991c3a39a.json")
+    Credential = GoogleCredential.FromFile("moviesprivatekey.json")
 });
 
 var audience = builder.Configuration["Authentication:Audience"];
