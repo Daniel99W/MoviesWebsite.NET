@@ -10,7 +10,7 @@
 *.userosscache
 *.sln.docstates
 
-moviepiratedweb-firebase-adminsdk-epkfz-9991c3a39a
+moviesprivatekey
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -398,3 +398,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/BE/MoviesAPI/moviesprivatekey.json
