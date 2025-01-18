@@ -15,6 +15,10 @@ moviesprivatekey
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+
+environment.ts
+environment.prod.ts
+
 # Mono auto generated files
 mono_crash.*
 
