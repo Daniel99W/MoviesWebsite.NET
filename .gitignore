@@ -399,3 +399,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /BE/MoviesAPI/moviesprivatekey.json
+FE/movies-client/src/environments/environment.prod.ts
+FE/movies-client/src/environments/environment.ts
