@@ -41,7 +41,6 @@ builder.Services.AddCors(options => options.AddPolicy(
 
 var mysqlConnString = builder.Configuration["ConnectionStrings:MySqlConn"];
 
-Console.WriteLine(mysqlConnString);
 
 builder.Services.AddDbContext<MoviesDbContext>(options =>
 {
@@ -55,12 +54,6 @@ FirebaseApp.Create(new AppOptions()
 
 var audience = builder.Configuration["Authentication:Audience"];
 var validIssuer = builder.Configuration["Authentication:ValidIssuer"];
-
-
-Console.WriteLine("Mysql conn string:");
-Console.WriteLine(mysqlConnString);
-
-
 
 builder.Services
     .AddAuthentication(options =>
